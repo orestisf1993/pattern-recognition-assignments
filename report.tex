@@ -1,0 +1,44 @@
+%&preamble
+% Save static part as preamble.tex and use command:
+% xelatex -ini -shell-escape -job-name="preamble" "&xelatex preamble.tex\dump"
+% to produce preamble.fmt
+
+% Only for xelatex and lualatex. It provides an automatic and unified interface to feature-rich AAT and OpenType fonts.
+% https://ctan.org/pkg/fontspec
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\renewcommand{\contentsname}{Περιεχόμενα}
+\renewcommand{\listfigurename}{Λίστα Σχημάτων}
+\renewcommand{\figurename}{Σχήμα}
+\renewcommand{\lstlistingname}{Καταχώρηση}
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}
+
+%\includeonly{results}
+
+\title{Αναγνώριση Προτύπων\\
+Πρώτη Εργασία Μαθήματος – Ταξινόμηση}
+\author{
+  Παυλίδης Αντώνης, 7758\\
+  Ορέστης Φλώρος-Μαλιβίτσης, 7796\\
+  Χαμζάς Κωσταντίνος, 7798\\
+  Τομέας Ηλεκτρονικής,\\
+  Τμήμα Ηλ. Μηχανικών / Μηχανικών ΗΥ,\\
+  Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης}
+%\titlepic{\includegraphics[width=0.85\textwidth]{cover.pdf}}
+\begin{document}
+\maketitle
+\tableofcontents
+\listoffigures
+\newpage
+
+% Δομή του Project
+\chapter*{Δομή του Project} \label{project-structure}
+
+%\begin{description}
+% todo
+%\end{description}
+
+\include{intro}
+\include{preprocessing}
+\include{algorithms}
+\end{document}
