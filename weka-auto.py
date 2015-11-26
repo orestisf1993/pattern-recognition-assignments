@@ -1,4 +1,5 @@
-#!/home/orestis/Downloads/protupa/pyweka/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from __future__ import print_function
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
