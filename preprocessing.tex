@@ -1,3 +1,77 @@
-\chapter{Προεπεξεργασία Δεδομένων}
-Σε αυτό το στάδιo προσπαθήσαμε , τόσο εποπτικά όσο και μέσω φίλτρων του Weka, να επεξεργαστούμε τα δεδομένα μας και να δημιουργήσουμε νέα σετ εκπαίδευσης που είχαν καλύτερες αποδόσεις ή να απομακκρύνουμε διάφορα γνωρίσματα τα οποία δεν παρείχαν ουασιαστική πληροφορία για την ταξινόμησή μας
-\subsection {Χρήση φιλτρων}
+\chapter{Προ-επεξεργασία Δεδομένων}
+Σε αυτό το στάδιο προσπαθήσαμε , τόσο εποπτικά όσο και μέσω φίλτρων του Weka, να επεξεργαστούμε τα δεδομένα μας και να δημιουργήσουμε νέα σετ εκπαίδευσης που είχαν καλύτερες αποδόσεις ή να απομακρύνουμε διάφορα γνωρίσματα τα οποία δεν παρείχαν ουσιαστική πληροφορία για την ταξινόμησή μας
+\section {Επιλογή γνωρισμάτων(Feature selection) }
+To feature classId είναι προφανές ότι δεν περιέχει κάποια πληροφορία για το αν η κλάση μας έχει μεγάλη πιθανότητα σφάλματος ή όχι.Για αυτό το λόγω το αφαιρούμε χωρίς περεταίρω ανάλυση , καθώς μπορεί να προκαλέσει προβλήματα over-fitting.
+Για τα υπόλοιπα γνωρίσματα θα χρησιμοποιήσουμε 2 από τους εκτιμητές  του weka για να προσδιορίσουμε την χρησιμότητά τους .Το ChisquaredAttributeEval και το infoGainAttributeΕval
+\subsection{ChisquaredAttributeEval}
+
+\begin{tabular}{r|l}
+Ranked& attributes\\
+  \hline
+215.7338 &  wmc\\
+207.4892 &   numberOfLinesOfCode\\
+190.9737 &   fanOut\\
+180.9782 &  rfc\\
+166.2854 &   cbo\\
+ 88.3387 &  numberOfMethods\\
+ 80.068  &   numberOfAttributes\\
+ 78.8778&   lcom\\
+ 68.9736&   numberOfPublicAttributes\\
+ 65.4263&   numberOfPrivateMethods\\
+ 53.8219&   numberOfPublicMethods\\
+ 42.069  &   fanIn\\
+ 21.7091&    noc\\
+  0      &  numberOfPrivateAttributes\\
+  0     &   numberOfMethodsInherited\\
+  0    &     dit\\
+  0    &     numberOfAttributesInherited\\
+ \end{tabular}
+
+  \newpage
+ 
+ Υλοποιεί το γνωστό τεστ $\chi^2 $ στο οποίο κάνουμε την μηδενική υπόθεση ότι  2 χαρακτηριστικά ενός δείγματος από ένα πληθυσμό(εδώ είναι οι κλάσεις)    είναι ανεξάρτητα μεταξύ τους.
+Στη συγκεκριμένη περίπτωση Θα ελέγξει κατά πόσο το κάθε (feature έχει εξάρτηση από την δυαδική τιμή bug)
+Θα ελέγξει δηλαδή  κατά πόσο ισχύει η γνωστή σε όλους σχέση $P(X=x \cap Bugs = b) = P(X=x)\times P(Bugs =b)$
+Όπου το X=x σημαίνει το feature Χ ναι πάρει την τιμή χ και το b  παίρνει τις τιμές 1,0 και προφανώς σημαίνει η κλάση να είναι εσφαλμένη η όχι .Προφανώς είναι επιθυμητό να μην ισχύει η στατιστική ανεξαρτησία που περιγράφεται από την παραπάνω σχέση για τα feature μας και την κλάση ταξινόμησης.Το συγκεκριμένο test έδωσε τα εξής αποτελέσματα :
+
+\subsection{infoGainAttributeΕval}
+Αυτός εκτιμητής υπολογίζει την αξία ενός χαρακτηριστικού μετρώντας το πληροφοριακό κέρδος που έχουμε σε σχέση με την κλάση χρησιμοποιώντας τη σχέση  $H(Class) - H(Class | Attribute)$.
+Ο συγκεκριμένος έδωσε τα εξής αποτελέσματα :\\
+
+
+\begin{tabular}{r|l}
+ Ranked & attribute\\
+\hline
+ 0.1701 &  wmc\\
+ 0.1667&   numberOfLinesOfCode\\
+ 0.1529&   fanOut\\
+ 0.1384&   cbo\\
+ 0.1379&   rfc\\
+ 0.072 &  numberOfMethods\\
+ 0.0642&   lcom\\
+ 0.0599&   numberOfAttributes\\
+ 0.0501&   numberOfPublicAttributes\\
+ 0.0473&  numberOfPrivateMethods\\
+ 0.0414&   numberOfPublicMethods\\
+ 0.0306&   fanIn\\
+ 0.0183&   noc\\
+ 0      &  numberOfPrivateAttributes\\
+ 0      &  numberOfMethodsInherited\\
+ 0      &  dit\\
+ 0      &  numberOfAttributesInherited\\
+ \end{tabular}\newline \\ \\ 
+Βλέπουμε ότι και οι 2 εκτιμητές τα μας έδειξαν ότι       τα features :
+\begin{itemize}
+\bfseries
+\item numberOfPrivateAttributes
+\item numberOfMethodsInherited
+\item dit
+\item numberOfAttributesInherited 
+\end{itemize}
+ Δεν σχετίζονται με το αν η κλάση μας έχει bug ή όχι οπότε επιλέγουμε νατα αφαιραίσουμε καια υτά 
+ για να μειώσουμε τον κίνδυνο overtraining αλλά και την επιπλεόν πολυπλοκότητα που δημιουργούν τα πολλά feature
+ \section { Extreme values και Outliers }
+ Μία συνήθης τεχνική είναι να αφαιρούμε δείγματα από το training set τα οποία  έχουν ακραίες τιμές  
+ \section { Διακριτοποίηση - Κανονικοποίηση  }
+ \section { Principal component analysis (PCA)}
+ \section{Τελικά training sets}
