@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/orestis/Downloads/protupa/pyweka/bin/python
 from __future__ import print_function
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
@@ -12,6 +12,48 @@ import numpy as np
 import itertools
 import sys
 import time
+import os
+
+BASE_LATEX_STRING = r'''\subsection{{{section_name}}}
+\begin{{description}}
+\item \textbf{{Εντολή:}}
+
+\begin{{lstlisting}}[language=Java, numbers=none, breaklines=true]
+{cli}
+\end{{lstlisting}}
+
+\item \textbf{{Αποτελέσματα}}:
+
+\begin{{center}}
+\begin{{tabular}}{{l|cccc}}
+ & precision & recall & f-measure & accuracy \\
+class 0 & {precision0} & {recall0} & {fmeasure0} & -\\
+class 1 & {precision1} & {recall1} & {fmeasure1} & - \\
+weighted & {wprecision} & {wrecall} & {wfmeasure} & {accuracy}\% \\
+\end{{tabular}}
+\captionof{{table}}{{Αποτελέσματα {section_name}}}
+\label{{tab:{code_name}}}
+\end{{center}}
+
+\begin{{center}}
+\begin{{tabular}}{{l|c|c|c|c}}
+\multicolumn{{2}}{{c}}{{}}&\multicolumn{{2}}{{c}}{{Predicted}}&\\
+\cline{{3-4}}
+\multicolumn{{2}}{{c|}}{{}}&0&1&\multicolumn{{1}}{{c}}{{Total}}\\
+\cline{{2-4}}
+\parbox[t]{{2mm}}{{\multirow{{2}}{{*}}{{\rotatebox[origin=c]{{90}}{{Actual}}}}}} & 0 & ${a}$ & ${b}$ & ${ab}$\\
+\cline{{2-4}}
+& 1 & ${c}$ & ${d}$ & ${cd}$\\
+\cline{{2-4}}
+\multicolumn{{1}}{{c}}{{}} & \multicolumn{{1}}{{c}}{{Total}} & \multicolumn{{1}}{{c}}{{${ac}$}} & \multicolumn{{1}}{{c}}{{${bd}$}} & \multicolumn{{1}}{{c}}{{${abcd}$}}\\
+\end{{tabular}}
+\captionof{{table}}{{Confusion Matrix {section_name}}}
+\label{{tab:{code_name}}}
+\end{{center}}
+
+\item \textbf{{Σχόλια:}}
+\input{{algorithms/{code_name}-comments}}
+\end{{description}}'''
 
 DATA_FILE = r"out-edited.arff"
 #~ DATA_FILE = r"PCA.arff"
@@ -34,12 +76,46 @@ except:
                 yield element
         return custom_count
 
-#~ def generate_latex_table(evl):
-    #~ latex_base = r'''\begin{tabular}{ | c | c |}
-#~ \hline
-#~ {a} {b} \\ \hline
-#~ {c} {d} \\ \hline
-#~ \end{tabular}'''.format(a=,b=,c=,d=)
+def generate_latex_table(cls, evl, code_name, section_name):
+    a = int(evl.confusion_matrix[0][0])
+    b = int(evl.confusion_matrix[0][1])
+    c = int(evl.confusion_matrix[1][0])
+    d = int(evl.confusion_matrix[1][1])
+    replace_dict = {
+        'code_name': code_name,
+        'section_name': section_name,
+        'cli': cls.to_commandline(),
+        'precision0': evl.precision(0),
+        'precision1': evl.precision(1),
+        'recall0': evl.recall(0),
+        'recall1': evl.recall(1),
+        'fmeasure0': evl.f_measure(0),
+        'fmeasure1': evl.f_measure(1),
+        'wprecision': evl.weighted_precision,
+        'wrecall': evl.weighted_recall,
+        'wfmeasure': evl.weighted_f_measure,
+        'accuracy': evl.percent_correct,
+        'a': a,
+        'b': b,
+        'c': c,
+        'd': d,
+        'ab': a+b,
+        'cd': c+d,
+        'ac': a+c,
+        'bd': b+d,
+        'abcd': a+b+c+d
+    }
+    for key,val in replace_dict.items():
+        if isinstance(val, float):
+            s = '{0:.2f}' if key == 'accuracy' else '{0:.4f}'
+            replace_dict[key] = s.format(val)
+
+    with open(code_name + '.tex', 'w') as f:
+        f.write(BASE_LATEX_STRING.format(**replace_dict))
+
+    comments_filename = code_name + '-comments.tex'
+    if not os.path.exists(comments_filename):
+        open(comments_filename, 'w').close()
 
 def round_closest_half(number):
     return round(number * 2) / 2
