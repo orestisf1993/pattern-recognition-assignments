@@ -1,0 +1,40 @@
+\subsection{J48}
+\begin{description}
+\item \textbf{Εντολή:}
+
+\begin{lstlisting}[language=Java, numbers=none, breaklines=true]
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.ClassifierSubsetEval -B weka.classifiers.meta.CostSensitiveClassifier -T -H \"Click to set hold out or test instances\" -E f-meas -- -cost-matrix \"[0.0 1.0; 4.84210526316 0.0]\" -S 1 -W weka.classifiers.trees.J48 -do-not-check-capabilities -- -C 0.15 -M 2 -do-not-check-capabilities" -S "weka.attributeSelection.BestFirst -D 1 -N 10" -W weka.classifiers.meta.CostSensitiveClassifier -do-not-check-capabilities -- -cost-matrix "[0.0 1.0; 4.84210526316 0.0]" -S 1 -W weka.classifiers.meta.Bagging -do-not-check-capabilities -- -P 100 -S 1 -num-slots 6 -I 10 -W weka.classifiers.trees.J48 -do-not-check-capabilities -- -C 0.1625 -M 2 -do-not-check-capabilities
+\end{lstlisting}
+
+\item \textbf{Αποτελέσματα}:
+
+\begin{center}
+\begin{tabular}{l|cccc}
+ & precision & recall & f-measure & accuracy \\
+class 0 & 0.9310 & 0.8544 & 0.8911 & -\\
+class 1 & 0.5799 & 0.7605 & 0.6580 & - \\
+weighted & 0.8576 & 0.8348 & 0.8424 & 83.48\% \\
+\end{tabular}
+\captionof{table}{Αποτελέσματα J48}
+\label{tab:j48}
+\end{center}
+
+\begin{center}
+\begin{tabular}{l|c|c|c|c}
+\multicolumn{2}{c}{}&\multicolumn{2}{c}{Predicted}&\\
+\cline{3-4}
+\multicolumn{2}{c|}{}&0&1&\multicolumn{1}{c}{Total}\\
+\cline{2-4}
+\parbox[t]{2mm}{\multirow{2}{*}{\rotatebox[origin=c]{90}{Actual}}} & 0 & $540$ & $92$ & $632$\\
+\cline{2-4}
+& 1 & $40$ & $127$ & $167$\\
+\cline{2-4}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{$580$} & \multicolumn{1}{c}{$219$} & \multicolumn{1}{c}{$799$}\\
+\end{tabular}
+\captionof{table}{Confusion Matrix J48}
+\label{tab:conf-j48}
+\end{center}
+
+\item \textbf{Σχόλια:}
+\input{algorithms/j48-comments}
+\end{description}
