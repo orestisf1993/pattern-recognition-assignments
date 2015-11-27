@@ -1,0 +1,40 @@
+\subsection{Random Forest}
+\begin{description}
+\item \textbf{Εντολή:}
+
+\begin{lstlisting}[language=Java, numbers=none, breaklines=true]
+weka.classifiers.meta.CostSensitiveClassifier -cost-matrix "[0.0 1.0; 4.75 0.0]" -S 1 -W weka.classifiers.meta.Bagging -- -P 100 -S 1 -num-slots 6 -I 10 -W weka.classifiers.trees.RandomForest -do-not-check-capabilities -- -I 50 -K 0 -S 1 -O -num-slots 6
+\end{lstlisting}
+
+\item \textbf{Αποτελέσματα}:
+
+\begin{center}
+\begin{tabular}{l|cccc}
+ & precision & recall & f-measure & accuracy \\
+class 0 & 0.9297 & 0.8576 & 0.8922 & -\\
+class 1 & 0.5833 & 0.7545 & 0.6580 & - \\
+weighted & 0.8573 & 0.8360 & 0.8432 & 83.60\% \\
+\end{tabular}
+\captionof{table}{Αποτελέσματα Random Forest}
+\label{tab:random-forest}
+\end{center}
+
+\begin{center}
+\begin{tabular}{l|c|c|c|c}
+\multicolumn{2}{c}{}&\multicolumn{2}{c}{Predicted}&\\
+\cline{3-4}
+\multicolumn{2}{c|}{}&0&1&\multicolumn{1}{c}{Total}\\
+\cline{2-4}
+\parbox[t]{2mm}{\multirow{2}{*}{\rotatebox[origin=c]{90}{Actual}}} & 0 & $542$ & $90$ & $632$\\
+\cline{2-4}
+& 1 & $41$ & $126$ & $167$\\
+\cline{2-4}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{$583$} & \multicolumn{1}{c}{$216$} & \multicolumn{1}{c}{$799$}\\
+\end{tabular}
+\captionof{table}{Confusion Matrix Random Forest}
+\label{tab:conf-random-forest}
+\end{center}
+
+\item \textbf{Σχόλια:}
+\input{algorithms/random-forest-comments}
+\end{description}
