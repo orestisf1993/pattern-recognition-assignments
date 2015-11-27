@@ -45,7 +45,7 @@ weighted & {wprecision} & {wrecall} & {wfmeasure} & {accuracy}\% \\
 \multicolumn{{1}}{{c}}{{}} & \multicolumn{{1}}{{c}}{{Total}} & \multicolumn{{1}}{{c}}{{${ac}$}} & \multicolumn{{1}}{{c}}{{${bd}$}} & \multicolumn{{1}}{{c}}{{${abcd}$}}\\
 \end{{tabular}}
 \captionof{{table}}{{Confusion Matrix {section_name}}}
-\label{{tab:{code_name}}}
+\label{{tab:conf-{code_name}}}
 \end{{center}}
 
 \item \textbf{{Σχόλια:}}
