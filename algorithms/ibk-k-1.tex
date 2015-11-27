@@ -1,0 +1,40 @@
+\subsection{NN (k=1)}
+\begin{description}
+\item \textbf{Εντολή:}
+
+\begin{lstlisting}[language=Java, numbers=none, breaklines=true]
+weka.classifiers.lazy.IBk -K 1 -W 0 -F -A "weka.core.neighboursearch.KDTree -A \"weka.core.EuclideanDistance -R first-last\" -S weka.core.neighboursearch.kdtrees.SlidingMidPointOfWidestSide -W 0.01 -L 40 -N"
+\end{lstlisting}
+
+\item \textbf{Αποτελέσματα}:
+
+\begin{center}
+\begin{tabular}{l|cccc}
+ & precision & recall & f-measure & accuracy \\
+class 0 & 0.8875 & 0.9114 & 0.8993 & -\\
+class 1 & 0.6267 & 0.5629 & 0.5931 & - \\
+weighted & 0.8330 & 0.8385 & 0.8353 & 83.85\% \\
+\end{tabular}
+\captionof{table}{Αποτελέσματα NN (k=1)}
+\label{tab:ibk-k-1}
+\end{center}
+
+\begin{center}
+\begin{tabular}{l|c|c|c|c}
+\multicolumn{2}{c}{}&\multicolumn{2}{c}{Predicted}&\\
+\cline{3-4}
+\multicolumn{2}{c|}{}&0&1&\multicolumn{1}{c}{Total}\\
+\cline{2-4}
+\parbox[t]{2mm}{\multirow{2}{*}{\rotatebox[origin=c]{90}{Actual}}} & 0 & $576$ & $56$ & $632$\\
+\cline{2-4}
+& 1 & $73$ & $94$ & $167$\\
+\cline{2-4}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{$649$} & \multicolumn{1}{c}{$150$} & \multicolumn{1}{c}{$799$}\\
+\end{tabular}
+\captionof{table}{Confusion Matrix NN (k=1)}
+\label{tab:conf-ibk-k-1}
+\end{center}
+
+\item \textbf{Σχόλια:}
+\input{algorithms/ibk-k-1-comments}
+\end{description}
