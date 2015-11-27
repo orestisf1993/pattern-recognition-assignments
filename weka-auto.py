@@ -84,54 +84,23 @@ def main():
     # load data
     global perms
 
-    if (len(sys.argv) >= 2):
-        import pickle
-        d = pickle.load(sys.argv[1])
-        perms = d['perms']
-        old_maxf = d['curr_maxf']
-        old_bestcli = d['curr_bestcli']
-        cli = d['cli']
-        del d
+    expirements = [
+            {'cli':r'weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.ClassifierSubsetEval -B weka.classifiers.meta.CostSensitiveClassifier -T -H \"Click to set hold out or test instances\" -E f-meas -- -cost-matrix \"[0.0 1.0; {cost} 0.0]\" -S 1 -W weka.classifiers.trees.J48 -do-not-check-capabilities -- -C 0.15 -M 2 -do-not-check-capabilities" -S "weka.attributeSelection.BestFirst -D 1 -N 10" -W weka.classifiers.meta.CostSensitiveClassifier -do-not-check-capabilities -- -cost-matrix "[0.0 1.0; {cost} 0.0]" -S 1 -W weka.classifiers.meta.Bagging -do-not-check-capabilities -- -P 100 -S 1 -num-slots 6 -I 10 -W weka.classifiers.trees.J48 -do-not-check-capabilities -- -C {conf} -M 2 -do-not-check-capabilities', 'cost': np.linspace(4, 6, 20), 'conf':np.linspace(0.05,0.2,5)}
+    ]
+    for expirement in expirements:
+        cli = expirement.pop('cli')
+        perms = [dict(zip(expirement, v)) for v in itertools.product(*expirement.values())]
         call_expirement(cli)
-        if old_maxf > curr_maxf:
-            print('\n' + str(old_bestcli))
-        else:
-            print('\n' + str(curr_bestcli))
-    else:
-        expirements = [
-
-                {'cli':r'weka.classifiers.meta.CostSensitiveClassifier -cost-matrix "[0.0 1.0; {cost} 0.0]" -S 1 -W weka.classifiers.lazy.IBk -do-not-check-capabilities -- -K {K} -W 0 -{weight} -A "weka.core.neighboursearch.LinearNNSearch -A \"weka.core.EuclideanDistance -R first-last\""', 'cost':np.linspace(4.5, 5.5, 5), 'K':range(1, 20), 'weight':['I', 'F']}
-                #~ {'cli':r'weka.classifiers.meta.CostSensitiveClassifier -cost-matrix "[0.0 1.0; {cost} 0.0]" -S 1 -W weka.classifiers.functions.SMO -do-not-check-capabilities -- -no-checks -C {costsvm} -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.NormalizedPolyKernel -E {e} -C 0 -no-checks" -do-not-check-capabilities', 'cost':np.linspace(4.5, 5.5, 5), 'costsvm':np.linspace(0.5, 2, 10), 'e':np.linspace(2,8,4)}
-                #~ {'cli': r'weka.classifiers.meta.CostSensitiveClassifier -cost-matrix "[0.0 1.0; {cost} 0.0]" -S 1 -W weka.classifiers.functions.LibSVM -do-not-check-capabilities -- -S 0 -K 2 -D 3 -G {gamma} -R 0.0 -N 0.5 -M 400.0 -C {costsvm} -E 0.01 -P 0.1 -W "1.0 {weight}" -model /home/orestis -seed 1', 'cost': np.linspace(4.5, 5.5, 5), 'costsvm':np.linspace(0.5, 2, 10), 'weight': np.linspace(1,5,5), 'gamma':np.linspace(0.0,2*10**(-2),3)}
-            #~ {
-                #~ 'cli': r'weka.classifiers.meta.CostSensitiveClassifier -cost-matrix "[0.0 1.0; {cost} 0.0]" -S 1 -W weka.classifiers.trees.RandomForest -- -I 100 -K 0 -S 1 -num-slots 4',
-                #~ 'cost': np.linspace(0.01, 7, 100)
-            #~ },
-            #~ {
-                #~ 'cli': r'weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.ClassifierSubsetEval -B weka.classifiers.meta.CostSensitiveClassifier -T -H \"Click to set hold out or test instances\" -E f-meas -- -cost-matrix \"[0.0 1.0; {cost} 0.0]\" -S 1 -W weka.classifiers.trees.J48 -- -C {conf} -M 2" -S "weka.attributeSelection.BestFirst -D 1 -N 10" -W weka.classifiers.meta.CostSensitiveClassifier -- -cost-matrix "[0.0 1.0; {cost} 0.0]" -S 1 -W weka.classifiers.meta.Bagging -- -P 100 -S 1 -num-slots 6 -I 10 -W weka.classifiers.trees.J48 -- -C {conf} -M 2',
-                #~ 'cost': np.linspace(0.01, 6, 35),
-                #~ 'conf': np.linspace(0.01, 0.30, 55)
-            #~ }
-        ]
-        for expirement in expirements:
-            cli = expirement.pop('cli')
-            perms = [dict(zip(expirement, v)) for v in itertools.product(*expirement.values())]
-            call_expirement(cli)
-            print('\n' + str(curr_bestcli))
+        print('\n\n' + str(curr_bestcli))
 
 if __name__ == "__main__":
     try:
         jvm.start()
         loader = Loader(classname="weka.core.converters.ArffLoader")
-        data = loader.load_file(DATA_DIR + DATA_FILE)
+        data = loader.load_file(os.path.join(DATA_DIR, DATA_FILE))
         data.class_is_last()
         main()
     except Exception as e:
-        import pickle
-        print('Saving data!', file=sys.stderr)
-        with open('dump' + time.strftime('%d-%m-%Y-%H-%M-%S') + '.pickle', 'wb') as f:
-            pickle.dump({'perms': perms[curr_count:],
-                         'curr_maxf': curr_maxf, 'curr_bestcli': curr_bestcli}, f)
         import traceback
         print(traceback.format_exc(), file=sys.stderr)
     finally:
