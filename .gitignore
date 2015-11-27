@@ -48,6 +48,9 @@ $RECYCLE.BIN/
 *.ps
 *.eps
 *.pdf
+*.png
+*.jpg
+*.jpeg
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
