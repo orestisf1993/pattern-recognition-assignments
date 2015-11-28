@@ -1,11 +1,14 @@
 \subsection{Random Forest}
 \begin{description}
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Εντολή:}
 
 \begin{lstlisting}[language=Java, numbers=none, breaklines=true]
 weka.classifiers.meta.CostSensitiveClassifier -cost-matrix "[0.0 1.0; 4.75 0.0]" -S 1 -W weka.classifiers.meta.Bagging -- -P 100 -S 1 -num-slots 6 -I 10 -W weka.classifiers.trees.RandomForest -do-not-check-capabilities -- -I 50 -K 0 -S 1 -O -num-slots 6
 \end{lstlisting}
+\end{minipage}
 
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Αποτελέσματα}:
 
 \begin{center}
@@ -34,6 +37,7 @@ weighted & 0.8573 & 0.8360 & 0.8432 & 83.60\% \\
 \captionof{table}{Confusion Matrix Random Forest}
 \label{tab:conf-random-forest}
 \end{center}
+\end{minipage}
 
 \item \textbf{Σχόλια:}
 \input{algorithms/random-forest-comments}

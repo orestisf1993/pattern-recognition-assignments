@@ -1,11 +1,14 @@
 \subsection{IBk}
 \begin{description}
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Εντολή:}
 
 \begin{lstlisting}[language=Java, numbers=none, breaklines=true]
 weka.classifiers.meta.CostSensitiveClassifier -cost-matrix "[0.0 1.0; 4.5 0.0]" -S 1 -W weka.classifiers.lazy.IBk -do-not-check-capabilities -- -K 18 -W 0 -I -A "weka.core.neighboursearch.KDTree -A \"weka.core.EuclideanDistance -R first-last\" -S weka.core.neighboursearch.kdtrees.SlidingMidPointOfWidestSide -W 0.01 -L 40 -N"
 \end{lstlisting}
+\end{minipage}
 
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Αποτελέσματα}:
 
 \begin{center}
@@ -34,6 +37,7 @@ weighted & 0.8532 & 0.8110 & 0.8232 & 81.10\% \\
 \captionof{table}{Confusion Matrix IBk}
 \label{tab:conf-ibk}
 \end{center}
+\end{minipage}
 
 \item \textbf{Σχόλια:}
 \input{algorithms/ibk-comments}

@@ -1,11 +1,14 @@
 \subsection{SMO (RBF)}
 \begin{description}
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Εντολή:}
 
 \begin{lstlisting}[language=Java, numbers=none, breaklines=true]
 weka.classifiers.meta.CostSensitiveClassifier -cost-matrix "[0.0 1.0; 3.68421052632 0.0]" -S 1 -W weka.classifiers.functions.SMO -do-not-check-capabilities -- -no-checks -C 2.63684210526 -L 0.001 -P 1.0E-12 -N 1 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.RBFKernel -G 0.2 -C 0 -no-checks" -do-not-check-capabilities
 \end{lstlisting}
+\end{minipage}
 
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Αποτελέσματα}:
 
 \begin{center}
@@ -34,6 +37,7 @@ weighted & 0.8546 & 0.8348 & 0.8417 & 83.48\% \\
 \captionof{table}{Confusion Matrix SMO (RBF)}
 \label{tab:conf-smo-rbf-pca}
 \end{center}
+\end{minipage}
 
 \item \textbf{Σχόλια:}
 \input{algorithms/smo-rbf-pca-comments}

@@ -13,12 +13,15 @@ import json
 
 BASE_LATEX_STRING = r'''\subsection{{{section_name}}}
 \begin{{description}}
+\begin{{minipage}}{{1.0\linewidth}}
 \item \textbf{{Εντολή:}}
 
 \begin{{lstlisting}}[language=Java, numbers=none, breaklines=true]
 {cli}
 \end{{lstlisting}}
+\end{{minipage}}
 
+\begin{{minipage}}{{1.0\linewidth}}
 \item \textbf{{Αποτελέσματα}}:
 
 \begin{{center}}
@@ -31,6 +34,7 @@ weighted & {wprecision} & {wrecall} & {wfmeasure} & {accuracy}\% \\
 \captionof{{table}}{{Αποτελέσματα {section_name}}}
 \label{{tab:{code_name}}}
 \end{{center}}
+\end{{minipage}}
 
 \begin{{center}}
 \begin{{tabular}}{{l|c|c|c|c}}
@@ -50,7 +54,8 @@ weighted & {wprecision} & {wrecall} & {wfmeasure} & {accuracy}\% \\
 
 \item \textbf{{Σχόλια:}}
 \input{{algorithms/{code_name}-comments}}
-\end{{description}}'''
+\end{{description}}
+'''
 
 def generate_latex_table(cls, evl, code_name, section_name):
     a = int(evl.confusion_matrix[0][0])

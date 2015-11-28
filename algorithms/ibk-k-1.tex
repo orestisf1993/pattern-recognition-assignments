@@ -1,11 +1,14 @@
 \subsection{NN (k=1)}
 \begin{description}
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Εντολή:}
 
 \begin{lstlisting}[language=Java, numbers=none, breaklines=true]
 weka.classifiers.lazy.IBk -K 1 -W 0 -F -A "weka.core.neighboursearch.KDTree -A \"weka.core.EuclideanDistance -R first-last\" -S weka.core.neighboursearch.kdtrees.SlidingMidPointOfWidestSide -W 0.01 -L 40 -N"
 \end{lstlisting}
+\end{minipage}
 
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Αποτελέσματα}:
 
 \begin{center}
@@ -34,6 +37,7 @@ weighted & 0.8330 & 0.8385 & 0.8353 & 83.85\% \\
 \captionof{table}{Confusion Matrix NN (k=1)}
 \label{tab:conf-ibk-k-1}
 \end{center}
+\end{minipage}
 
 \item \textbf{Σχόλια:}
 \input{algorithms/ibk-k-1-comments}
