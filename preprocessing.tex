@@ -1,66 +1,88 @@
 \chapter{Προ-επεξεργασία Δεδομένων}
-Σε αυτό το στάδιο προσπαθήσαμε , τόσο εποπτικά όσο και μέσω φίλτρων του Weka, να επεξεργαστούμε τα δεδομένα μας και να δημιουργήσουμε νέα σετ εκπαίδευσης που είχαν καλύτερες αποδόσεις ή να απομακρύνουμε διάφορα γνωρίσματα τα οποία δεν παρείχαν ουσιαστική πληροφορία για την ταξινόμησή μας
-\section {Επιλογή γνωρισμάτων(Feature selection) }
-To feature classId είναι προφανές ότι δεν περιέχει κάποια πληροφορία για το αν η κλάση μας έχει μεγάλη πιθανότητα σφάλματος ή όχι.Για αυτό το λόγω το αφαιρούμε χωρίς περεταίρω ανάλυση , καθώς μπορεί να προκαλέσει προβλήματα over-fitting.
-Για τα υπόλοιπα γνωρίσματα θα χρησιμοποιήσουμε 2 από τους εκτιμητές  του weka για να προσδιορίσουμε την χρησιμότητά τους .Το ChisquaredAttributeEval και το infoGainAttributeΕval
-\subsection{ChisquaredAttributeEval}
+Σε αυτό το στάδιο προσπαθήσαμε,
+τόσο εποπτικά όσο και μέσω φίλτρων του Weka,
+να επεξεργαστούμε τα δεδομένα μας και να δημιουργήσουμε νέα σετ εκπαίδευσης που είχαν καλύτερες αποδόσεις ή να απομακρύνουμε διάφορα γνωρίσματα τα οποία δεν παρείχαν ουσιαστική πληροφορία για την ταξινόμησή μας.
 
+\section {Επιλογή γνωρισμάτων(Feature selection) }
+To feature classId είναι προφανές ότι δεν περιέχει κάποια πληροφορία για το αν η κλάση μας έχει μεγάλη πιθανότητα σφάλματος ή όχι
+και το αφαιρέσαμε καθώς μπορεί να προκαλέσει προβλήματα over-fitting.
+Για τα υπόλοιπα γνωρίσματα θα χρησιμοποιήσουμε 2 από τους εκτιμητές του weka για να προσδιορίσουμε την χρησιμότητά τους.
+Το
+\lstinline[language=Java]!ChisquaredAttributeEval!
+και το
+\lstinline[language=Java]!infoGainAttributeΕval!.
+
+\subsection{ChisquaredAttributeEval}
+\begin{table}[tbh]
+\centering
 \begin{tabular}{r|l}
 Ranked& attributes\\
-  \hline
+\hline
 215.7338 &  wmc\\
 207.4892 &   numberOfLinesOfCode\\
 190.9737 &   fanOut\\
 180.9782 &  rfc\\
 166.2854 &   cbo\\
- 88.3387 &  numberOfMethods\\
- 80.068  &   numberOfAttributes\\
- 78.8778&   lcom\\
- 68.9736&   numberOfPublicAttributes\\
- 65.4263&   numberOfPrivateMethods\\
- 53.8219&   numberOfPublicMethods\\
- 42.069  &   fanIn\\
- 21.7091&    noc\\
-  0      &  numberOfPrivateAttributes\\
-  0     &   numberOfMethodsInherited\\
-  0    &     dit\\
-  0    &     numberOfAttributesInherited\\
- \end{tabular}
-
-  \newpage
- 
- Υλοποιεί το γνωστό τεστ $\chi^2 $ στο οποίο κάνουμε την μηδενική υπόθεση ότι  2 χαρακτηριστικά ενός δείγματος από ένα πληθυσμό(εδώ είναι οι κλάσεις)    είναι ανεξάρτητα μεταξύ τους.
-Στη συγκεκριμένη περίπτωση Θα ελέγξει κατά πόσο το κάθε (feature έχει εξάρτηση από την δυαδική τιμή bug)
-Θα ελέγξει δηλαδή  κατά πόσο ισχύει η γνωστή σε όλους σχέση $P(X=x \cap Bugs = b) = P(X=x)\times P(Bugs =b)$
-Όπου το X=x σημαίνει το feature Χ ναι πάρει την τιμή χ και το b  παίρνει τις τιμές 1,0 και προφανώς σημαίνει η κλάση να είναι εσφαλμένη η όχι .Προφανώς είναι επιθυμητό να μην ισχύει η στατιστική ανεξαρτησία που περιγράφεται από την παραπάνω σχέση για τα feature μας και την κλάση ταξινόμησης.Το συγκεκριμένο test έδωσε τα εξής αποτελέσματα :
+88.3387 &  numberOfMethods\\
+80.068  &   numberOfAttributes\\
+78.8778&   lcom\\
+68.9736&   numberOfPublicAttributes\\
+65.4263&   numberOfPrivateMethods\\
+53.8219&   numberOfPublicMethods\\
+42.069  &   fanIn\\
+21.7091&    noc\\
+0      &  numberOfPrivateAttributes\\
+0     &   numberOfMethodsInherited\\
+0    &     dit\\
+0    &     numberOfAttributesInherited\\
+\end{tabular}
+\caption{Αποτελέσματα ChisquaredAttributeEval}
+\label{table:ChisquaredAttributeEval}
+\end{table}
+Υλοποιεί το γνωστό τεστ $\chi^2 $ στο οποίο κάνουμε την μηδενική υπόθεση ότι 2 χαρακτηριστικά ενός δείγματος από ένα πληθυσμό (εδώ είναι οι κλάσεις) είναι ανεξάρτητα μεταξύ τους.
+Στη συγκεκριμένη περίπτωση Θα ελέγξει κατά πόσο το κάθε feature έχει εξάρτηση από την δυαδική τιμή bug.
+Θα ελέγξει δηλαδή  κατά πόσο ισχύει η σχέση
+\[ P(X=x \cap Bugs = b) = P(X=x) \cdot P(Bugs =b) \]
+Όπου το $X=x$ σημαίνει το feature $Χ$ να πάρει την τιμή χ και το b  παίρνει τις τιμές $1,0$ και προφανώς σημαίνει η κλάση να είναι εσφαλμένη η όχι.
+Προφανώς, είναι επιθυμητό να μην ισχύει η στατιστική ανεξαρτησία που περιγράφεται από την παραπάνω σχέση για τα feature μας και την κλάση ταξινόμησης.
+Τα αποτελέσματα φαίνονται στον
+\hyperref[table:ChisquaredAttributeEval]{πίνακα \ref{table:ChisquaredAttributeEval}}.
+\FloatBarrier
 
 \subsection{infoGainAttributeΕval}
-Αυτός εκτιμητής υπολογίζει την αξία ενός χαρακτηριστικού μετρώντας το πληροφοριακό κέρδος που έχουμε σε σχέση με την κλάση χρησιμοποιώντας τη σχέση  $H(Class) - H(Class | Attribute)$.Όπου H είναι η εντροπία 
-Ο συγκεκριμένος έδωσε τα εξής αποτελέσματα :\\
-
-
+\begin{table}[tbh]
+\centering
 \begin{tabular}{r|l}
- Ranked & attribute\\
+Ranked & attribute\\
 \hline
- 0.1701 &  wmc\\
- 0.1667&   numberOfLinesOfCode\\
- 0.1529&   fanOut\\
- 0.1384&   cbo\\
- 0.1379&   rfc\\
- 0.072 &  numberOfMethods\\
- 0.0642&   lcom\\
- 0.0599&   numberOfAttributes\\
- 0.0501&   numberOfPublicAttributes\\
- 0.0473&  numberOfPrivateMethods\\
- 0.0414&   numberOfPublicMethods\\
- 0.0306&   fanIn\\
- 0.0183&   noc\\
- 0      &  numberOfPrivateAttributes\\
- 0      &  numberOfMethodsInherited\\
- 0      &  dit\\
- 0      &  numberOfAttributesInherited\\
- \end{tabular}\newline \\ \\ 
-Βλέπουμε ότι και οι 2 εκτιμητές τα μας έδειξαν ότι       τα features :
+0.1701 &  wmc\\
+0.1667&   numberOfLinesOfCode\\
+0.1529&   fanOut\\
+0.1384&   cbo\\
+0.1379&   rfc\\
+0.072 &  numberOfMethods\\
+0.0642&   lcom\\
+0.0599&   numberOfAttributes\\
+0.0501&   numberOfPublicAttributes\\
+0.0473&  numberOfPrivateMethods\\
+0.0414&   numberOfPublicMethods\\
+0.0306&   fanIn\\
+0.0183&   noc\\
+0      &  numberOfPrivateAttributes\\
+0      &  numberOfMethodsInherited\\
+0      &  dit\\
+0      &  numberOfAttributesInherited\\
+\end{tabular}
+\caption{Αποτελέσματα infoGainAttributeΕval}
+\label{table:infoGainAttributeΕval}
+\end{table}
+
+Αυτός ο εκτιμητής υπολογίζει την αξία ενός χαρακτηριστικού μετρώντας το πληροφοριακό κέρδος που έχουμε σε σχέση με την κλάση χρησιμοποιώντας τη σχέση $H(Class) - H(Class \mid Attribute)$.
+Όπου $H$ είναι η εντροπία.
+Τα αποτελέσματα φαίνονται στον
+\hyperref[table:infoGainAttributeΕval]{πίνακα \ref{table:infoGainAttributeΕval}}.
+\FloatBarrier
+Βλέπουμε ότι και οι 2 εκτιμητές τα μας έδειξαν ότι τα features :
 \begin{itemize}
 \bfseries
 \item numberOfPrivateAttributes
@@ -68,51 +90,83 @@ Ranked& attributes\\
 \item dit
 \item numberOfAttributesInherited 
 \end{itemize}
- Δεν σχετίζονται με το αν η κλάση μας έχει bug ή όχι οπότε επιλέγουμε νατα αφαιραίσουμε καια υτά 
- για να μειώσουμε τον κίνδυνο overtraining αλλά και την επιπλεόν πολυπλοκότητα που δημιουργούν τα πολλά feature
- \section { Extreme values και Outliers }
- Μία συνήθης τεχνική είναι να αφαιρούμε δείγματα από το training set τα οποία  έχουν ακραίες τιμές  .Αυτά τα δείγματα συνήθως θεωρούνται ότι έχουν μετρηθεί εσφαλμένα  ή ότι είναι εξαιρέσεις που αντιβαίνουν τον κανόνα και μας δυσκολεύουν στο να κάνουμε σωστή ταξινόμηση . Όταν  όμως χρησιμοποιήσαμε το φίλτρο ΙnterquantileRange του weka για να αφαιρέσουμε τις extreme και outliers τιμές παρατηρήσαμε ότι σχεδόν οι μισές classes me bug αφαιρέθηκαν ενώ δεν συνέβη το ίδιο με τις κλάσεις που δεν είχαν bug.Οπότε υποθέσαμε ότι  υπήρχε κάποια εξάρτηση ανάμεσα στα δείγματα που είχαν extreme τιμές και τις κλάσεις με bug.Για αυτό το λόγο δημιουργήσαμε 2 καινούργια feature το Extreme και το Outliers.Η παραπάνω υπόθεση επιβεβαιώθηκε τόσο θεωρητικά τρέχοντας τους εκτιμητές που αναφέρθηκαν παραπάνω και παίρνοντας εκτιμήσεις που τα κατατάσσεται στη μέση σχεδόν των υπόλοιπων feature. Επίσης σε μερικούς αλγόριθμους πήραμε καλύτερα αποτελέσματα από κάνοντας χρήση αυτών Και τέλος μπορούμε να το δούμε και εποπτικά από το σχήμα που ακολουθεί
- \begin{figure}[h!]
-	\centering
-	\subfloat[ExtremeValues(no-yes)]{\includegraphics[width=0.5\textwidth, height = 0.3\textheight]{ExtremeValues.eps}}
-	\subfloat[OutliersValues(no-yes)]{\includegraphics[width=0.5\textwidth , height = 0.3\textheight]{OutLiersValue.eps}}
-	\caption{Τα δείγματα με extreme και outliers}
+Δεν σχετίζονται με το αν η κλάση μας έχει bug ή όχι οπότε επιλέγουμε να τα αφαιρέσουμε
+για να μειώσουμε τον κίνδυνο overtraining αλλά και την επιπλεόν πολυπλοκότητα που δημιουργούν τα πολλά feature.
+
+\section { Extreme values και Outliers }
+Μία συνήθης τεχνική είναι να αφαιρούμε δείγματα από το training set τα οποία έχουν ακραίες τιμές.
+Αυτά τα δείγματα συνήθως θεωρούνται ότι έχουν μετρηθεί εσφαλμένα ή ότι είναι εξαιρέσεις που αντιβαίνουν τον κανόνα και μας δυσκολεύουν στο να κάνουμε σωστή ταξινόμηση.
+Όταν όμως χρησιμοποιήσαμε το φίλτρο ΙnterquantileRange του weka για να αφαιρέσουμε τις extreme και outliers τιμές παρατηρήσαμε ότι σχεδόν οι μισές classes me bug αφαιρέθηκαν ενώ δεν συνέβη το ίδιο με τις κλάσεις που δεν είχαν bug.
+Οπότε υποθέσαμε ότι υπήρχε κάποια εξάρτηση ανάμεσα στα δείγματα που είχαν extreme τιμές και τις κλάσεις με bug.
+Για αυτό το λόγο δημιουργήσαμε 2 καινούργια feature το Extreme και το Outliers.
+Η παραπάνω υπόθεση επιβεβαιώθηκε τόσο θεωρητικά τρέχοντας τους εκτιμητές που αναφέρθηκαν παραπάνω και παίρνοντας εκτιμήσεις που τα κατατάσσεται στη μέση σχεδόν των υπόλοιπων feature. Επίσης σε μερικούς αλγόριθμους πήραμε καλύτερα αποτελέσματα από κάνοντας χρήση αυτών και τέλος μπορούμε να το δούμε και εποπτικά από το
+\hyperref[fig:extreme-outlier]{\figurename{} \ref{fig:extreme-outlier}}.
+\begin{figure}[ht]
+    \subfloat[ExtremeValues(no-yes)]{\includegraphics[width=0.5\textwidth, height = 0.3\textheight]{ExtremeValues.eps}}
+    \subfloat[OutliersValues(no-yes)]{\includegraphics[width=0.5\textwidth , height = 0.3\textheight]{OutLiersValue.eps}}
+    \caption{Τα δείγματα με extreme και outliers}
+    \label{fig:extreme-outlier}
 \end{figure}
 
-Φαίνεται καθαρά ότι η αναλογία τον bugs/nobugs είναι μεγαλύτερη στην δεξιά μπάρα(yes) σε σχέση μεν την αριστερή(no)
- \section { Διακριτοποίηση - Κανονικοποίηση  }
- 2 άλλες τεχνικές που χρησιμοποιήθηκαν είναι  η διακριτοποίηση και η κανονικοποίσηση .Διάφοροι αλγόριθμοι βελτιώνονται όταν τα χαρακτηριστικά τους είναι διακριτοποιημένα (Bayes) ή κανονικοποιημένα(SVM)
- H Διακριτοποίηση έγινε με το supervised φίλτρο discretized το οποίο διακριτοποιεί το κάθε feature ξεχωριστά με το βέλτιστο τρόπο που θεωρεί αυτό.Ενώ η κανονικοποίηση έγινε με το unsupervised φίλτρο normalize το οποίο απλά έκαν το range των τιμών να είναι από 0 εως 1.παρατείθεται μόνο παράδειγma από την διακριτοποίηση καθώς υπάρχει οπτική αλλάγη σε αντίθεση με τhn κανονικοποίηση.
- 
-  \begin{figure}[h!]
-	\centering
-	\subfloat[Undisritized Num\_Lines\_of\_Code]{\includegraphics[width=0.5\textwidth, height = 0.3\textheight]{undiscretized.eps}}
-	\subfloat[disritized Num\_Lines\_of\_Code]{\includegraphics[width=0.5\textwidth , height = 0.3\textheight]{discretized.eps}}
-	\caption{Τα δείγματα με extreme και outliers}
-\end{figure}
- \section { Principal component analysis (PCA)}
- 
- Το PCA είναι ένα από τα πιο σημαντικά αποτελέσματα της Γραμμικής Άλγεβρας.Χρησιμοποιείται σε πολλούς τομείς ανάλυσης άρα και στην αναγνώριση προτύπων επειδή είναι ένας απλός τρόπος εξαγωγής συμπερασμάτων από πολύπλοκα σετ δεδομένων.Ουσιαστικά μας δίνει έναν τρόπο για να μειώσουμε ένα πολύπλοκο σετ σε ένα σετ μικρότερων διαστάσεων ώστε να κατανοήσουμε καλύτερα κρυμμένη πληροφορία η οποία υποκρύπτεται μέσα σ'αυτά.
-Το PCA είναι μια στατιστική διαδικασία η οποία χρησιμοποιεί έναν ορθογώνιο μετασχηματισμό που μετατρέπει πιθανώς συσχετιζόμενα χαρακτηριστικά σε ένα νέο σετ από γραμμικά ασυσχέτιστα χαρακτηριστικά που ονομάζονται principal components των οποίων ο αριθμός είναι μικρότερος ή ίσος από τον αρχικό αριθμό.Ο μετασχηματισμός γίνεται με τέτοιο τρόπο ώστε το πρώτο principal component να έχει την μεγαλύτερη διακύμανση και το διάνυσμα που περιέχει τα principal components να είναι φθίνων ώς προς την διακύμανση.Έτσι το αποτέλεσμα που προκύπτει αποτελείται από ασυσχέτιστα ορθογώνια χαρακτηριστικά.Τα principal components είναι ορθογώνια γιατί είναι τα ιδιοδιανύσματα του πίνακα διακύμανσης ο οποίος είναι συμμετρικός.
+Φαίνεται καθαρά ότι η αναλογία τον bugs/nobugs είναι μεγαλύτερη στην δεξιά μπάρα(yes) σε σχέση μεν την αριστερή(no).
 
-Στο δικό μας πρόβληα ταξινόμησης θα εφαρμόσουμε το PCA στον αλγόριθμο SVM έτσι ώστε τα χαρακτηριστικά μας να είναι γραμμικά διαχωρίσιμα.Μετά την εφαρμογή του PCA στο weka παίρνουμε το παρακάτω dataset:
-\newline
+\section { Διακριτοποίηση - Κανονικοποίηση  }
+Δύο ακόμα τεχνικές που χρησιμοποιήθηκαν είναι η διακριτοποίηση και η κανονικοποίηση .
+Διάφοροι αλγόριθμοι βελτιώνονται όταν τα χαρακτηριστικά τους είναι διακριτοποιημένα (Bayes) ή κανονικοποιημένα(SVM).
+H διακριτοποίηση έγινε με το supervised φίλτρο discretized το οποίο διακριτοποιεί το κάθε feature ξεχωριστά με το βέλτιστο τρόπο που θεωρεί αυτό.
+Ενώ η κανονικοποίηση έγινε με το unsupervised φίλτρο normalize το οποίο απλά έκαναν το range των τιμών να είναι από 0 εως 1.
+Στο 
+\hyperref[fig:discritized]{\figurename{} \ref{fig:discritized}}
+φαίνεται ένα παράδειγμα απο την διακριτοποίηση.
+ 
+\begin{figure}[ht]
+\centering
+\subfloat[Undisritized Num\_Lines\_of\_Code]{\includegraphics[width=0.5\textwidth, height = 0.3\textheight]{undiscretized.eps}}
+\subfloat[disritized Num\_Lines\_of\_Code]{\includegraphics[width=0.5\textwidth , height = 0.3\textheight]{discretized.eps}}
+\caption{Διακριτοποίηση τιμών}
+\label{fig:discritized}
+\end{figure}
+
+\section{Principal component analysis (PCA)}
+Το PCA είναι ένα από τα πιο σημαντικά αποτελέσματα της Γραμμικής Άλγεβρας.
+Χρησιμοποιείται σε πολλούς τομείς ανάλυσης άρα και στην αναγνώριση προτύπων επειδή είναι ένας απλός τρόπος εξαγωγής συμπερασμάτων από πολύπλοκα σετ δεδομένων.
+Ουσιαστικά μας δίνει έναν τρόπο για να μειώσουμε ένα πολύπλοκο σετ σε ένα σετ μικρότερων διαστάσεων ώστε να κατανοήσουμε καλύτερα κρυμμένη πληροφορία η οποία υποκρύπτεται μέσα σ'αυτά.
+
+\begin{table}[htb]
+\centering
 \begin{tabular}{r|l}
-	Ranked & attribute\\
-	\hline
- 0.6159 &  1 0.357rfc+0.356numberOfLinesOfCode+0.35 numberOfMethods+0.344wmc...\\
- 0.4813  & 2 -0.563dit-0.526numberOfMethodsInherited-0.42numberOfAttributesInherited...\\
- 0.3779  & 3 -0.361numberOfPublicAttributes+0.342fanIn-0.329numberOfPrivateMethods...\\
- 0.2904  & 4 -0.517noc-0.382fanIn-0.334numberOfAttributes-0.322numberOfPublicAttributes \\
- 0.2153  & 5 -0.454numberOfPublicAttributes+0.393fanOut+0.337numberOfPrivateAttributes...\\
- 0.1669  & 6 0.412noc+0.372numberOfAttributesInherited-0.367numberOfMethodsInherited...\\
- 0.124   & 7 0.632numberOfPrivateAttributes+0.531noc-0.387fanOut-0.212cbo\\
- 0.0874  & 8 -0.656numberOfAttributesInherited+0.444numberOfMethodsInherited+0.341noc...\\
- 0.0623  & 9 -0.593fanOut+0.515fanIn+0.369numberOfPrivateMethods-0.265noc\\
- 0.0412 & 10 -0.67numberOfAttributes+0.647numberOfPublicAttributes...\\
-\end{tabular}\newline \\ \\ 
+Ranked & attribute\\
+\hline
+0.6159 &  1 0.357rfc+0.356numberOfLinesOfCode+0.35 numberOfMethods+0.344wmc...\\
+0.4813  & 2 -0.563dit-0.526numberOfMethodsInherited-0.42numberOfAttributesInherited...\\
+0.3779  & 3 -0.361numberOfPublicAttributes+0.342fanIn-0.329numberOfPrivateMethods...\\
+0.2904  & 4 -0.517noc-0.382fanIn-0.334numberOfAttributes-0.322numberOfPublicAttributes \\
+0.2153  & 5 -0.454numberOfPublicAttributes+0.393fanOut+0.337numberOfPrivateAttributes...\\
+0.1669  & 6 0.412noc+0.372numberOfAttributesInherited-0.367numberOfMethodsInherited...\\
+0.124   & 7 0.632numberOfPrivateAttributes+0.531noc-0.387fanOut-0.212cbo\\
+0.0874  & 8 -0.656numberOfAttributesInherited+0.444numberOfMethodsInherited+0.341noc...\\
+0.0623  & 9 -0.593fanOut+0.515fanIn+0.369numberOfPrivateMethods-0.265noc\\
+0.0412 & 10 -0.67numberOfAttributes+0.647numberOfPublicAttributes...\\
+\end{tabular}
+\caption{Αποτελέσματα PCA}
+\label{table:PCA}
+\end{table}
 
-Παρατηρούμε ότι το καινούργιο dataset προκύπτει όντως σας γραμμικός συνδυασμών χαρακτηριστικών του προηγούμενου dataset.To dataset που προκύπτει περιέχει 10 χαρακτηριστικά σε σχέση με τα 17 του αρχικού μας και είναι ισοδύναμο με αυτό.Το χαρατηριστικό που βρίσκεται με Ranked 0.6159 παίζει μεγαλύτερο ρόλο από τα υπόλοιπα.Το διάνυσμα που προκύπτει σαν αποτέλεσμα από το PCA είναι όντως ταξινομημένο κατά την διακύμανση,όπως αναφέρθηκε παραπάνω,που σχετίζεται με την σημαντικότητα του κάθε χαρακτηριστικού στην τελική ταξινόμηση.Ακόμα μπορούμε να διώξουμε κάποιο από τα καινούργια χαρακτηριστικά αν θεωρούμε ότι παίζουν πολύ μικρό ή κανένα ρόλο στο αν η κλάση μας έχει bugs ή όχι.Εμείς στην δικιά μας περίπτωση χρησιμοποιούμε ολόκληρο το dataset που προκύπτει από το PCA.
+Το PCA είναι μια στατιστική διαδικασία η οποία χρησιμοποιεί έναν ορθογώνιο μετασχηματισμό που μετατρέπει πιθανώς συσχετιζόμενα χαρακτηριστικά σε ένα νέο σετ από γραμμικά ασυσχέτιστα χαρακτηριστικά που ονομάζονται principal components των οποίων ο αριθμός είναι μικρότερος ή ίσος από τον αρχικό αριθμό.
+Ο μετασχηματισμός γίνεται με τέτοιο τρόπο ώστε το πρώτο principal component να έχει την μεγαλύτερη διακύμανση και το διάνυσμα που περιέχει τα principal components να είναι φθίνων ώς προς την διακύμανση.
+Έτσι, το αποτέλεσμα που προκύπτει αποτελείται από ασυσχέτιστα ορθογώνια χαρακτηριστικά.Τα principal components είναι ορθογώνια γιατί είναι τα ιδιοδιανύσματα του πίνακα διακύμανσης ο οποίος είναι συμμετρικός.
+
+Στο δικό μας πρόβλημα ταξινόμησης θα εφαρμόσουμε το PCA στον αλγόριθμο SVM έτσι ώστε τα χαρακτηριστικά μας να είναι γραμμικά διαχωρίσιμα.
+Μετά την εφαρμογή του PCA στο weka παίρνουμε το παρακάτω dataset που φαίνεται στον
+\hyperref[table:PCA]{πίνακα \ref{table:PCA}}
+
+Παρατηρούμε ότι το καινούργιο dataset προκύπτει όντως σας γραμμικός συνδυασμών χαρακτηριστικών του προηγούμενου dataset.
+To dataset που προκύπτει περιέχει 10 χαρακτηριστικά σε σχέση με τα 17 του αρχικού μας και είναι ισοδύναμο με αυτό.
+Το χαρατηριστικό που βρίσκεται με Ranked 0.6159 παίζει μεγαλύτερο ρόλο από τα υπόλοιπα.Το διάνυσμα που προκύπτει σαν αποτέλεσμα από το PCA είναι όντως ταξινομημένο κατά την διακύμανση,
+όπως αναφέρθηκε παραπάνω,
+που σχετίζεται με την σημαντικότητα του κάθε χαρακτηριστικού στην τελική ταξινόμηση.
+Ακόμα, μπορούμε να διώξουμε κάποιο από τα καινούργια χαρακτηριστικά αν θεωρούμε ότι παίζουν πολύ μικρό ή κανένα ρόλο στο αν η κλάση μας έχει bugs ή όχι.
+Εμείς στην δικιά μας περίπτωση χρησιμοποιούμε ολόκληρο το dataset που προκύπτει από το PCA.
  
- 
- \section{Τελικά training sets}
+\FloatBarrier
+\section{Τελικά training sets}
