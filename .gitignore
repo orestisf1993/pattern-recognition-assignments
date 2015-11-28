@@ -246,3 +246,4 @@ vignettes/*.html
 vignettes/*.pdf
 
 *.txt
+*.csv
