@@ -15,8 +15,6 @@
 \renewcommand{\lstlistingname}{Καταχώρηση}
 \renewcommand{\lstlistlistingname}{List of \lstlistingname s}
 
-%\includeonly{results}
-
 \title{Αναγνώριση Προτύπων\\
 Πρώτη Εργασία Μαθήματος – Ταξινόμηση}
 \author{
@@ -31,14 +29,14 @@
 \maketitle
 \tableofcontents
 \listoffigures
-\newpage
 
-% Δομή του Project
 \chapter*{Δομή του Project} \label{project-structure}
-
-%\begin{description}
-% todo
-%\end{description}
+\begin{description}
+\item[data/] Φάκελος με τα αρχικά δεδομένα.
+\item[bugs\_test.csv] Τα αποτελέσματα από το test dataset σε csv.
+\item[report.pdf] Αυτή η αναφορά.
+\item[weka-auto.py] Script σε python που χρησιμοποιήθηκε για την βελτιστοποίηση παραμέτρων των διάφορων αλγορίθμων.
+\end{description}
 
 \include{intro}
 \include{preprocessing}
