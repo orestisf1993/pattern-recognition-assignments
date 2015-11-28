@@ -1,11 +1,15 @@
 \subsection{J48}
 \begin{description}
+
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Εντολή:}
 
 \begin{lstlisting}[language=Java, numbers=none, breaklines=true]
 weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.ClassifierSubsetEval -B weka.classifiers.meta.CostSensitiveClassifier -T -H \"Click to set hold out or test instances\" -E f-meas -- -cost-matrix \"[0.0 1.0; 4.84210526316 0.0]\" -S 1 -W weka.classifiers.trees.J48 -do-not-check-capabilities -- -C 0.15 -M 2 -do-not-check-capabilities" -S "weka.attributeSelection.BestFirst -D 1 -N 10" -W weka.classifiers.meta.CostSensitiveClassifier -do-not-check-capabilities -- -cost-matrix "[0.0 1.0; 4.84210526316 0.0]" -S 1 -W weka.classifiers.meta.Bagging -do-not-check-capabilities -- -P 100 -S 1 -num-slots 6 -I 10 -W weka.classifiers.trees.J48 -do-not-check-capabilities -- -C 0.1625 -M 2 -do-not-check-capabilities
 \end{lstlisting}
+\end{minipage}
 
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Αποτελέσματα}:
 
 \begin{center}
@@ -34,7 +38,10 @@ weighted & 0.8576 & 0.8348 & 0.8424 & 83.48\% \\
 \captionof{table}{Confusion Matrix J48}
 \label{tab:conf-j48}
 \end{center}
+\end{minipage}
 
+\begin{minipage}{1.0\linewidth}
 \item \textbf{Σχόλια:}
 \input{algorithms/j48-comments}
+\end{minipage}
 \end{description}
