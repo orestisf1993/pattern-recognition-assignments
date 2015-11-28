@@ -13,8 +13,8 @@ To feature classId είναι προφανές ότι δεν περιέχει κ
 \lstinline[language=Java]!infoGainAttributeΕval!.
 
 \subsection{ChisquaredAttributeEval}
-\begin{table}[tbh]
-\centering
+\begin{minipage}{1.0\textwidth}
+\begin{center}[tbh]
 \begin{tabular}{r|l}
 Ranked& attributes\\
 \hline
@@ -36,9 +36,9 @@ Ranked& attributes\\
 0    &     dit\\
 0    &     numberOfAttributesInherited\\
 \end{tabular}
-\caption{Αποτελέσματα ChisquaredAttributeEval}
+\captionof{table}{Αποτελέσματα ChisquaredAttributeEval}
 \label{table:ChisquaredAttributeEval}
-\end{table}
+\end{center}
 Υλοποιεί το γνωστό τεστ $\chi^2 $ στο οποίο κάνουμε την μηδενική υπόθεση ότι 2 χαρακτηριστικά ενός δείγματος από ένα πληθυσμό (εδώ είναι οι κλάσεις) είναι ανεξάρτητα μεταξύ τους.
 Στη συγκεκριμένη περίπτωση Θα ελέγξει κατά πόσο το κάθε feature έχει εξάρτηση από την δυαδική τιμή bug.
 Θα ελέγξει δηλαδή  κατά πόσο ισχύει η σχέση
@@ -47,11 +47,11 @@ Ranked& attributes\\
 Προφανώς, είναι επιθυμητό να μην ισχύει η στατιστική ανεξαρτησία που περιγράφεται από την παραπάνω σχέση για τα feature μας και την κλάση ταξινόμησης.
 Τα αποτελέσματα φαίνονται στον
 \hyperref[table:ChisquaredAttributeEval]{πίνακα \ref{table:ChisquaredAttributeEval}}.
-\FloatBarrier
+\end{minipage}
 
 \subsection{infoGainAttributeΕval}
-\begin{table}[tbh]
-\centering
+\begin{minipage}{1.0\textwidth}
+\begin{center}[tbh]
 \begin{tabular}{r|l}
 Ranked & attribute\\
 \hline
@@ -73,15 +73,15 @@ Ranked & attribute\\
 0      &  dit\\
 0      &  numberOfAttributesInherited\\
 \end{tabular}
-\caption{Αποτελέσματα infoGainAttributeΕval}
+\captionof{table}{Αποτελέσματα infoGainAttributeΕval}
 \label{table:infoGainAttributeΕval}
-\end{table}
+\end{center}
 
 Αυτός ο εκτιμητής υπολογίζει την αξία ενός χαρακτηριστικού μετρώντας το πληροφοριακό κέρδος που έχουμε σε σχέση με την κλάση χρησιμοποιώντας τη σχέση $H(Class) - H(Class \mid Attribute)$.
 Όπου $H$ είναι η εντροπία.
 Τα αποτελέσματα φαίνονται στον
 \hyperref[table:infoGainAttributeΕval]{πίνακα \ref{table:infoGainAttributeΕval}}.
-\FloatBarrier
+
 Βλέπουμε ότι και οι 2 εκτιμητές τα μας έδειξαν ότι τα features :
 \begin{itemize}
 \bfseries
@@ -92,7 +92,7 @@ Ranked & attribute\\
 \end{itemize}
 Δεν σχετίζονται με το αν η κλάση μας έχει bug ή όχι οπότε επιλέγουμε να τα αφαιρέσουμε
 για να μειώσουμε τον κίνδυνο overtraining αλλά και την επιπλεόν πολυπλοκότητα που δημιουργούν τα πολλά feature.
-
+\end{minipage}
 \section { Extreme values και Outliers }
 Μία συνήθης τεχνική είναι να αφαιρούμε δείγματα από το training set τα οποία έχουν ακραίες τιμές.
 Αυτά τα δείγματα συνήθως θεωρούνται ότι έχουν μετρηθεί εσφαλμένα ή ότι είναι εξαιρέσεις που αντιβαίνουν τον κανόνα και μας δυσκολεύουν στο να κάνουμε σωστή ταξινόμηση.
