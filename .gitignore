@@ -247,3 +247,5 @@ vignettes/*.pdf
 
 *.txt
 *.csv
+*.pickle
+out.html
