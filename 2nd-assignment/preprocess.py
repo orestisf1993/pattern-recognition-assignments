@@ -115,6 +115,11 @@ def csv_read(filename, delimiter=";", startpos=2):
             columns=header,
             dtype=int)
 
+def apply_class(dataset, filename='class.csv'):
+    """Function to append the category as the last attribute."""
+    df_class = csv_read(filename, startpos=0)
+    df_concat = pandas.concat([dataset, df_class], axis=1)
+    return df_concat
 
 def main():
     """Main function."""
@@ -130,6 +135,9 @@ def main():
     })
     tree.create_node("frequency_based_selection", parent="join_duplicates", data={
         'action': frequency_based_selection
+    })
+    tree.create_node("apply_class", parent="frequency_based_selection", data={
+        'action': lambda dataset: apply_class(dataset, os.path.join(base_dir, 'class.csv'))
     })
 
     for node_name in tree.expand_tree():
