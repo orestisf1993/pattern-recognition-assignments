@@ -150,7 +150,10 @@ def main():
         with open(filename_pickle, 'wb') as file_object:
             pickle.dump(node.data['dataset'], file_object)
         node.data['dataset'].to_csv(
-            filename + '.csv', sep=',', encoding='utf-8')
+            filename + '.csv',
+            sep=',',
+            encoding='utf-8',
+            index=False)
 
 if __name__ == '__main__':
     main()
