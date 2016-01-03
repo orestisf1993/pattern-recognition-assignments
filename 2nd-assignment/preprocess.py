@@ -107,7 +107,7 @@ def join_duplicates(dataset):
     return dataset.groupby(dataset.columns, axis=1).sum()
 
 
-def csv_read(filename, delimiter=";", startpos=2):
+def csv_read(filename, delimiter=",", startpos=2):
     """
     Parse csv file and return a dataframe.
     First row becames the header.
@@ -148,10 +148,11 @@ def main():
     """Main function."""
     base_dir = 'datasets'
     base_file = 'dataset'
+    os.chdir(base_dir)
 
     tree = treelib.Tree()
     tree.create_node("root", data={
-        'action': lambda _: csv_read(os.path.join(base_dir, base_file + '.csv'))
+        'action': lambda _: csv_read(base_file + '.csv')
     })
     tree.create_node("join_duplicates", parent="root", data={
         'action': join_duplicates
@@ -161,7 +162,7 @@ def main():
     })
 
     for node_name in tree.expand_tree():
-        directory = os.path.join(base_dir, tree.get_full_path(node_name))
+        directory = tree.get_full_path(node_name)
         filename = os.path.join(directory, base_file)
         filename_pickle = filename + '.pickle'
         already_exists = os.path.exists(filename_pickle)
