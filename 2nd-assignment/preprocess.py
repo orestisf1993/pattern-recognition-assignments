@@ -98,15 +98,20 @@ def join_duplicates(dataset):
     return dataset.groupby(dataset.columns, axis=1).sum()
 
 
-def csv_read(filename, delimiter=";"):
+def csv_read(filename, delimiter=";", startpos=2):
     """
     Parse csv file and return a dataframe.
     First row becames the header.
     """
+
+    def filter_line(line):
+        """Filter and split a file's line."""
+        return line.replace('\n', '').lower().split(delimiter)[startpos:]
+
     with open(filename) as file_object:
-        header = file_object.readline().lower().split(delimiter)[2:]
+        header = filter_line(file_object.readline())
         return pandas.DataFrame(
-            [line.lower().split(delimiter)[2:] for line in file_object],
+            [filter_line(line) for line in file_object],
             columns=header,
             dtype=int)
 
