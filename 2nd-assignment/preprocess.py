@@ -31,6 +31,9 @@ class MyTree(treelib.Tree):
 # override original class from module
 treelib.__dict__['Tree'] = MyTree
 
+def bool_it(dataset):
+    """Convert all int values too boolean."""
+    return dataset.applymap(lambda x: 1 if x else 0)
 
 def frequency_based_selection(dataset, low_bound=8, upper_bound=50):
     """Remove some attributes that are too frequent or too infrequent."""
