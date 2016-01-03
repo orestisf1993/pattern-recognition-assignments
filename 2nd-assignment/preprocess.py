@@ -1,5 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Module to preprocess our data and create a tree of the results"""
+from __future__ import print_function
 import os
 import pickle
 import pandas
@@ -10,7 +11,7 @@ class MyTree(treelib.Tree):
     """Used to override and extend some of Tree's features."""
 
     def create_node(self, tag=None, identifier=None, parent=None, data=None):
-        return super().create_node(
+        return super(MyTree, self).create_node(
             tag=tag,
             identifier=tag,
             parent=parent,
