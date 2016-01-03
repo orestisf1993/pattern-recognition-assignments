@@ -90,7 +90,12 @@ def join_similar(dataset, similarity_bound=0.9):
                         break
                 if not existed:
                     to_join.append([first, second])
-    return to_join
+    to_drop = []
+    for group in to_drop:
+        to_drop += group
+        # sum group to the first member
+        df[group[0]] = sum(df[member] for member in group)
+    return dataset.drop(to_drop, axis=1)
 
 
 def join_duplicates(dataset):
