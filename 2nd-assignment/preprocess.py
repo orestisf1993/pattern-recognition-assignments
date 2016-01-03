@@ -141,8 +141,7 @@ def main():
             continue
 
         action = node.data['action']
-        parent_data = None if node.is_root()
-            else tree.parent(node_name).data['dataset']
+        parent_data = None if node.is_root() else tree.parent(node_name).data['dataset']
         node.data['dataset'] = action(parent_data)
 
         if not os.path.exists(directory):
