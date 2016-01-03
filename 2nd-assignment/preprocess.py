@@ -124,11 +124,25 @@ def csv_read(filename, delimiter=";", startpos=2):
             columns=header,
             dtype=int)
 
-def apply_class(dataset, filename='class.csv'):
+def append_class(dataset, filename='class.csv'):
     """Function to append the category as the last attribute."""
     df_class = csv_read(filename, startpos=0)
     df_concat = pandas.concat([dataset, df_class], axis=1)
     return df_concat
+
+def save_results(dataset, directory, filename, pre_save_action=append_class):
+    """Save dataset to a .pickle and .csv file."""
+    if pre_save_action:
+        dataset = pre_save_action(dataset)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    with open(filename + '.pickle', 'wb') as file_object:
+        pickle.dump(dataset, file_object)
+    dataset.to_csv(
+        filename + '.csv',
+        sep=',',
+        encoding='utf-8',
+        index=False)
 
 def main():
     """Main function."""
@@ -144,9 +158,6 @@ def main():
     })
     tree.create_node("frequency_based_selection", parent="join_duplicates", data={
         'action': frequency_based_selection
-    })
-    tree.create_node("apply_class", parent="frequency_based_selection", data={
-        'action': lambda dataset: apply_class(dataset, os.path.join(base_dir, 'class.csv'))
     })
 
     for node_name in tree.expand_tree():
@@ -166,16 +177,8 @@ def main():
         parent_data = None if node.is_root() else tree.parent(node_name).data['dataset']
         node.data['dataset'] = action(parent_data)
 
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-
-        with open(filename_pickle, 'wb') as file_object:
-            pickle.dump(node.data['dataset'], file_object)
-        node.data['dataset'].to_csv(
-            filename + '.csv',
-            sep=',',
-            encoding='utf-8',
-            index=False)
+        save_results(node.data['dataset'], directory=directory, filename=filename)
+        print('----' + node_name + ' is finished')
 
 if __name__ == '__main__':
     main()
