@@ -146,11 +146,18 @@ def save_results(dataset, directory, filename, pre_save_action=append_class):
         encoding='utf-8',
         index=False)
 
-def main():
-    """Main function."""
-    base_dir = 'datasets'
-    base_file = 'dataset'
-    os.chdir(base_dir)
+def drop_fry_words(dataset, filename='fry-words.txt'):
+    """
+    Drops columns that have a name that is a Fry word.
+    The Fry Sight Word List is made up of the most frequently used words in
+    children's books, novels, articles and textbooks.
+    """
+    with open(filename) as file_object:
+        fry_words = []
+        for line in file_object:
+            fry_words += filter_line(line, delimiter=' ', startpos=0)
+    to_drop = [word for word in fry_words if word in dataset.columns]
+    return dataset.drop(to_drop, axis=1)
 
 def gibberish_detector(dataset):
     """Try to delete attributes with gibberish column names."""
@@ -180,6 +187,13 @@ def gibberish_detector(dataset):
     tree.create_node("frequency_based_selection", parent="join_duplicates", data={
         'action': frequency_based_selection
     })
+def main():
+    """Main function."""
+    base_dir = 'datasets'
+    base_file = 'dataset'
+    os.chdir(base_dir)
+
+    tree = tree_init(base_file)
 
     for node_name in tree.expand_tree():
         directory = tree.get_full_path(node_name)
