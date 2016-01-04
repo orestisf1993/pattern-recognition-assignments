@@ -107,21 +107,19 @@ def join_duplicates(dataset):
     """Join duplicate words."""
     return dataset.groupby(dataset.columns, axis=1).sum()
 
+def filter_line(line, delimiter=",", startpos=2):
+    """Filter and split a file's line."""
+    return line.replace('\n', '').lower().split(delimiter)[startpos:]
 
 def csv_read(filename, delimiter=",", startpos=2):
     """
     Parse csv file and return a dataframe.
     First row becames the header.
     """
-
-    def filter_line(line):
-        """Filter and split a file's line."""
-        return line.replace('\n', '').lower().split(delimiter)[startpos:]
-
     with open(filename) as file_object:
-        header = filter_line(file_object.readline())
+        header = filter_line(file_object.readline(), delimiter, startpos)
         return pandas.DataFrame(
-            [filter_line(line) for line in file_object],
+            [filter_line(line, delimiter, startpos) for line in file_object],
             columns=header,
             dtype=int)
 
