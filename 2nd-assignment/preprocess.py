@@ -3,6 +3,7 @@
 from __future__ import print_function
 import os
 import sys
+import traceback
 import pickle
 import pandas
 import treelib
@@ -170,8 +171,16 @@ def gibberish_detector(dataset):
         """Return the result from the training."""
         return gib_detect_train.avg_transition_prob(word, model_mat) <= threshold
 
-    with open('gib_model.pki', 'rb') as file_object:
-        model_data = pickle.load(file_object)
+    try:
+        with open('gib_model.pki', 'rb') as file_object:
+            model_data = pickle.load(file_object)
+    except FileNotFoundError:
+        traceback.print_exc(file=sys.stdout)
+        print("Please follow the README in Gibberish-Detector submodule"\
+              "and place gib_model.pki in the datasets/ folder")
+        print("Continuing without editing dataset")
+        return dataset
+
     model_mat = model_data['mat']
     threshold = model_data['thresh']
     to_drop = [column for column in dataset.columns if is_word_gibberish(column)]
