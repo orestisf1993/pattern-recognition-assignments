@@ -186,9 +186,13 @@ def gibberish_detector(dataset):
     to_drop = [column for column in dataset.columns if is_word_gibberish(column)]
     return dataset.drop(to_drop, axis=1)
 
+def tree_init(base_file):
+    """Initialize the tree."""
     tree = treelib.Tree()
+    # your tree structure here:
+    # tag names currently should be unique.
     tree.create_node("root", data={
-        'action': lambda _: csv_read(base_file + '.csv')
+        'action': lambda _: csv_read(base_file + '.csv', delimiter=';')
     })
     tree.create_node("join_duplicates", parent="root", data={
         'action': join_duplicates
@@ -196,6 +200,26 @@ def gibberish_detector(dataset):
     tree.create_node("frequency_based_selection", parent="join_duplicates", data={
         'action': frequency_based_selection
     })
+    tree.create_node("gibberish_detector", parent="frequency_based_selection", data={
+        'action': gibberish_detector
+    })
+    tree.create_node("join_similar", parent="gibberish_detector", data={
+        'action': join_similar
+    })
+    tree.create_node("drop_fry_words", parent="join_similar", data={
+        'action': drop_fry_words
+    })
+    tree.create_node("frequency_based_selection_df", parent="drop_fry_words", data={
+        'action': frequency_based_selection
+    })
+    tree.create_node("bool_it", parent="gibberish_detector", data={
+        'action': bool_it
+    })
+    tree.create_node("frequency_based_selection2", parent="bool_it", data={
+        'action': frequency_based_selection
+    })
+    return tree
+
 def main():
     """Main function."""
     base_dir = 'datasets'
