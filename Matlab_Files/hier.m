@@ -1,5 +1,5 @@
 
-filename = 'datasetF8_50.csv';
+filename = 'datasets/datasetF8_50.csv';
 T = readtable(filename);
 T(:,end) = [];
 X=table2array(T);
@@ -15,7 +15,7 @@ Y = pdist (X,distance);
 YY = squareform(Y);
 Z =linkage(YY,'single');
 c = cophenet(Z,Y)
-display_heatmap(X,distance);
+
 YY = 1-YY;
 figure;
 % Create the heat map.
