@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """Module to preprocess our data and create a tree of the results"""
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function, unicode_literals
+from builtins import *
+from future.builtins.disabled import *
 import os
 import sys
 import traceback
@@ -174,7 +176,7 @@ def gibberish_detector(dataset):
     try:
         with open('gib_model.pki', 'rb') as file_object:
             model_data = pickle.load(file_object)
-    except FileNotFoundError:
+    except (OSError, IOError) as exception:
         traceback.print_exc(file=sys.stdout)
         print("Please follow the README in Gibberish-Detector submodule"\
               "and place gib_model.pki in the datasets/ folder")
