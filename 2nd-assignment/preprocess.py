@@ -133,12 +133,15 @@ def append_class(dataset, filename='class.csv'):
 def save_results(dataset, directory, filename, pre_save_action=append_class):
     """Save dataset to a .pickle and .csv file."""
     if pre_save_action:
-        dataset = pre_save_action(dataset)
+        dataset_after_action = dataset.copy(deep=True)
+        dataset_after_action = pre_save_action(dataset)
+    else:
+        dataset_after_action = dataset
     if not os.path.exists(directory):
         os.makedirs(directory)
     with open(filename + '.pickle', 'wb') as file_object:
         pickle.dump(dataset, file_object)
-    dataset.to_csv(
+    dataset_after_action.to_csv(
         filename + '.csv',
         sep=',',
         encoding='utf-8',
