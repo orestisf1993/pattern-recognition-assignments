@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """Module to preprocess our data and create a tree of the results"""
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import absolute_import, division, print_function
 import os
 import sys
 import traceback
