@@ -1,0 +1,3 @@
+[submodule "2nd-assignment/Gibberish-Detector"]
+	path = 2nd-assignment/Gibberish-Detector
+	url = https://github.com/rrenaud/Gibberish-Detector.git

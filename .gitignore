@@ -249,3 +249,4 @@ vignettes/*.pdf
 *.csv
 *.pickle
 out.html
+*.pki

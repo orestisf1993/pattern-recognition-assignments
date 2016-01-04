@@ -2,6 +2,7 @@
 """Module to preprocess our data and create a tree of the results"""
 from __future__ import print_function
 import os
+import sys
 import pickle
 import pandas
 import treelib
@@ -152,6 +153,24 @@ def main():
     base_dir = 'datasets'
     base_file = 'dataset'
     os.chdir(base_dir)
+
+def gibberish_detector(dataset):
+    """Try to delete attributes with gibberish column names."""
+    lib_path = os.path.abspath(os.path.join('..', 'Gibberish-Detector'))
+    if lib_path not in sys.path:
+        sys.path.append(lib_path)
+    import gib_detect_train
+
+    def is_word_gibberish(word):
+        """Return the result from the training."""
+        return gib_detect_train.avg_transition_prob(word, model_mat) <= threshold
+
+    with open('gib_model.pki', 'rb') as file_object:
+        model_data = pickle.load(file_object)
+    model_mat = model_data['mat']
+    threshold = model_data['thresh']
+    to_drop = [column for column in dataset.columns if is_word_gibberish(column)]
+    return dataset.drop(to_drop, axis=1)
 
     tree = treelib.Tree()
     tree.create_node("root", data={
