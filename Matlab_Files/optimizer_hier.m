@@ -1,4 +1,4 @@
-function [c ,lMethod ,distancesMap] = iterate_hier(X)
+function [c ,lMethod ,distancesMap] = optimizer_hier(X,type)
 
 distancesMap = {'euclidean'; 'seuclidean'; 'cityblock'; 'minkowski';
   'chebychev';'cosine';'correlation';'spearman';'hamming';'jaccard'};
@@ -15,7 +15,9 @@ for i=1:1:M
         YY = squareform(Y);
         Z =linkage(YY,lMethod{i});
         c(k,:) = [cophenet(Z,Y),i,j];
-        fprintf('Method %s  Distance %s c is %f \n',lMethod{i},distancesMap{j} ,c(k,1)); 
+        T = cluster(Z,'maxclust',8);
+        s = eval_clust(T,type);
+        fprintf('Method %s  Distance %s c is %f succes is %f \n',lMethod{i},distancesMap{j} ,c(k,1),s); 
         
     end
 end

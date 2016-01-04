@@ -13,7 +13,7 @@ end
 distance = 'correlation';
 Y = pdist (X,distance);
 YY = squareform(Y);
-Z =linkage(YY,'single');
+Z =linkage(YY,'weighted');
 c = cophenet(Z,Y)
 
 YY = 1-YY;
