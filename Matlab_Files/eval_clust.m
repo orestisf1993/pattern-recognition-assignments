@@ -1,9 +1,9 @@
 function [ success_percentage ] = eval_clust( T,type)
 % %%This function implements the evaluation of the clustering.
 %
-% if nargin<2
-%     mode =2;
-% end
+if nargin<2
+    type = 2;
+end
 number_of_features=80;
 real_data=zeros(1,number_of_features);
 real_data(1,1:24)= 1;
@@ -28,8 +28,8 @@ if type==1
         
     end
     success_percentage = corrects/(incorrects+corrects);
-    corrects
-    incorrects
+%     corrects
+%     incorrects
     
 end
 
