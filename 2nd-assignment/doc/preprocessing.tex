@@ -1,0 +1,110 @@
+\chapter{Προεπεξεργασία Δεδομένων}
+\section{Μορφή των δεδομένων}
+Τα δεδομένα μας προέρχονται από τους όρους-λέξεις 80 βιβλιοθηκών της γλώσσας προγραμματισμού Java που ανήκουν σε 8 κατηγορίες:
+\begin{enumerate}\label{itemize:categories}
+    \item android
+    \item command-line-parsers
+    \item csv-libraries
+    \item http-clients
+    \item json-libraries
+    \item swing-libraries
+    \item testing-frameworks
+    \item xml-processing
+\end{enumerate}
+
+Το αρχικό μας dataset περιλαμβάνει $109706$ λέξεις οι οποίες παρουσιάζονται σαν στήλες σε ένα αρχείο \texttt{.csv}.
+Κάτω από την καθεμία αναγράφονται οι απόλυτες συχνότητες εμφάνισης του κάθε όρου.
+Επίσης, δίνονται οι στήλες \texttt{project}, κάτω από την οποία είναι τα ονόματα της κάθε βιβλιοθήκης, και \texttt{category}, κάτω από την οποία είναι η
+\hyperref[itemize:categories]{κατηγορία} που ανήκει η κάθε βιβλιοθήκη.
+
+\begin{center}
+\captionsetup{type={table}}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+project & category & ACONST & CompoundButtonCheckedChangeOnSubscribe & StatisticsComponent & getProjection & hashedSignature & propertyDescs & testGetBound & testReadPaths \\ \hline
+com.appnexus.opensdk/appnexus-sdk & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.auth0.android/lock & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.bingzer.android.ads/adrunner & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.daimajia.easing/library & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.facebook.android/facebook-android-sdk & android & 0 & 0 & 0 & 0 & 2 & 0 & 0 & 0 \\
+com.facebook.fresco/fbcore & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.facebook.fresco/fresco & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.github.asne/asne-core & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.github.castorflex.smoothprogressbar/library & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.hannesdorfmann.mosby/mvp & android & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+com.jakewharton.rxbinding/rxbinding & android & 0 & 3 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.jakewharton.timber/timber & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.jdroidframework/jdroid-android & android & 0 & 0 & 0 & 3 & 0 & 0 & 0 & 0 \\
+com.joanzapata.iconify/android-iconify & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.mixpanel.android/mixpanel-android & android & 0 & 0 & 0 & 0 & 0 & 3 & 0 & 1 \\
+com.rengwuxian.materialedittext/library & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.shamanland/xdroid-core & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.stanfy.enroscar/enroscar-beans & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.stanfy.enroscar/enroscar-sdk-dep & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.stanfy.enroscar/enroscar-shared & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+de.quist.apps.maps/android-maps-abstraction & android & 0 & 0 & 0 & 6 & 0 & 0 & 0 & 0 \\
+eu.inmite.android.lib/android-styled-dialogs & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+io.palaima.debugdrawer/debugdrawer & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+io.reactivex/rxandroid & android & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+args4j/args4j & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.beust/jcommander & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.github.spullara.cli-parser/cli-parser & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.lexicalscope.jewelcli/jewelcli & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+commons-cli/commons-cli & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+gnu.getopt/java-getopt & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+io.airlift/airline & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+net.sf.jopt-simple/jopt-simple & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+net.sourceforge.argparse4j/argparse4j & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.cyclopsgroup/jcli & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.realityforge.getopt4j/getopt4j & command-line-parsers & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+au.com.bytecode/opencsv & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.fasterxml.jackson.dataformat/jackson-dataformat-csv & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.opencsv/opencsv & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+net.sf.flatpack/flatpack & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+net.sf.supercsv/super-csv-dozer & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+net.sf.supercsv/super-csv & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.apache.commons/commons-csv & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.beanio/beanio & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.jdbi/jdbi & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.onebusaway/onebusaway-csv-entities & csv-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.github.kevinsawicki/http-request & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.google.http-client/google-http-client & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+com.jcabi/jcabi-http & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.m3/curly & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.mashape.unirest/unirest-java & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.metamx/http-client & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.ning/async-http-client & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.squareup.okhttp/okhttp & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.apache.httpcomponents/httpasyncclient & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.apache.httpcomponents/httpclient & http-clients & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.alibaba/fastjson & json-libraries & 5 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.eclipsesource.minimal-json/minimal-json & json-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.fasterxml.jackson.core/jackson-core & json-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.google.code.gson/gson & json-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.googlecode.json-simple/json-simple & json-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.jayway.jsonpath/json-path & json-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+net.minidev/json-smart & json-libraries & 4 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.codehaus.jettison/jettison & json-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.json/json & json-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.github.rickyclarkson/swingflow & swing-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+net.sf.cssbox/swingbox & swing-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.buildsomethingawesome.lib/awesome-java-swing & swing-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.fuin/utils4swing & swing-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.scijava/swing-checkbox-tree & swing-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.softsmithy.lib/softsmithy-lib-swing & swing-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.swinglabs/swingx & swing-libraries & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.novocode/junit-interface & testing-frameworks & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+junit/junit & testing-frameworks & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+org.testng/testng & testing-frameworks & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+xmlunit/xmlunit & testing-frameworks & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+com.fasterxml/aalto-xml & xml-processing & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+dom4j/dom4j & xml-processing & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+jdom/jdom & xml-processing & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+net.sf.kxml/kxml2 & xml-processing & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+xstream/xstream & xml-processing & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+\end{tabular}
+}
+\captionof{table}{Παράδειγμα μερικών στηλών για όλες τις γραμμές του αρχικού dataset}
+\label{table:init}
+\end{center}
