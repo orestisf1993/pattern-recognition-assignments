@@ -1,8 +1,11 @@
 function [c ,lMethod ,distancesMap] = optimizer_hier(X,type)
 
-distancesMap = {'euclidean'; 'seuclidean'; 'cityblock'; 'minkowski';
-  'chebychev';'cosine';'correlation';'spearman';'hamming';'jaccard'};
-ls
+% distancesMap = {'euclidean'; 'seuclidean'; 'cityblock'; 'minkowski';
+%   'chebychev';'cosine';'correlation';'spearman';'hamming';'jaccard'};
+
+distancesMap = {'cityblock'; 'minkowski';  'chebychev';'cosine';'correlation';
+    'spearman';'hamming';'jaccard'};
+
 lMethod = {'weighted';'ward';'single';  'complete' ;  'average'};
 M = length(lMethod);
 N = length(distancesMap);

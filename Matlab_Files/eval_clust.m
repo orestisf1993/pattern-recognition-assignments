@@ -25,11 +25,8 @@ if type==1
         d_lib = mode(el);
         incorrects = sum(el~= d_lib)+incorrects;
         corrects = sum(el == d_lib) + corrects;
-        
     end
     success_percentage = corrects/(incorrects+corrects);
-%     corrects
-%     incorrects
     
 end
 
@@ -44,9 +41,6 @@ if type==2 %Trying to give one lib to one cluster
             
             el1 = RT(RT(:,1)==libs(l),2);
             d_clust = mode(el1);
-            
-            %             pause
-            
             el2 = RT(RT(:,2)==d_clust,1);
             d_lib = mode(el2);
             %             pause
@@ -54,26 +48,15 @@ if type==2 %Trying to give one lib to one cluster
             if libs(l) == d_lib
                 rem = find(RT(:,1)==libs(l));% remove all the libs
                 RT(min(rem):max(rem),:)=[];
-                % remove all the clusters
                 rem = RT(:,2)==d_clust;% remove all the d_clusts
-                RT(rem,:)=[];
-                
-%                 libs(l) = 0;
+                RT(rem,:)=[];%
                 corrects = sum(el2 == d_lib) + corrects;
-%                 incorrects = sum(el2~= d_lib)+incorrects +sum(rem);
-                fprintf('Cluster %f goes to library %f \n',d_clust,d_lib)
+%                 fprintf('Cluster %d goes to library %d \n',d_clust,d_lib)
             end
-            
-           
         end
-%         libs(libs==0) =[];
-%         libs
     end
-    incorrects = numel(RT)+incorrects;
+    %     incorrects = numel(RT)+incorrects;
     success_percentage = corrects/80;
-%     corrects
-%     incorrects
 end
 
-
-% end
+end
