@@ -172,3 +172,31 @@ datasets/root
 
 Στη συνέχεια περιγράφονται οι διάφορες διαδικασίες που αναπτύχθηκαν.
 
+\subsection{Frequency Based Selection}
+Αφαίρεση των λέξεων που εμφανίζονται πολύ συχνά ή πολύ σπάνια.
+Η επιλογή βασίζεται μόνο στο αν μια λέξη εμφανίζεται ή όχι σε μια βιβλιοθήκη.
+Ο απόλυτος αριθμός εμφανίσεων δεν έχει σημασία.
+Έτσι, αν θέσουμε κατώτατο όριο $3$ και μία λέξη εμφανιστεί $500$ φορές σε μια βιβλιοθήκη αλλά πουθενά αλλού, τότε αυτή η λέξη θεωρείται ότι εμφανίζεται πολύ σπάνια και θα κοπεί.
+
+Η υλοποίηση βρίσκεται στη συνάρτηση \lstinline!frequency_based_selection! και ακολουθούμε τα εξής βήματα:
+\begin{enumerate}
+\item Μετατροπή του dataset σε bool.
+\begin{lstlisting}[numbers=none, aboveskip=\smallskipamount, belowskip=\smallskipamount, captionpos=none]
+to_bool = dataset.applymap(lambda x: True if x else False)
+\end{lstlisting}
+
+\item Άθροισμα κατά γραμμή.
+\begin{lstlisting}[numbers=none, aboveskip=\smallskipamount, belowskip=\smallskipamount, captionpos=none]
+to_bool_sums = to_bool.sum(axis=0)
+\end{lstlisting}
+
+\item Εύρεση και αφαίρεση όσων στηλών είναι εκτός των ορίων από το αρχικό dataset \lstinline!low_bound! και \lstinline!upper_bound!
+\begin{lstlisting}[numbers=none, aboveskip=\smallskipamount, belowskip=\smallskipamount, captionpos=none]
+to_drop = [
+    column
+    for column, nonzeros in zip(columns, to_bool_sums)
+    if nonzeros < low_bound or nonzeros > upper_bound
+]
+return dataset.drop(to_drop, axis=1)
+\end{lstlisting}
+\end{enumerate}
