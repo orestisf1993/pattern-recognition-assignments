@@ -289,3 +289,21 @@ for group in to_join[::-1]:
 return dataset.drop(to_drop, axis=1)
 \end{lstlisting}
 \end{itemize}
+
+\subsection{Gibberish Detector}
+\sloppy Για την εύρεση λέξεων που είναι "ασυναρτησίες" χρησιμοποιούμε την συνάρτηση
+\lstinline!gibberish_detector()!.
+
+Η συνάρτηση χρησιμοποιεί το πρόγραμμα \href{https://github.com/rrenaud/Gibberish-Detector}{Gibberish-Detector}
+που βρέθηκε μέσω της ερώτησης \href{http://stackoverflow.com/a/6298193/3430986}{"Is there any way to detect strings like putjbtghguhjjjanika?"}
+στο \href{stackoverflow.com}{stackoverflow}.
+Το πρόγραμμα αυτό χρησιμοποιεί μια μαρκοβιανή αλυσίδα για να πετύχει τον στόχο του και είναι επίσης γραμμένο σε Python(2).
+Για να το χρησιμοποιήσουμε πρέπει να τρέξουμε το \texttt{gib\_detect\_train.py} για την εκπαίδευση
+και να μετακινήσουμε το αποτέλεσμα \texttt{gib\_model.pki} στον φάκελο με τα datasets.
+
+Στην συνάρτηση αφαιρούμε κάθε λέξη του dataset που ταξινομείται ως "ασυναρτησία".
+\begin{lstlisting}[captionpos=none, numbers=none, breaklines=true]
+to_drop = [
+    column for column in dataset.columns if is_word_gibberish(column)]
+return dataset.drop(to_drop, axis=1)
+\end{lstlisting}
