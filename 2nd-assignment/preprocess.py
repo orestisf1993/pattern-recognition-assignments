@@ -33,9 +33,11 @@ class MyTree(treelib.Tree):
 # override original class from module
 treelib.__dict__['Tree'] = MyTree
 
+
 def bool_it(dataset):
     """Convert all int values too boolean."""
     return dataset.applymap(lambda x: 1 if x else 0)
+
 
 def frequency_based_selection(dataset, low_bound=8, upper_bound=50):
     """Remove some attributes that are too frequent or too infrequent."""
@@ -48,6 +50,7 @@ def frequency_based_selection(dataset, low_bound=8, upper_bound=50):
         if nonzeros < low_bound or nonzeros > upper_bound
     ]
     return dataset.drop(to_drop, axis=1)
+
 
 def join_similar(dataset, similarity_bound=0.9):
     """Try to join words that are very similar."""
@@ -82,20 +85,23 @@ def join_similar(dataset, similarity_bound=0.9):
         if close:
             to_join.append([word] + close)
             to_drop += close
-    # Ιterate from the end to the beggining so that we can recursively sum
+    # Iterate from the end to the beginning so that we can recursively sum
     # results from the end
     for group in to_join[::-1]:
         # sum group to the first member
         dataset[group[0]] = sum(dataset[member] for member in group)
     return dataset.drop(to_drop, axis=1)
 
+
 def join_duplicates(dataset):
     """Join duplicate words."""
     return dataset.groupby(dataset.columns, axis=1).sum()
 
+
 def filter_line(line, delimiter=",", startpos=2):
     """Filter and split a file's line."""
     return line.replace('\n', '').lower().split(delimiter)[startpos:]
+
 
 def csv_read(filename, delimiter=",", startpos=2):
     """
@@ -109,11 +115,13 @@ def csv_read(filename, delimiter=",", startpos=2):
             columns=header,
             dtype=int)
 
+
 def append_class(dataset, filename='class.csv'):
     """Function to append the category as the last attribute."""
     df_class = csv_read(filename, startpos=0)
     df_concat = pandas.concat([dataset, df_class], axis=1)
     return df_concat
+
 
 def save_results(dataset, directory, filename, pre_save_action=append_class):
     """Save dataset to a .pickle and .csv file."""
@@ -132,6 +140,7 @@ def save_results(dataset, directory, filename, pre_save_action=append_class):
         encoding='utf-8',
         index=False)
 
+
 def drop_fry_words(dataset, filename='fry-words.txt'):
     """
     Drops columns that have a name that is a Fry word.
@@ -145,6 +154,7 @@ def drop_fry_words(dataset, filename='fry-words.txt'):
     to_drop = [word for word in fry_words if word in dataset.columns]
     return dataset.drop(to_drop, axis=1)
 
+
 def gibberish_detector(dataset):
     """Try to delete attributes with gibberish column names."""
     lib_path = os.path.abspath(os.path.join('..', 'Gibberish-Detector'))
@@ -154,22 +164,25 @@ def gibberish_detector(dataset):
 
     def is_word_gibberish(word):
         """Return the result from the training."""
-        return gib_detect_train.avg_transition_prob(word, model_mat) <= threshold
+        return gib_detect_train.avg_transition_prob(
+            word, model_mat) <= threshold
 
     try:
         with open('gib_model.pki', 'rb') as file_object:
             model_data = pickle.load(file_object)
-    except (OSError, IOError) as exception:
+    except (OSError, IOError) as _:
         traceback.print_exc(file=sys.stdout)
-        print("Please follow the README in Gibberish-Detector submodule"\
+        print("Please follow the README in Gibberish-Detector submodule"
               "and place gib_model.pki in the datasets/ folder")
         print("Continuing without editing dataset")
         return dataset
 
     model_mat = model_data['mat']
     threshold = model_data['thresh']
-    to_drop = [column for column in dataset.columns if is_word_gibberish(column)]
+    to_drop = [
+        column for column in dataset.columns if is_word_gibberish(column)]
     return dataset.drop(to_drop, axis=1)
+
 
 def tree_init(base_file):
     """Initialize the tree."""
@@ -182,21 +195,25 @@ def tree_init(base_file):
     tree.create_node("join_duplicates", parent="root", data={
         'action': join_duplicates
     })
-    tree.create_node("frequency_based_selection", parent="join_duplicates", data={
-        'action': frequency_based_selection
-    })
-    tree.create_node("gibberish_detector", parent="frequency_based_selection", data={
-        'action': gibberish_detector
-    })
+    tree.create_node(
+        "frequency_based_selection",
+        parent="join_duplicates",
+        data={
+            'action': frequency_based_selection})
+    tree.create_node("gibberish_detector",
+                     parent="frequency_based_selection",
+                     data={'action': gibberish_detector})
     tree.create_node("join_similar", parent="gibberish_detector", data={
         'action': join_similar
     })
     tree.create_node("drop_fry_words", parent="join_similar", data={
         'action': drop_fry_words
     })
-    tree.create_node("frequency_based_selection_df", parent="drop_fry_words", data={
-        'action': frequency_based_selection
-    })
+    tree.create_node(
+        "frequency_based_selection_df",
+        parent="drop_fry_words",
+        data={
+            'action': frequency_based_selection})
     tree.create_node("bool_it", parent="gibberish_detector", data={
         'action': bool_it
     })
@@ -205,12 +222,13 @@ def tree_init(base_file):
     })
     return tree
 
+
 def main():
     """Main function."""
     base_dir = 'datasets'
     base_file = 'dataset'
     os.chdir(base_dir)
-    base_dir = os.getcwd() # full path to base_dir
+    base_dir = os.getcwd()  # full path to base_dir
     file_to_print_paths = os.path.join(base_dir, 'paths.txt')
     os.remove(file_to_print_paths)
 
@@ -232,10 +250,15 @@ def main():
             continue
 
         action = node.data['action']
-        parent_data = None if node.is_root() else tree.parent(node_name).data['dataset'].copy(deep=True)
+        parent_data = (
+            None if node.is_root()
+            else tree.parent(node_name).data['dataset'].copy(deep=True))
         node.data['dataset'] = action(parent_data)
 
-        save_results(node.data['dataset'], directory=directory, filename=filename)
+        save_results(
+            node.data['dataset'],
+            directory=directory,
+            filename=filename)
         print('----' + node_name + ' is finished')
 
 if __name__ == '__main__':
