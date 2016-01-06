@@ -49,14 +49,9 @@ def frequency_based_selection(dataset, low_bound=8, upper_bound=50):
     ]
     return dataset.drop(to_drop, axis=1)
 
-
 def join_similar(dataset, similarity_bound=0.9):
     """Try to join words that are very similar."""
-    from difflib import SequenceMatcher
-
-    def similar(first, second):
-        """Similarity of 2 strings."""
-        return SequenceMatcher(None, first, second).ratio()
+    from difflib import get_close_matches
 
     blacklist = [
         ('adding', 'padding'),
@@ -72,37 +67,27 @@ def join_similar(dataset, similarity_bound=0.9):
         ('stats', 'status')
     ]
 
-    columns = dataset.columns
-    to_join = []
-    for idx, first in enumerate(columns):
-        for second in columns[idx + 1:]:
-            condition = (
-                (first, second) not in blacklist and
-                similar(first, second) > similarity_bound
-            )
-            if condition:
-                existed = False
-                for group in to_join:
-                    if first in group and second in group:
-                        existed = True
-                        break
-                    elif first in group:
-                        group.append(second)
-                        existed = True
-                        break
-                    elif second in group:
-                        group.append(first)
-                        existed = True
-                        break
-                if not existed:
-                    to_join.append([first, second])
-    to_drop = []
-    for group in to_join:
-        to_drop += group[1:]
+    to_join = []  # list of groups to join together.
+    to_drop = []  # list of columns to drop.
+    for idx, word in enumerate(dataset.columns[:-1]):
+        rest = dataset.columns[idx + 1:]
+        close = get_close_matches(
+            word=word,  # For which word to find similarities.
+            possibilities=rest,  # search in the rest of the columns list.
+            n=len(rest),  # Don't limit the search for too many results.
+            cutoff=similarity_bound)  # At least this score.
+        for match in close:
+            if (word, match) in blacklist:
+                close.remove(match)
+        if close:
+            to_join.append([word] + close)
+            to_drop += close
+    # Ιterate from the end to the beggining so that we can recursively sum
+    # results from the end
+    for group in to_join[::-1]:
         # sum group to the first member
         dataset[group[0]] = sum(dataset[member] for member in group)
     return dataset.drop(to_drop, axis=1)
-
 
 def join_duplicates(dataset):
     """Join duplicate words."""
