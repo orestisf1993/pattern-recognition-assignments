@@ -1,15 +1,10 @@
-function [ T] = hier(filename12,num_clust)
+function [ IDX] = hier(X,num_clust)
 % filename = 'datasets1/datasetF8_50.csv';
-
-T = readtable(filename12);
-T(:,end) = [];%delete the category from the data
-X=table2array(T);
 
 %%nomralize X
 for x =1:1:size(X,1)
     X(x,:) = X(x,:)./max(X(x,:));
 end
-
 
 distance = 'correlation';
 Y = pdist (X,distance);
