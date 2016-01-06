@@ -238,3 +238,54 @@ def drop_fry_words(dataset, filename='fry-words.txt'):
     to_drop = [word for word in fry_words if word in dataset.columns]
     return dataset.drop(to_drop, axis=1)
 \end{lstlisting}
+
+\subsection{Join Similar}
+Συνάθροιση όλων των λέξεων που είναι παρόμοιες σαν strings (με βάση τους χαρακτήρες).
+Υλοποιείται στην συνάρτηση \lstinline!join_similar!.
+
+Η δομή της συνάρτησης είναι η εξής:
+\begin{itemize}
+\item Καθώς αυτού του τύπου σύγκριση μπορεί να δώσει αποτελέσματα που δεν θέλουμε να συναθροίσουμε έπρεπε να ελέγξουμε όλα τα αποτελέσματα
+και να εξαιρέσουμε μερικά από αυτά μέσω της \lstinline!list! \lstinline!blacklist!.
+\begin{lstlisting}[captionpos=none, numbers=none, breaklines=true]
+blacklist = [
+    ('adding', 'padding'),
+    ...
+    ('stats', 'status')
+]
+\end{lstlisting}
+
+\item Στην κυρίως επανάληψη της συνάρτησης συγκρίνουμε κάθε λέξη με τις υπόλοιπες.
+Αυτές που είναι αρκετά όμοιες τις ομαδοποιούμε μαζί.
+\begin{lstlisting}[captionpos=none, numbers=none, breaklines=true]
+for idx, word in enumerate(dataset.columns[:-1]):
+    rest = dataset.columns[idx + 1:]
+    ...
+    for match in close:
+        if (word, match) in blacklist:
+            close.remove(match)
+    if close:
+        to_join.append([word] + close)
+        to_drop += close
+\end{lstlisting}
+
+\item Για την εύρεση της ομοιότητας χρησιμοποιείται η συνάρτηση \lstinline!get_close_matches()! της βιβλιοθήκης \lstinline!difflib! της python.
+\begin{lstlisting}[captionpos=none, numbers=none, breaklines=true]
+close = get_close_matches(
+    word=word,  # For which word to find similarities.
+    possibilities=rest,  # search in the rest of the columns list.
+    n=len(rest),  # Don't limit the search for too many results.
+    cutoff=similarity_bound)  # At least this score.
+\end{lstlisting}
+
+\item Συναθροίζουμε όλες τις ομάδες παρόμοιων string στο πρώτο μέλος της ομάδας και αφαιρούμε τα υπόλοιπα.
+Οι συναθροίσεις γίνονται από το τέλος έτσι ώστε αν
+η λέξη \texttt{A} μοιάζει με την \texttt{B} και η \texttt{B} με την \texttt{C} στο τελικό αποτέλεσμα θα
+συναθροίσουμε τις \texttt{B} και \texttt{C} στην \texttt{A}.
+\begin{lstlisting}[captionpos=none, numbers=none, breaklines=true]
+for group in to_join[::-1]:
+    # sum group to the first member
+    dataset[group[0]] = sum(dataset[member] for member in group)
+return dataset.drop(to_drop, axis=1)
+\end{lstlisting}
+\end{itemize}
