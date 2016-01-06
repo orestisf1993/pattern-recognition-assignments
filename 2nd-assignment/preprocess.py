@@ -225,6 +225,9 @@ def main():
     base_dir = 'datasets'
     base_file = 'dataset'
     os.chdir(base_dir)
+    base_dir = os.getcwd() # full path to base_dir
+    file_to_print_paths = os.path.join(base_dir, 'paths.txt')
+    os.remove(file_to_print_paths)
 
     tree = tree_init(base_file)
 
@@ -232,6 +235,8 @@ def main():
         directory = tree.get_full_path(node_name)
         filename = os.path.join(directory, base_file)
         filename_pickle = filename + '.pickle'
+        with open(file_to_print_paths, 'a') as file_object:
+            print(filename + '.csv', file=file_object)
         already_exists = os.path.exists(filename_pickle)
 
         node = tree.get_node(node_name)
