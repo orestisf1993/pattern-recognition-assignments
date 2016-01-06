@@ -9,5 +9,5 @@ for ff = 3:1:length(files)
     T(:,end) = [];%delete the category from the data
     X=table2array(T);
     IDX = hier(X,8);
-%     optimizer_hiera(X,2,1);
+    optimizer_hier(X,2,1);
 end
