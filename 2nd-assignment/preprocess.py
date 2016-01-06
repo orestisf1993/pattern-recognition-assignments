@@ -230,7 +230,8 @@ def main():
     os.chdir(base_dir)
     base_dir = os.getcwd()  # full path to base_dir
     file_to_print_paths = os.path.join(base_dir, 'paths.txt')
-    os.remove(file_to_print_paths)
+    if os.path.exists(file_to_print_paths):
+        os.remove(file_to_print_paths)
 
     tree = tree_init(base_file)
 
