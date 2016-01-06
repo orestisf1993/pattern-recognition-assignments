@@ -200,3 +200,12 @@ to_drop = [
 return dataset.drop(to_drop, axis=1)
 \end{lstlisting}
 \end{enumerate}
+
+\subsection{Join Duplicates}
+Συνάθροιση των λέξεων που είναι διπλές.
+Αυτή η συνάρτηση συνήθως έχει νόημα αν μετατρέψουμε το αρχείο σε lower case καθώς το διαβάζουμε.
+\begin{lstlisting}[captionpos=none, numbers=none]
+def join_duplicates(dataset):
+    """Join duplicate words."""
+    return dataset.groupby(dataset.columns, axis=1).sum()
+\end{lstlisting}
