@@ -98,7 +98,7 @@ def join_similar(dataset, similarity_bound=0.9):
                     to_join.append([first, second])
     to_drop = []
     for group in to_join:
-        to_drop += group
+        to_drop += group[1:]
         # sum group to the first member
         dataset[group[0]] = sum(dataset[member] for member in group)
     return dataset.drop(to_drop, axis=1)
