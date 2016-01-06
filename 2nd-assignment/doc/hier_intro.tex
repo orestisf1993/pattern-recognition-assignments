@@ -20,11 +20,12 @@
 \end{enumerate}
 Μπορούν να χρησιμοποιηθούν πολλές διαφορετικές μετρικές ανάλογα με το πρόβλημα και την περίσταση.
 
-\begin{minipage}{\linewidth}% to keep image and caption on one page
-H απόσταση ανάμεσα στα   clusters  συνήθως οπτικοποιείται με έναν πίνακα ομοιότητας χρωματισμένο σαν θερμοκρασία .το λεγόμενο heatmap  όπως το παρακάτω :
+\begin{minipage}{\linewidth}
+\captionsetup{type={figure}}
+H απόσταση ανάμεσα στα   clusters  συνήθως οπτικοποιείται με έναν πίνακα ομοιότητας χρωματισμένο σαν θερμοκρασία, το λεγόμενο heatmap  όπως το παρακάτω :
 \makebox[\linewidth]{%        to center the image
-  \includegraphics[keepaspectratio=true,scale=0.3]{images/heat1}}
-\captionof{figure}{Πίνακας ομοιότητα από τα δεδομένα της άσκησης}\label{fig:heat1}%      only if needed  
+    \includegraphics[keepaspectratio=true,width=1.0\linewidth]{images/heat1}}
+    \captionof{figure}{Πίνακας ομοιότητα από τα δεδομένα της άσκησης}\label{fig:heat1}
 \end{minipage}
 
 Οι πιο γνωστοί τρόποι για linkage είναι 
@@ -47,10 +48,11 @@ Define each point as cluster\\
 \end{algorithm}
 
 \begin{minipage}{\linewidth}% to keep image and caption on one page
+\captionsetup{type={figure}}
 Ένας σύνηθες τρόπος να το δούμε είναι η  χρήση ενός δένδρο-διαγράμματος
 \makebox[\linewidth]{%        to center the image
-  \includegraphics[keepaspectratio=true,scale=0.6]{images/hier_tree}}
-\captionof{figure}{Παράδειγμα δεντρο-διαγράμματος}\label{fig:dentro1}%      only if needed  
+  \includegraphics[keepaspectratio=true,width=1.0\linewidth]{images/hier_tree}}
+\captionof{figure}{Παράδειγμα δεντρο-διαγράμματος}\label{fig:dentro1}
 \end{minipage}
  
 Τέλος αφού έχουμε την ιεραρχία μπορούμε να σπάμε τους πιο ασθενείς συνδέσμους(πιο ψηλούς στο δένδρο-διαγράμμα ) και να δημιουργούμε μικρότερα clusters.Το κάνουμε ώσπου να έχουμε τον επιθυμητό αριθμό από clusters
