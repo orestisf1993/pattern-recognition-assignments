@@ -218,3 +218,23 @@ def bool_it(dataset):
     """Convert all int values too boolean."""
     return dataset.applymap(lambda x: 1 if x else 0)
 \end{lstlisting}
+
+\subsection{Drop Fry Words}
+Αφαίρεση των \href{http://www.k12reader.com/subject/vocabulary/fry-words/}{Fry Words}.
+Αποτελεί μια λίστα από τις $1000$ πιο συχνές λέξεις της Αγγλικής γλώσσας.
+Καθώς αυτές οι λέξεις είναι πολύ γενικές δεν έχουν κάποιο ιδιαίτερο νόημα σε προγραμματιστικό περιβάλλον και έτσι τις αφαιρούμε.
+Οι λέξεις φορτώνονται από ένα αρχείο και συγκρίνονται με τις λέξεις του dataset.
+\begin{lstlisting}[captionpos=none, numbers=none, breaklines=true]
+def drop_fry_words(dataset, filename='fry-words.txt'):
+    """
+    Drops columns that have a name that is a Fry word.
+    The Fry Sight Word List is made up of the most frequently used words in
+    children's books, novels, articles and textbooks.
+    """
+    with open(filename) as file_object:
+        fry_words = []
+        for line in file_object:
+            fry_words += filter_line(line, delimiter=' ', startpos=0)
+    to_drop = [word for word in fry_words if word in dataset.columns]
+    return dataset.drop(to_drop, axis=1)
+\end{lstlisting}
