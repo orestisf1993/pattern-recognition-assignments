@@ -209,3 +209,12 @@ def join_duplicates(dataset):
     """Join duplicate words."""
     return dataset.groupby(dataset.columns, axis=1).sum()
 \end{lstlisting}
+
+\subsection{Μετατροπή σε δυαδικό}
+Όποτε μια λέξη δεν εμφανίζεται η τιμή παραμένει μηδέν.
+Αλλιώς γίνεται 1.
+\begin{lstlisting}[captionpos=none, numbers=none]
+def bool_it(dataset):
+    """Convert all int values too boolean."""
+    return dataset.applymap(lambda x: 1 if x else 0)
+\end{lstlisting}
