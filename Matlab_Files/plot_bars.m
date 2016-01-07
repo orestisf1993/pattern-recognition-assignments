@@ -10,8 +10,9 @@ lMet = {'WE'; 'WA'; 'SI'; 'CO'; 'AV'};
 % c(k,:) = [DATASET,DIST,MERTHOD,EVAL1,EVAL2,sil,coh,sep];
 
 L = size(c,1);
-figure('units','normalized','outerposition',[0 0 1 1])
-set(gcf, 'PaperPositionMode', 'auto');
+figure('visible', 'off', 'PaperType', 'a4', 'PaperOrientation', 'portrait', ...
+  'PaperUnits', 'centimeters', 'PaperPosition', [0 0 21 29.7], 'PaperPositionMode', 'manual', ...
+  'Menubar', 'none', 'defaulttextinterpreter', 'latex', 'units', 'normalized', 'outerposition', [0 0 1 1]);
 y = [c(:,6),c(:,7),c(:,8),c(:,5)];
 bar(y)
 
@@ -33,7 +34,7 @@ set(gca,'XTickLabelRotation',90)
 
 
 title(tit)
-saveas(gcf,['../2nd-assignment/doc/images/',name],'epsc')
+print(name, '-dpdf', '-r0')
 
 close all
 
