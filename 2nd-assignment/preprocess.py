@@ -253,6 +253,8 @@ def tree_init(base_file):
 
 def main():
     """Main function."""
+    import logging
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     base_dir = 'datasets'
     base_file = 'dataset'
     os.chdir(base_dir)
@@ -268,6 +270,8 @@ def main():
         directory = tree.get_full_path(node_name)
         filename = os.path.join(directory, base_file)
         filename_pickle = filename + '.pickle'
+        logging.debug('directory: ' + directory)
+        logging.debug('filename: ' + filename)
         with open(file_to_print_paths, 'a') as file_object:
             print(filename + '.csv', file=file_object)
         already_exists = os.path.exists(filename_pickle)
@@ -276,7 +280,7 @@ def main():
         if already_exists:
             with open(filename_pickle, 'rb') as file_object:
                 node.data['dataset'] = pickle.load(file_object)
-            print('loaded: ' + filename_pickle)
+            logging.info('loaded: ' + filename_pickle)
             continue
 
         action = node.data['action']
@@ -289,7 +293,6 @@ def main():
             node.data['dataset'],
             directory=directory,
             filename=filename)
-        print('----' + node_name + ' is finished')
-
+        logging.info(node_name + ' is finished')
 if __name__ == '__main__':
     main()
