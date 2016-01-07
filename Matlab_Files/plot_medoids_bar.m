@@ -1,4 +1,4 @@
-function plot_medoid_bar(all_res, tit, name)
+function plot_medoids_bar(all_res, tit, name)
 % set(0, 'currentfigure', h); % set current figure
 % hold on; <<--- for some reasons breaks the colors for me.
 % axes = h.CurrentAxes;
