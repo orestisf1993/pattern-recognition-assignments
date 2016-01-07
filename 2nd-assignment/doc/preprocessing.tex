@@ -307,3 +307,7 @@ to_drop = [
     column for column in dataset.columns if is_word_gibberish(column)]
 return dataset.drop(to_drop, axis=1)
 \end{lstlisting}
+
+\subsection{Normalization}
+Πραγματοποιήθηκε κανονικοποίηση του dataset μας μέσω της Matlab.
+Όλα τα στοιχεία της κάθε γραμμής διαιρέθηκαν με το μέγιστό τους.
