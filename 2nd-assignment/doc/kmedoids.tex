@@ -1,28 +1,32 @@
 \section{Κ-medoids}
-Ο K-medoids είναι μία παραλλαγή του k-means που χρησιμοποιείται σε κατηγορικά η διακριτά δεδομένα. Η βασική του διαφορά είναι ότι  χρησιμοποιεί σαν κέντρο του cluster ένα σημείο από αυτό το επονομαζόμενο medoid.
+Ο K-medoids είναι μία παραλλαγή του k-means που χρησιμοποιείται σε κατηγορικά η διακριτά δεδομένα.
+Η βασική του διαφορά είναι ότι χρησιμοποιεί σαν κέντρο του cluster ένα σημείο από αυτό το επονομαζόμενο medoid.
 
-Γενικά θεωρείται πιο ανθεκτικός στο θόρυβο επειδή προσπαθεί να ελαχιστοποιήσει την ανομοιότητα ανάμεσα σε στοιχεία παρά το τετραγωνικό άθροισμα των αποστάσεων όπως κάνει συχνά ο k-means.Σαν medoid επιλέγεται συνήθως το σημείο το οποίο διαφέρει λιγότερα από όλα τα σημεία του cluster.
+Γενικά θεωρείται πιο ανθεκτικός στο θόρυβο επειδή προσπαθεί να ελαχιστοποιήσει την ανομοιότητα ανάμεσα σε στοιχεία παρά το τετραγωνικό άθροισμα των αποστάσεων όπως κάνει συχνά ο k-means.
+Σαν medoid επιλέγεται συνήθως το σημείο το οποίο διαφέρει λιγότερα από όλα τα σημεία του cluster.
 
+Ένας από του πιο συχνούς αλγορίθμους του k-medoids είναι o \textbf{Partitioning Around Medoids (PAM)}.
+Ο τρόπος με τον οποίο δουλεύει
+περιγράφεται με τον ακόλουθο ψευδοκώδικα:\\
+\begin{algorithm}[H]
+    Αρχικοποίηση$\:$διάλεξε στην τύχη $\kappa$ σημεία ως medoids\;
+    Συσχέτισε το κάθε σημείο με το κοντινότερο medoid\;
+    \While{το συνολικό κόστος μειώνεται(συνολικό κόστος των cluster)}{
+        \For{κάθε σημείο medoid $m$, για κάθε μη-medoid σημείο $o$}{
+            Άλλαξε(swap) το $m$ με το $o$ \;
+            Ξαναυπολόγισε το κόστος του cluster(άθροισμα αποστάσεων από το medoid) \;
+            \If{το συνολικό κόστος αυξηθεί}{
+                Αναίρεσε την αλλαγή(swap)
+            }
+        }
+    }
+\end{algorithm}
 
-Ένας από του πιο συχνούς αλγορίθμους του k-medoids είναι o\textbf{ Partitioning Around Medoids (PAM)} Και ο τρόπος με τον οποίο δουλεύει 
-περιγράφεται με τον ακόλουθο ψευδοκώδικα:
-\begin{enumerate}
-  \item Αρχικοποίηση$\:$διάλεξε στην τύχη $\kappa$ σημεία ως medoids
-  \item Συσχέτισε το κάθε σημείο με το κοντινότερο medoid
-  \item Ενώ το συνολικό κόστος  μειώνεται(συνολικό κόστος των cluster)
-  \begin{enumerate}
-  	\item Για κάθε σημείο medoid m,για κάθε μη-medoid σημείο o
-  	\begin{enumerate}
-  		\item Άλλαξε(swap) το m με το ο , ξαναυπολόγισε το κόστος του cluster(άθροισμα αποστάσεων από το medoid) 
-  		\item αν το συνολικό κόστος αυξηθεί τότε αναίρεσε την αλλαγή(swap) 
-  	\end{enumerate}
-  \end{enumerate}
-\end{enumerate}
-
-
-\begin{minipage}{\linewidth}% to keep image and caption on one page
-Ένα παράδειγμα του παραπάνω αλγορίθμου φάινεται στο παρακάτω σχήμα:
-	\makebox[\linewidth]{%        to center the image
-		\includegraphics[keepaspectratio=true,scale=0.5]{images/kmedoid}}
-	\captionof{figure}{Παράδειγμα k-medoid}\label{fig:pam}%      only if needed  
+Ένα παράδειγμα του παραπάνω αλγορίθμου φάινεται στο παρακάτω σχήμα:\\
+\noindent\begin{minipage}{\linewidth}
+    \centering
+    \captionsetup{type={figure}}
+	\makebox[\linewidth]{
+		\includegraphics[keepaspectratio=true,width=\linewidth]{images/kmedoid}}
+	\captionof{figure}{Παράδειγμα k-medoid}\label{fig:pam}
 \end{minipage}
