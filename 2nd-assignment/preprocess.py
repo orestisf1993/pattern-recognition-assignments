@@ -254,21 +254,54 @@ def tree_init(base_file):
 def main():
     """Main function."""
     import logging
-    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-    base_dir = 'datasets'
-    base_file = 'dataset'
-    os.chdir(base_dir)
+
+    def parse_args():
+        """Create parser and parse argv."""
+        from argparse import ArgumentParser
+        parser = ArgumentParser()
+        parser.add_argument(
+            "--dir",
+            help="Specify directory to create datasets tree.",
+            action="store",
+            dest="base_dir",
+            default='datasets')
+        parser.add_argument(
+            "-b",
+            "--base-file",
+            help="Specify filename of starting dataset.",
+            action="store",
+            dest="base_file",
+            default='dataset')
+        parser.add_argument(
+            '-d', '--debug',
+            help="Print lots of debugging statements",
+            action="store_const",
+            dest="loglevel",
+            const=logging.DEBUG,
+            default=logging.WARNING)
+        parser.add_argument(
+            '-v', '--verbose',
+            help="Be verbose",
+            action="store_const",
+            dest="loglevel",
+            const=logging.INFO)
+        return parser.parse_args()
+
+    args = parse_args()
+
+    logging.basicConfig(stream=sys.stdout, level=args.loglevel)
+    os.chdir(args.base_dir)
     base_dir = os.getcwd()  # full path to base_dir
     file_to_print_paths = os.path.join(base_dir, 'paths.txt')
     if os.path.exists(file_to_print_paths):
         os.remove(file_to_print_paths)
 
-    tree = tree_init(base_file)
+    tree = tree_init(args.base_file)
     tree.show()
 
     for node_name in tree.expand_tree():
         directory = tree.get_full_path(node_name)
-        filename = os.path.join(directory, base_file)
+        filename = os.path.join(directory, args.base_file)
         filename_pickle = filename + '.pickle'
         logging.debug('directory: ' + directory)
         logging.debug('filename: ' + filename)
