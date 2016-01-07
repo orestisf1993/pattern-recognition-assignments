@@ -1,4 +1,4 @@
-function [ IDX] = hier()
+% function [ IDX] = hier()
 
 paths_filename = '../2nd-assignment/datasets/paths.txt';
 files = file_paths(paths_filename);
@@ -13,15 +13,16 @@ YY = squareform(Y);
 Z =linkage(YY,'average');
 % c = cophenet(Z,Y)
 
-% YY = 1-YY;
-% figure;
-% % Create the heat map.
-% imagesc(YY);
-% % Set the tile
-% title('Feature Heatmap')
-% colormap jet
-% % Add a colorbar to display the scale of the data.
-% colorbar
+YY = 1-YY;
+figure;
+% Create the heat map.
+imagesc(YY);
+% Set the tile
+title('Hierarhical Clustering HeatMap')
+colormap jet
+% Add a colorbar to display the scale of the data.
+colorbar
+saveas(gcf,'../2nd-assignment/doc/images/heatHier','epsc')
 
 % T = cluster(Z,'cutoff',0.8);
 IDX = cluster(Z,'maxclust',8);
@@ -32,8 +33,9 @@ IDX = cluster(Z,'maxclust',8);
 % plot(T)
 % subplot(3,1,2)
 % hist(T)
-% subplot(3,1,3)
-% dendrogram(Z)
+figure
+dendrogram(Z)
+saveas(gcf,'../2nd-assignment/doc/images/dentroHier','epsc')
 
 
 eval1 = eval_clust(IDX,1)

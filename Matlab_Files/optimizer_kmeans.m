@@ -1,4 +1,4 @@
-function [c] = optimizer_kmeans( verb,clnumber)
+function [c,IDXS,IDXL] = optimizer_kmeans( verb,clnumber)
 
 
 paths_filename = '../2nd-assignment/datasets/paths.txt';
@@ -51,10 +51,12 @@ for ff = 3:1:F
             if succ2 > s_max
                 strMax = strM;
                 s_max = succ2;
+                IDXS = IDX;
             end
             if sil>sil_max
                 sil_max = sil;
                 strSil =strM;
+                IDXL = IDX;
             end
             
         end
