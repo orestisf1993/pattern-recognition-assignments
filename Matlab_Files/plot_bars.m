@@ -14,27 +14,35 @@ figure('visible', 'off', 'PaperType', 'a4', 'PaperOrientation', 'portrait', ...
   'PaperUnits', 'centimeters', 'PaperPosition', [0 0 21 29.7], 'PaperPositionMode', 'manual', ...
   'Menubar', 'none', 'defaulttextinterpreter', 'latex', 'units', 'normalized', 'outerposition', [0 0 1 1]);
 y = [c(:,6),c(:,7),c(:,8),c(:,5)];
-bar(y)
+barh(y)
+
+paths_filename = '../2nd-assignment/datasets/paths.txt';
+files = file_paths(paths_filename);
 
 legend('Silhouette','Cohesion','Separation','Success\_Rate')
 x = cell(1,L);
 for t = 1:1:L
-    x{t} = [num2str(c(t, 1)) dMap{c(t, 2)}, lMet{c(t, 3)}];
+    x{t} = [files{(c(t, 1))} ,dMap{c(t, 2)}, lMet{c(t, 3)}];
 end
 % axis([ 0 inf 0 1 ]);
 
 
 % set(gca, 'YTick', 1:L, 'YTickLabel', x)
 % set(gca, 'YTickLabelRotation', 90)
-% set(gca, 'FontSize', 3)
 
 
-set(gca, 'XTick',1:L, 'XTickLabel',x)
-set(gca,'XTickLabelRotation',90)
+
+% set(gca,'XTickLabelRotation',90)
 
 
 title(tit)
+
+
+set(gca, 'YTick',1:L, 'YTickLabel',x)
+set(gca, 'FontSize', 3)
 print(name, '-dpdf', '-r0')
+
+
 
 close all
 
