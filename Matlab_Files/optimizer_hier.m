@@ -49,7 +49,7 @@ for ff = 3:1:F
             if succ2 > s_max
                 strMax = strM;
                 s_max = succ2;
-                IDXHS = IDX;
+                
             end
             if sil>sil_max
                 sil_max = sil;
@@ -60,6 +60,7 @@ for ff = 3:1:F
         if s_max > s_max_all
             strMaxAll = strMax;
             s_max_all = succ2;
+            IDXHS = IDX;
         end
         
     end

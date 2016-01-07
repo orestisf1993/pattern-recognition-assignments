@@ -1,0 +1,76 @@
+\section{Περιγραφή εξερεύνησης των ιεραρχικών μοντέλων}
+
+Τα μοντέλα μας δημιουργήθηκαν με την χρήση του Matlab και η διαδικασία που περιγράφτηκε στην εισαγωγή πραγματοποιείται στο αρχείο optimizer\_hier.m
+για τις διάφορες παραμέτρους. Οι αποστάσεις ανάμεσα στα σημεία ή υπολογίζονται για τους ιεραρχικούς με την χρήση της συνάρτησης pdist , η οποία μπορεί να υπολογίσει τις εξής αποστάσεις:
+\begin{itemize}
+	\item euclidean
+	\item seuclidean
+	\item Mankowski
+	\item chebychev
+	\item mahalanobis
+	\item cosine
+	\item correlation
+	\item spearman
+	\item jaccard 
+\end{itemize}
+
+
+Περισσότερες πληροφορίες για την pdist \href{http://www.mathworks.com/help/stats/pdist.html}{εδώ}
+Σαν αποστάσεις ικανοποιητικά αποτελέσματα έδιναν μόνο το correlation και το 
+cosine  μία πιθανή εξήγηση βρίσκεται \textbf{(Εδώ τα reference})
+
+Έπειτα χρησιμοποιήθηκε η συνάτηση linkage οποία δημιουργεί ουσιαστικά το δέντρο ιεραρχίας .Οι μετρική που χρησιθμοποιεί για να συνδέσει τα κοντινοερα cluster μπορεί να είναι μία από της εξής:
+\begin{itemize}
+  	\item single
+  	\item complete
+  	\item average
+  	\item weighted
+  	\item centroid
+  	\item median
+  	\item ward 
+  \end{itemize}
+
+Από άποψη χρόνου και αποτελεσμάτων ύστερα από δοκιμές για τα τελικά πειράματα επιλέχτηκαν οι weighted ,ward, complete,average.
+
+Έπειτα με την χρήση της συνάρτησης cluster δημιουργήσαμε τα τελικά cluster που θέλαμε τα παραπάνω βήματα υλοποιούνται από τις παρακάτω γραμμές κώδικα 
+
+
+\begin{lstlisting}[language=Matlab]
+%simple example of hierarchical clustering
+Y = pdist (X,distance); %X is an array containig the data
+YY = squareform(Y); %convert Y in a square form
+Z =linkage(YY,); %find  hierarchical cluster tree,
+CDX = cluster(Z,'maxclust',8);
+\end{lstlisting}
+
+
+επίσης υπάρχει η συνάρτηση cophonet(Z,YY) η οποία είναι μια μετρική που υπολογίζει την συσχέτιση ανάμεσα στις συνδέσεις που έχει δημιουργήσει το Z και τις αντίστοιχες αποστάσεις στο YY .Όσο πιο μεγάλη είναι η συσχέτιση τόσο πιο καλά έχει αποτυπωθεί η διαφορετικότητα των αρχικών σημείων, σαν συνδέσεις μεταξύ clusters , περισσότερα
+\href{https://en.wikipedia.org/wiki/Cophenetic\_correlation{εδώ}}
+
+Στη συνέχεια παρουσιάζονται και σχολιάζονται τα πειραματικά αποτελέσματα.
+
+\section{Πειραματικά αποτελέσματα}
+
+Χρησιμοποιούνται οι γνωστές μετρικές silhouette ,cohesion,separation
+αλλά και η success1 η οποία είναι μία από τις 2 μετρικές που  υπολογίζει το πόσα πετύχαμε από τα πραγματικά δεδομένα.Περισσότερα για το πως υπολογίστηκαν και τη αντιπροσωπεύει η success1 στο \textbf{TELOS} του κεφαλαίου.   	
+
+Έγινε χρήση των προαναφερθένων  αλγορίθμων απόστασης και εφαρμόστηκαν στον καθένα 4 διαφορετικοί τρόποι σύνδεσης για όλα τα dataset
+
+
+\begin{figure}
+	\includegraphics{images/hierCosBar.pdf}
+	\caption{Μετρικές για τον ιεραρχικό αλγόριθμο με την χρήση του Cosine}
+	\label{fig:CosineHier}
+\end{figure}
+
+
+
+\begin{figure}
+	\includegraphics{images/hierCorBar.pdf}
+	\caption{Μετρικές για τον ιεραρχικό αλγόριθμο με την χρήση του Cosine}
+	\label{fig:CorrelationHier}
+\end{figure}
+
+
+
+
