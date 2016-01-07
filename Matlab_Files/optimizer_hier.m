@@ -3,11 +3,11 @@ function [c] = optimizer_hier(verb)
 % distancesMap = {'euclidean'; 'seuclidean'; 'cityblock'; 'minkowski';
 %   'chebychev';'cosine';'correlation';'spearman';'hamming';'jaccard'};
 
-distancesMap2 = {'cosine     ';'correlation'};
+distancesMap2 = {'cosine   ','correlation'};
 lMethod2 = {'weighted';'ward    ';'single  ';'complete' ;  'average '};
 
-distancesMap = {'cosine';'correlation'};
-lMethod = {'weighted';'ward';'single';'complete';'average'};
+distancesMap = {'cosine','correlation'};
+lMethod = {'weighted';'ward';'complete';'average'};
 
 paths_filename = '../2nd-assignment/datasets/paths.txt';
 files = file_paths(paths_filename);
@@ -55,8 +55,8 @@ for ff = 3:1:F
     fprintf('The best result was .. \n')
     fprintf(strMax)
 end
-k 
-M*N*(F-2)
+k ;
+M*N*(F-2);
 
 
 
