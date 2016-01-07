@@ -1,6 +1,6 @@
 function [max_succ, max_sil, IDX_max_succ, IDX_max_sil, filename_max_succ, filename_max_sil, all_res] = optimize_medoids()
-distance_types = {'cosine'; 'correlation'};
-starts = {'plus'; 'sample'; 'cluster'};
+distance_types = {'correlation'};
+starts = {'plus'};
 
 num_clust = 8;
 

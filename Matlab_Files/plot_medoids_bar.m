@@ -25,7 +25,7 @@ end
 title(tit)
 
 set(gca, 'YTick', 1:L, 'YTickLabel', x)
-set(gca, 'FontSize', 3)
+set(gca, 'FontSize', 5)
 ax = gca;
 ax.Title.FontSize = 10;
 
@@ -39,5 +39,5 @@ set(cat(2), 'FaceColor', [253, 184, 99] / 255, 'EdgeColor', [253, 184, 99] / 255
 set(cat(3), 'FaceColor', [178, 171, 210] / 255, 'EdgeColor', [178, 171, 210] / 255);
 set(cat(4), 'FaceColor', [94, 60, 153] / 255, 'EdgeColor', [94, 60, 153] / 255);
 
-print(name, '-dpdf', '-r0')
+print(['../2nd-assignment/doc/images/',name], '-dpdf', '-r0')
 end
