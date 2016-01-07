@@ -56,6 +56,13 @@ def join_similar(dataset, similarity_bound=0.9):
     """Try to join words that are very similar."""
     from difflib import get_close_matches
 
+    to_iter = enumerate(dataset.columns[:-1])
+    try:
+        from tqdm import tqdm
+        to_iter = tqdm(list(to_iter))
+    except ImportError:
+        pass
+
     blacklist = [
         ('adding', 'padding'),
         ('border', 'order'),
@@ -72,7 +79,7 @@ def join_similar(dataset, similarity_bound=0.9):
 
     to_join = []  # list of groups to join together.
     to_drop = []  # list of columns to drop.
-    for idx, word in enumerate(dataset.columns[:-1]):
+    for idx, word in to_iter:
         rest = dataset.columns[idx + 1:]
         close = get_close_matches(
             word=word,  # For which word to find similarities.
