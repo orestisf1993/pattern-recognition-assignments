@@ -1,4 +1,4 @@
-function [c] = optimizer_hier(verb)
+function [c,IDXHS,IDXHL] = optimizer_hier(verb)
 
 % distancesMap = {'euclidean'; 'seuclidean'; 'cityblock'; 'minkowski';
 %   'chebychev';'cosine';'correlation';'spearman';'hamming';'jaccard'};
@@ -49,10 +49,12 @@ for ff = 3:1:F
             if succ2 > s_max
                 strMax = strM;
                 s_max = succ2;
+                IDXHS = IDX;
             end
             if sil>sil_max
                 sil_max = sil;
                 strSil =strM;
+                IDXHL = IDX;
             end
         end
         if s_max > s_max_all
