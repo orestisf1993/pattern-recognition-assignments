@@ -7,7 +7,7 @@ cor = c(c(:,2)==2,:);
 
 % 
 plot_bars(cos,'Using cosine as distance metric' ,'hierCosBar');
-% plot_bars(cos,'Using correlation as distance metric' ,'hierCorBar');
+plot_bars(cos,'Using correlation as distance metric' ,'hierCorBar');
 
 % h = figure(1);
 % f=@(h)plot_bars(c,h);

@@ -19,14 +19,16 @@ F = length(files);
 c  = zeros(M*N*(F-2),8);
 
 k =0 ;
+s_max_all = 0;
+sil_max = 0;
 for ff = 3:1:F
     T = readtable(files{ff});
     T(:,end) = [];%delete the category from the data
     X=table2array(T);
-%     for x =1:1:size(X,1)%Normalize X
-%         X(x,:) = X(x,:)./max(X(x,:));
-%     end
-   
+    %     for x =1:1:size(X,1)%Normalize X
+    %         X(x,:) = X(x,:)./max(X(x,:));
+    %     end
+    
     s_max = 0;
     for j = 1:1:N
         for i = 1:1:M
@@ -48,13 +50,23 @@ for ff = 3:1:F
                 strMax = strM;
                 s_max = succ2;
             end
-            
+            if sil>sil_max
+                sil_max = sil;
+                strSil =strM;
+            end
+        end
+        if s_max > s_max_all
+            strMaxAll = strMax;
+            s_max_all = succ2;
         end
         
     end
     fprintf('The best result was .. \n')
     fprintf(strMax)
 end
+fprintf('The best of ALL result was .. \n')
+fprintf(strMaxAll)
+fprintf(strSil);
 k ;
 M*N*(F-2);
 
