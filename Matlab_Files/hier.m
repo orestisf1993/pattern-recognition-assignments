@@ -1,15 +1,16 @@
-function [ IDX] = hier(X,num_clust)
-% filename = 'datasets1/datasetF8_50.csv';
+function [ IDX] = hier()
 
-%%nomralize X
-for x =1:1:size(X,1)
-    X(x,:) = X(x,:)./max(X(x,:));
-end
+paths_filename = '../2nd-assignment/datasets/paths.txt';
+files = file_paths(paths_filename);
+
+T = readtable(files{4});
+T(:,end) = [];%delete the category from the data
+X=table2array(T);
 
 distance = 'correlation';
 Y = pdist (X,distance);
 YY = squareform(Y);
-Z =linkage(YY,'weighted');
+Z =linkage(YY,'average');
 % c = cophenet(Z,Y)
 
 % YY = 1-YY;
@@ -23,9 +24,9 @@ Z =linkage(YY,'weighted');
 % colorbar
 
 % T = cluster(Z,'cutoff',0.8);
-IDX = cluster(Z,'maxclust',num_clust);
+IDX = cluster(Z,'maxclust',8);
 
-% 
+%
 % figure
 % subplot(3,1,1)
 % plot(T)

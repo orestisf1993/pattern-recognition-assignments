@@ -4,7 +4,7 @@ function [c] = optimizer_hier(verb)
 %   'chebychev';'cosine';'correlation';'spearman';'hamming';'jaccard'};
 
 distancesMap2 = {'cosine   ','correlation'};
-lMethod2 = {'weighted';'ward    ';'single  ';'complete' ;  'average '};
+lMethod2 = {'weighted';'ward    ';'complete' ;  'average '};
 
 distancesMap = {'cosine','correlation'};
 lMethod = {'weighted';'ward';'complete';'average'};
@@ -46,7 +46,7 @@ for ff = 3:1:F
             if verb ==1
                 fprintf(strM)
             end
-            if succ1 > s_max
+            if succ2 > s_max
                 strMax = strM;
                 s_max = succ2;
             end
@@ -69,7 +69,4 @@ fprintf(strMaxAll)
 fprintf(strSil);
 k ;
 M*N*(F-2);
-
-
-
 end

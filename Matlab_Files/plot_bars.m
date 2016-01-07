@@ -1,15 +1,13 @@
-function plot_bars(c, tit, name)
+function plot_bars(c,lMethod, tit, name,eval)
 % set(0, 'currentfigure', h); % set current figure
 % hold on; <<--- for some reasons breaks the colors for me.
 % axes = h.CurrentAxes;
-
-lMethod = {'weighted'; 'ward'; 'complete'; 'average'};
 
 L = size(c, 1);
 figure('visible', 'off', 'PaperType', 'a4', 'PaperOrientation', 'portrait', ...
   'PaperUnits', 'centimeters', 'PaperPosition', [0 0 21 29.7], 'PaperPositionMode', 'manual', ...
   'Menubar', 'none', 'defaulttextinterpreter', 'latex', 'units', 'normalized', 'outerposition', [0 0 1 1]);
-y = [c(:, 6), c(:, 7), c(:, 8), c(:, 5)];
+y = [c(:, 6), c(:, 7), c(:, 8), c(:, eval)];
 barh(y)
 
 paths_filename = '../2nd-assignment/datasets/paths.txt';
@@ -33,10 +31,7 @@ end
 title(tit)
 
 set(gca, 'YTick', 1:L, 'YTickLabel', x)
-% FontName may break some stuff if you don't  have them.
-% set(gca, 'FontName', 'Source Code Pro Medium')
 set(gca, 'FontSize', 3)
-
 ax = gca;
 ax.Title.FontSize = 10;
 
@@ -47,5 +42,7 @@ set(cat(2), 'FaceColor', [253, 184, 99] / 255, 'EdgeColor', [253, 184, 99] / 255
 set(cat(3), 'FaceColor', [178, 171, 210] / 255, 'EdgeColor', [178, 171, 210] / 255);
 set(cat(4), 'FaceColor', [94, 60, 153] / 255, 'EdgeColor', [94, 60, 153] / 255);
 
-print(name, '-dpdf', '-r0')
+print(['../2nd-assignment/doc/images/',name], '-dpdf', '-r0')
+
+close all
 end
