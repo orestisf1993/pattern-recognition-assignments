@@ -2,47 +2,61 @@
 
 Πριν προχωρήσουμε στους αλγορίθμους που χρησιμοποιήσαμε είναι χρήσιμο να αναφέρουμε 2 σημαντικά ζητήματα που αφορούν την ομαδοποίηση μας. Το πρώτο αφορά την μετρική που θα χρησιμοποιήσουμε για την αξιολόγηση της ομαδοποίησης και ο δεύτερος τον τρόπο με τον οποίο θα μετρήσουμε την απόσταση. Όσον αφορά την μετρική μπορούμε να αναφέρουμε ότι σαν κύρια μετρική θα χρησιμοποιήσουμε το $Silhouette$ καθώς μέσα σε αυτήν εμπεριέχονται οι μετρικές $Cohesion$ και $Separation$ και μπορεί να θεωρηθεί πιο αντιπροσωπευτική.
 \section{Διαχωριστικοί Αλγόριθμοι}
-
 Ο αλγόριθμος που κυρίως αντιπροσωπεύει αυτή την κατηγορία αλγορίθμων είναι ο K-means. Η βασική ιδέα των διαχωριστικών αλγορίθμων είναι η ανάθεση των σημείων μας σε ομάδες προσπαθώντας να ελαχιστοποιήσουμε την απόσταση από ένα σημείο που αντιπροσωπεύει την ομάδα. Έτσι κάθε σημείο μας θεωρούμε ότι ανήκει στην ομάδα αυτή στην οποία η απόσταση από το αντιπροσωπευτικό σημείο είναι ελάχιστη. Εκτός από τον K-means σε αυτήν την κατηγορία ανήκουν διάφορες παραλλαγές του όπως ο bisection K-means ,ο fuzzy Κ-means και ο K-medoid. Στην δικιά μας υλοποίηση χρησιμοποιήσαμε τον απλό K-means και τον K-medoid.
 
 \subsection{K-means}
 
 \subsubsection{Εισαγωγή}
-
 Όπως αναφέραμε ο K-means είναι ο πιο συνηθισμένος και απλός διαχωριστικός αλγόριθμος. Η λογική που χρησιμοποιεί είναι η εξής:
 \begin{enumerate}
-	\item Κάθε ομάδα συνδέεται με ένα κέντρο (centroid) το οποίο είναι το αντιπροσωπευτικό σημείο της ομάδας.
-	\item Κάθε σημείο αποδίδεται στην ομάδα με το πιο κοντινό κέντρο ελαχιστοποιώντας την μεταξύ τους απόσταση. 
-	\item Ο αριθμός των ομάδων Κ πρέπει να έχει καθοριστεί από πριν.
+    \item Κάθε ομάδα συνδέεται με ένα κέντρο (centroid) το οποίο είναι το αντιπροσωπευτικό σημείο της ομάδας.
+    \item Κάθε σημείο αποδίδεται στην ομάδα με το πιο κοντινό κέντρο ελαχιστοποιώντας την μεταξύ τους απόσταση.
+    \item Ο αριθμός των ομάδων Κ πρέπει να έχει καθοριστεί από πριν.
 \end{enumerate}
 
 Πιο συγκεκριμένα μπορούμε να αναλύσουμε τα βήματα του αλγορίθμου που ακολουθούμε ως εξής:
 \begin{enumerate}
-	\item Επιλέγουμε k σημεία ως αρχικά κέντρα.
-	\item Δημιουργούμε k ομάδες με τον τρόπο που περιγράφτηκε.
-	\item Υπολογίζουμε τα νέα κέντρα των ομάδων μας.
-	\item Επαναλαμβάνουμε τα βήματα 2-3 μέχρις ώτου δεν μεταβληθούν τα κέντρα.
+    \item Επιλέγουμε k σημεία ως αρχικά κέντρα.
+    \item Δημιουργούμε k ομάδες με τον τρόπο που περιγράφτηκε.
+    \item Υπολογίζουμε τα νέα κέντρα των ομάδων μας.
+    \item Επαναλαμβάνουμε τα βήματα 2-3 μέχρις ότου δεν μεταβληθούν τα κέντρα.
 \end{enumerate}
 
-Παρακάτω παρουσιάζεται ο αλγόριθμος K-means σε ψευδογλώσσα:
+Παρακάτω παρουσιάζεται ο αλγόριθμος K-means σε ψευδογλώσσα:\\
+\noindent\begin{minipage}{0.9\linewidth}
+\centering
 \begin{algorithm}[H]
-	Select K points as the initial centroids.\;
-	\Do{The centroids don't change}{
-	Form K clusters by assigning all points to the closest centroid.\;
+    Select K points as the initial centroids.\;
+    \Do{The centroids don't change}{
+    Form K clusters by assigning all points to the closest centroid.\;
     Recompute the centroid of each cluster.\;
     }
 \end{algorithm}
+\end{minipage}
 
-Αφού περιγράψαμε τις βασικές ιδέες του αλγορίθμου K-means μπορούμε πλέον να προχωρήσουμε σε ορισμένα σημαντικά θέματα που αφορούν τον αλγόριθμο K-means. Αυτά είναι ο αριθμός των ομάδων, η επιλογή των αρχικών κέντρων και ο τρόπος υπολογισμού της απόστασης.Ο τελικός αριθμός των ομάδων στην περίπτωση μας είναι ίσος με 8. Μπορούμε να δημιουργήσουμε περισσότερες ή λιγότερες ομάδες αρχικά και σταδιακά να φτάσουμε στον τελικό αριθμό. Όσον αφορά το θέμα της επιλογής των αρχικών κέντρων υπάρχουν διάφορες τεχνικές αντιμετώπισης αυτού του προβλήματος. Τα αρχικά κέντρα συνήθως επιλέγονται τυχαία. Αν και συνήθως αυτοί οι αλγόριθμοι συγκλίνουν με τυχαία επιλογή κέντρων υπάρχει πάντα η πιθανότητα να πέσουμε σε τοπικό ελάχιστο της προς ελαχιστοποίηση συνάρτησης. Για αυτόν τον λόγο χρησιμοποιήθηκαν 2 τρόποι αντιμετώπισης του προβλήματος των αρχικών τιμών. 
+Αφού περιγράψαμε τις βασικές ιδέες του αλγορίθμου K-means μπορούμε πλέον να προχωρήσουμε σε ορισμένα σημαντικά θέματα που αφορούν τον αλγόριθμο K-means. Αυτά είναι ο αριθμός των ομάδων, η επιλογή των αρχικών κέντρων και ο τρόπος υπολογισμού της απόστασης.Ο τελικός αριθμός των ομάδων στην περίπτωση μας είναι ίσος με 8. Μπορούμε να δημιουργήσουμε περισσότερες ή λιγότερες ομάδες αρχικά και σταδιακά να φτάσουμε στον τελικό αριθμό. Όσον αφορά το θέμα της επιλογής των αρχικών κέντρων υπάρχουν διάφορες τεχνικές αντιμετώπισης αυτού του προβλήματος. Τα αρχικά κέντρα συνήθως επιλέγονται τυχαία. Αν και συνήθως αυτοί οι αλγόριθμοι συγκλίνουν με τυχαία επιλογή κέντρων υπάρχει πάντα η πιθανότητα να πέσουμε σε τοπικό ελάχιστο της προς ελαχιστοποίηση συνάρτησης. Για αυτόν τον λόγο χρησιμοποιήθηκαν 2 τρόποι αντιμετώπισης του προβλήματος των αρχικών τιμών.
 \begin{enumerate}
-	\item Τυχαία αρχικοποίηση των centroids αλλά επιλέγοντας να τρέξει πολλές φορές ο K-means. Έτσι ουσιαστικά τρέχουμε πολλές φορές τον αλγόριθμο ομαδοποίησης και επιλέγουμε κάθε φορά αυτόν που μας δίνει το ελάχιστο σφάλμα.
-	\item Heuristic Μέθοδος επιλογής centroids. Υπάρχουν διάφορες τεχνικές επιλογής αρχικού κέντρου με Heuristic μεθόδους που προκύπτουν από την εμπειρία μας. Η τεχνική που χρησιμοποιήσαμε εμείς ακολουθά την παρακάτω λογική και έχει ως σκοπό την επιλογή Κ centroid, όσες και οι ομάδες μας. Επιλέγουμε σαν αρχική τιμή centroid το σημείο από τα δεδομένα μας που βρίσκεται πιο κοντά στον μέσο όρο των σημείων μας. Έτσι έχουμε ένα centroid. Για το επόμενο υπολογίζουμε τις αποστάσεις των σημείων μας από το centroid και ορίζουμε αυτό που βρίσκεται πιο μακριά από το centroid. Έτσι έχουμε 2 centroids. Όμοια προχωράμε επιλέγοντας σαν επόμενο centroid αυτό που απέχει περισσότερο από τα ήδη επιλεγμένα centroid. Συνεχίζουμε έτσι μέχρις ότου επιλέξουμε K centroids. Αναλυτικά τα βήματα του αλγορίθμου:
-	\begin{algorithm}[H]
-		From n objects calculate a point whose attribute values are average of n-objects attribute values so first initial centroid is average of n-objects.\;
-	    Select next initial centroids from n-objects in such a way that the Euclidean distance of that object is maximum from other selected initial centroids.\;
-	    Repeat step2 until we get k initial centroids.
-	    From these steps we will get initial centroids and with these initial centroids perform K-means algorithm.\;
-	\end{algorithm}
+    \item Τυχαία αρχικοποίηση των centroids αλλά επιλέγοντας να τρέξει πολλές φορές ο K-means. Έτσι ουσιαστικά τρέχουμε πολλές φορές τον αλγόριθμο ομαδοποίησης και επιλέγουμε κάθε φορά αυτόν που μας δίνει το ελάχιστο σφάλμα.
+
+    \item Heuristic Μέθοδος επιλογής centroids.
+    Υπάρχουν διάφορες τεχνικές επιλογής αρχικού κέντρου με Heuristic μεθόδους που προκύπτουν από την εμπειρία μας.
+    Η τεχνική που χρησιμοποιήσαμε εμείς ακολουθά την παρακάτω λογική και έχει ως σκοπό την επιλογή Κ centroid, όσες και οι ομάδες μας.
+    Επιλέγουμε σαν αρχική τιμή centroid το σημείο από τα δεδομένα μας που βρίσκεται πιο κοντά στον μέσο όρο των σημείων μας.
+    Έτσι, έχουμε ένα centroid.
+    Για το επόμενο, υπολογίζουμε τις αποστάσεις των σημείων μας από το centroid και ορίζουμε αυτό που βρίσκεται πιο μακριά από το centroid.
+    Έτσι, έχουμε 2 centroids.
+    Όμοια, προχωράμε επιλέγοντας σαν επόμενο centroid αυτό που απέχει περισσότερο από τα ήδη επιλεγμένα centroid.
+    Συνεχίζουμε έτσι μέχρις ότου επιλέξουμε K centroids.
+    Αναλυτικά τα βήματα του αλγορίθμου:\\
+    \noindent\begin{minipage}{0.9\linewidth}
+    \centering
+    \begin{algorithm}[H]
+        From n objects calculate a point whose attribute values are average of n-objects attribute values so first initial centroid is average of n-objects.\;
+        Select next initial centroids from n-objects in such a way that the Euclidean distance of that object is maximum from other selected initial centroids.\;
+        Repeat step2 until we get k initial centroids.
+        From these steps we will get initial centroids and with these initial centroids perform K-means algorithm.\;
+    \end{algorithm}
+    \end{minipage}
 \end{enumerate}
 
 Ο παραπάνω αλγόριθμος υλοποιήθηκε στο Matlab μέσω της συνάρτησης
@@ -50,8 +64,8 @@
 
 Όπου οι είσοδοι μας είναι:
 \begin{enumerate}
-	\item \lstinline[language=MATLAB]!X)! : Το dataset μας σε μορφή πίνακα.
-	\item \lstinline[language=MATLAB]!number_of_features! : Ο αριθμός των γνωρισμάτων μας που στην περίπτωση μας είναι ο αριθμός των βιβλιοθικών μας ,δηλαδή 80.
+    \item \lstinline[language=MATLAB]!X)! : Το dataset μας σε μορφή πίνακα.
+    \item \lstinline[language=MATLAB]!number_of_features! : Ο αριθμός των γνωρισμάτων μας που στην περίπτωση μας είναι ο αριθμός των βιβλιοθικών μας ,δηλαδή 80.
     \item \lstinline[language=MATLAB]!total_centroid_counter! : Ο αριθμός των ομάδων που θέλουμε να δημιουργήσουμε.
 \end{enumerate}
 
@@ -64,29 +78,28 @@
 
 Τέλος η τελευταία παράμετρος που επιλέγεται στον αλγόριθμο K-means είναι η απόσταση. Οι μετρικές που χρησιμοποιούνται σαν απόσταση είναι:
 \begin{enumerate}
-	\item \textbf{Τετραγωνική Ευκλείδια(sqeuclidean) }: Τετραγωνική ευκλείδια απόσταση.
-	\item \textbf{Cityblock }: To άθροισμα της απόλυτης διαφόρας γνωστή και ως $L1$ απόσταση.
-	\item \textbf{Cosine }: Απόσταση που εμπεριέχει το συνημίτονο της γωνίας των σημείων.
-	\item \textbf{Correlation }: Απόσταση που εμπεριέχει την συσχέτηση των σημείων.
-	\item \textbf{Hamming }: Απόσταση που χρησιμοποιείται για δυαδικά δεδομένα. Είναι το ποσοστό των bit που διαφέρουν.
+    \item \textbf{Τετραγωνική Ευκλείδια (sqeuclidean)}: Τετραγωνική ευκλείδια απόσταση.
+    \item \textbf{Cityblock}: To άθροισμα της απόλυτης διαφοράς γνωστή και ως $L1$ απόσταση.
+    \item \textbf{Cosine}: Απόσταση που εμπεριέχει το συνημίτονο της γωνίας των σημείων.
+    \item \textbf{Correlation}: Απόσταση που εμπεριέχει την συσχέτιση των σημείων.
+    \item \textbf{Hamming}: Απόσταση που χρησιμοποιείται για δυαδικά δεδομένα. Είναι το ποσοστό των bit που διαφέρουν.
 \end{enumerate}
 
 Ένα ακόμα πρόβλημα του K-means είναι ότι όταν οι ομάδες μας είναι ανισομεγεθής, έχουν διαφορετική πυκνότητα και μη σφαιρικά σχήματα. Τα παραπάνω προβλήματα επιλύονται με την δημιουργία πολλών μικρών ομάδων και την σύνθεση τους σε επίπεδο μετ-επεξεργασίας, θέμα το οποίο θα αναλυθεί παρακάτω εκτενέστερα στα ανοιχτά θέματα.
 Παρακάτω φαίνεται μια ομαδοποίηση που πραγματοποιήθηκε με K-means. Είναι ευδιάκριτα τόσο τα 3 clusters που δημιουργήθηκαν όσο και τα κέντρα τους. Κάθε σημείο του κάθε cluster απέχει την ελάχιστη απόσταση από το κέντρο του cluster στο οποιό ανήκει.
 
-	\begin{figure}
-\centering
-\includegraphics[width=0.7\linewidth]{../../../../../Dropbox/protypa-figs/pictures-2/kmeans}
-\caption{}
-\label{fig:kmeans}
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\linewidth]{images/kmeans}
+    \caption{}
+    \label{fig:kmeans}
 \end{figure}
-
 
 Τέλος βλέπουμε ένα παράδειγμα μιας ομαδοποίησης ενός dataset μέσω του αλγορίθμου K-means ανάλογα με το βήμα στο οποίο βρίσκεται. Βλέπουμε πως μεταβάλλονται τα κέντρα με το πέρασμα των επαναλήψεων και έτσι και τα σημεία που ανήκουν σε κάθε cluster. Στο τελευταίο βήμα παρατηρούμε πάλι ότι το σημείο κάθε cluster απέχει ελάχιστη απόσταση από το κέντρο του cluster στο οποίο βρίσκεται και συνεπώς δεν χρειάζεται να γίνει άλλη επανάληψη και ο αλγόριθμος έχει τερματιστεί.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.7\linewidth]{../../../../../Dropbox/protypa-figs/pictures-2/kmeans_change_centroids}
+\includegraphics[width=1.0\linewidth]{images/kmeans_change_centroids}
 \caption{}
 \label{fig:kmeans_change_centroids}
 \end{figure}
@@ -96,55 +109,55 @@
 Στην συνέχεια προχωρήσαμε στην υλοποίηση του αλγορίθμου K-means για τα διαφορετικά datasets που φτιάξαμε και περιγράφτηκαν παραπάνω. Τρέξαμε όλα τα datasets μας για τον αλγόριθμο K-means στο Matlab για διαφορετικά σετ παραμέτρων του αλγορίθμου μας. Τα διαφορετικά σετ παραμέτρων που χρησιμοποιήσαμε όπως αναφέραμε και παραπάνω αφορούν τόσο τον τρόπο υπολογισμού της απόστασης όσο και τον τρόπο επιλογής των αρχικών κεντρών. Όυσιαστικά υλοποιήσαμε 9 σετ παραμέτρων τα οποία παρουσιάζονται παρακάτω: 
 
 \begin{enumerate}
-	\item  \textbf{1ο Σετ Παραμέτρων}: 
-	\begin{itemize}
-		\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
-		\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος
-	\end{itemize}
-	\item  \textbf{2ο Σετ Παραμέτρων}:
-	\begin{itemize}
-		\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
-		\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος με επανάληψη αλγορίθμου 10 φορές
-	\end{itemize}
-	\item  \textbf{3ο Σετ Παραμέτρων}:
-		\begin{itemize}
-			\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
-			\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Επιλογή μέσω του ευρυστικού κανόνα.
-		\end{itemize}
-	\item  \textbf{4ο Σετ Παραμέτρων}:
-		\begin{itemize}
-			\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Correlation
-			\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος
-		\end{itemize}
-	\item  \textbf{5ο Σετ Παραμέτρων}:
-		\begin{itemize}
-			\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Correlation
-			\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος με επανάληψη αλγορίθμου 10 φορές
-		\end{itemize}
-	\item  \textbf{6ο Σετ Παραμέτρων}:
-		\begin{itemize}
-			\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Correlation
-			\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} :  Επιλογή μέσω του ευρυστικού κανόνα.
-		\end{itemize}
+    \item  \textbf{1ο Σετ Παραμέτρων}: 
+    \begin{itemize}
+        \item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
+        \item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος
+    \end{itemize}
+    \item  \textbf{2ο Σετ Παραμέτρων}:
+    \begin{itemize}
+        \item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
+        \item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος με επανάληψη αλγορίθμου 10 φορές
+    \end{itemize}
+    \item  \textbf{3ο Σετ Παραμέτρων}:
+        \begin{itemize}
+            \item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
+            \item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Επιλογή μέσω του ευρυστικού κανόνα.
+        \end{itemize}
+    \item  \textbf{4ο Σετ Παραμέτρων}:
+        \begin{itemize}
+            \item \textbf{Τρόπος Υπολογισμού Απόστασης} : Correlation
+            \item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος
+        \end{itemize}
+    \item  \textbf{5ο Σετ Παραμέτρων}:
+        \begin{itemize}
+            \item \textbf{Τρόπος Υπολογισμού Απόστασης} : Correlation
+            \item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος με επανάληψη αλγορίθμου 10 φορές
+        \end{itemize}
+    \item  \textbf{6ο Σετ Παραμέτρων}:
+        \begin{itemize}
+            \item \textbf{Τρόπος Υπολογισμού Απόστασης} : Correlation
+            \item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} :  Επιλογή μέσω του ευρυστικού κανόνα.
+        \end{itemize}
 \end{enumerate}
 
 Τα παραπάνω σετ παραμέτρων υλοποιούνται στο Matlab μέσω των εντολών:
 \begin{enumerate}
-	\item  \textbf{1ο Σετ Παραμέτρων}: \lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',cosine);!
-	Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται και η παράμετρος \lstinline[language=MATLAB]!Distance! που δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!cosine!. Δεν δηλώνεται τίποτα για τις αρχικές τιμές των κέντρων τον ομάδων.
-	\item  \textbf{2ο Σετ Παραμέτρων}:
+    \item  \textbf{1ο Σετ Παραμέτρων}: \lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',cosine);!
+    Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται και η παράμετρος \lstinline[language=MATLAB]!Distance! που δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!cosine!. Δεν δηλώνεται τίποτα για τις αρχικές τιμές των κέντρων τον ομάδων.
+    \item  \textbf{2ο Σετ Παραμέτρων}:
 \lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',cosine'Replicates',number_of_iretation);!
 Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται, η παράμετρος \lstinline[language=MATLAB]!Distance! δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!cosine! και η παράμετρος \lstinline[language=MATLAB]!Replicates! δηλώνει την επανάληψη του K-means \lstinline[language=MATLAB]!number_of_iretaion! φορές που στην περίπτωση μας επιλέχτηκε 10. 
-	\item  \textbf{3ο Σετ Παραμέτρων}:
+    \item  \textbf{3ο Σετ Παραμέτρων}:
 \lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',cosine,'Start',heuristic_centroid);!
 Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται και η παράμετρος \lstinline[language=MATLAB]!Distance! που δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!cosine!. Η παράμετρος \lstinline[language=MATLAB]!Start! δηλώνει την αρχική επιλογή των κέντρων και ισούται με \lstinline[language=MATLAB]!heuristic_centroid! που προκύπτουν από την κλήση της συνάρτησης \lstinline[language=MATLAB]!centroid_heuristic! που περιγράφτηκε παραπάνω.
-	\item  \textbf{4ο Σετ Παραμέτρων}:
+    \item  \textbf{4ο Σετ Παραμέτρων}:
 \lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',correlation);!
 Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται και η παράμετρος \lstinline[language=MATLAB]!Distance! που δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!correlation!. Δεν δηλώνεται τίποτα για τις αρχικές τιμές των κέντρων τον ομάδων.
-	\item  \textbf{5ο Σετ Παραμέτρων}:
+    \item  \textbf{5ο Σετ Παραμέτρων}:
 \lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',correlation'Replicates',number_of_iretation);!
 Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται, η παράμετρος \lstinline[language=MATLAB]!Distance! δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!correlation! και η παράμετρος \lstinline[language=MATLAB]!Replicates! δηλώνει την επανάληψη του K-means \lstinline[language=MATLAB]!number_of_iretaion! φορές που στην περίπτωση μας επιλέχτηκε 10. 
-	\item  \textbf{6ο Σετ Παραμέτρων}:
+    \item  \textbf{6ο Σετ Παραμέτρων}:
 \lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',correlation,'Start',heuristic_centroid);!
 Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται και η παράμετρος \lstinline[language=MATLAB]!Distance! που δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!correlation!. Η παράμετρος \lstinline[language=MATLAB]!Start! δηλώνει την αρχική επιλογή των κέντρων και ισούται με \lstinline[language=MATLAB]!heuristic_centroid! που προκύπτουν από την κλήση της συνάρτησης
 \end{enumerate}
@@ -233,30 +246,30 @@
 Στο παρακάτω πινακάκι παρουσιάζονται μαζεμένες όλες οι βέλτιστες λύσεις για το $Silhouette$ και για το $Success Rate$ για τις ομαδοποιήσεις που έγιναν.
 
 \begin{table}[]
-	\centering
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{lllllllll}
-			\cline{7-7}
-			Dataset & Center Type & Distance Type & Number of Clusters & Cohesion & \multicolumn{1}{l|}{Separation} & \multicolumn{1}{l|}{Silhouette} & Success Rate & Max Type \\ \cline{7-7}
-			Α & random multiple iretations & Cosine & 8 & 592 & 5080 & 0.231 & 0.925 & Best Success Rate \\
-			B & random multiple iretations & Correlation & 8 & 660 & 5090 & 0.259 & 0.887 & Best Silhouette \\
-			C & random multiple iretations & Correlation & 10 & 462 & 5300 & 0.222 & 0.938 & Best Success Rate \\
-			B & random multiple iretations & Cosine & 10 & 544 & 2630 & 0.263 & 0.875 & Best Silhouette \\
-			D & random multiple iretations & Cosine & 20 & 168 & 5500 & 0.213 & 0.938 & Best Success Rate \\
-			B & random multiple iretations & Correlation & 20 & 228 & 5520 & 0.278 & 0.9 & Best Silhouette
-		\end{tabular}
-	}
-	\caption{My caption}
-	\label{my-label}
+    \centering
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{lllllllll}
+            \cline{7-7}
+            Dataset & Center Type & Distance Type & Number of Clusters & Cohesion & \multicolumn{1}{l|}{Separation} & \multicolumn{1}{l|}{Silhouette} & Success Rate & Max Type \\ \cline{7-7}
+            Α & random multiple iretations & Cosine & 8 & 592 & 5080 & 0.231 & 0.925 & Best Success Rate \\
+            B & random multiple iretations & Correlation & 8 & 660 & 5090 & 0.259 & 0.887 & Best Silhouette \\
+            C & random multiple iretations & Correlation & 10 & 462 & 5300 & 0.222 & 0.938 & Best Success Rate \\
+            B & random multiple iretations & Cosine & 10 & 544 & 2630 & 0.263 & 0.875 & Best Silhouette \\
+            D & random multiple iretations & Cosine & 20 & 168 & 5500 & 0.213 & 0.938 & Best Success Rate \\
+            B & random multiple iretations & Correlation & 20 & 228 & 5520 & 0.278 & 0.9 & Best Silhouette
+        \end{tabular}
+    }
+    \caption{My caption}
+    \label{my-label}
 \end{table}
 
 Στο παραπάνω πινακάκι χρησιμοποιήσαμε τους κωδικούς των dataset τα οποία ορίσαμε ως εξής:
 \begin{enumerate}
-	\item A=\url{join_duplicates/freq_8_70/dataset.csv}
-	\item B=\url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv}
-	\item C=\url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/dataset.csv}
-	\item
-	D=\url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/bool_it/dataset.csv}
-	
+    \item A=\url{join_duplicates/freq_8_70/dataset.csv}
+    \item B=\url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv}
+    \item C=\url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/dataset.csv}
+    \item
+    D=\url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/bool_it/dataset.csv}
+    
 \end{enumerate}
 
