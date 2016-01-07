@@ -25,29 +25,24 @@
 \end{enumerate}
 
 Παρακάτω παρουσιάζεται ο αλγόριθμος K-means σε ψευδογλώσσα:
-
-\begin{algorithmic}[H]
-	\State Select K points as the initial centroids.
-	\Do
-	\State Form K clusters by assigning all points to the closest centroid.
-	\State Recompute the centroid of each cluster.
-	\doWhile{The centroids dont change} % <--- use \doWhile for the "while" at the end
-\end{algorithmic}
+\begin{algorithm}[H]
+	Select K points as the initial centroids.\;
+	\Do{The centroids don't change}{
+	Form K clusters by assigning all points to the closest centroid.\;
+    Recompute the centroid of each cluster.\;
+    }
+\end{algorithm}
 
 Αφού περιγράψαμε τις βασικές ιδέες του αλγορίθμου K-means μπορούμε πλέον να προχωρήσουμε σε ορισμένα σημαντικά θέματα που αφορούν τον αλγόριθμο K-means. Αυτά είναι ο αριθμός των ομάδων, η επιλογή των αρχικών κέντρων και ο τρόπος υπολογισμού της απόστασης.Ο τελικός αριθμός των ομάδων στην περίπτωση μας είναι ίσος με 8. Μπορούμε να δημιουργήσουμε περισσότερες ή λιγότερες ομάδες αρχικά και σταδιακά να φτάσουμε στον τελικό αριθμό. Όσον αφορά το θέμα της επιλογής των αρχικών κέντρων υπάρχουν διάφορες τεχνικές αντιμετώπισης αυτού του προβλήματος. Τα αρχικά κέντρα συνήθως επιλέγονται τυχαία. Αν και συνήθως αυτοί οι αλγόριθμοι συγκλίνουν με τυχαία επιλογή κέντρων υπάρχει πάντα η πιθανότητα να πέσουμε σε τοπικό ελάχιστο της προς ελαχιστοποίηση συνάρτησης. Για αυτόν τον λόγο χρησιμοποιήθηκαν 2 τρόποι αντιμετώπισης του προβλήματος των αρχικών τιμών. 
 \begin{enumerate}
 	\item Τυχαία αρχικοποίηση των centroids αλλά επιλέγοντας να τρέξει πολλές φορές ο K-means. Έτσι ουσιαστικά τρέχουμε πολλές φορές τον αλγόριθμο ομαδοποίησης και επιλέγουμε κάθε φορά αυτόν που μας δίνει το ελάχιστο σφάλμα.
-	\item Heuristic Μέθοδος επιλογής centroids. Υπάρχουν διάφορες τεχνικές επιλογής αρχικού κέντρου με Heuristic μεθόδους που προκύπτουν από την εμπειρία μας. Η τεχνική που χρησιμοποιήσαμε εμείς ακολουθά την παρακάτω λογική και έχει ως σκοπό την επιλογή Κ centroid, όσες και οι ομάδες μας. Επιλέγουμε σαν αρχική τιμή centroid το σημείο από τα δεδομένα μας που βρίσκεται πιο κοντά στον μέσο όρο των σημείων μας. Έτσι έχουμε ένα centroid. Για το επόμενο υπολογίζουμε τις αποστάσεις των σημείων μας από το centroid και ορίζουμε αυτό που βρίσκεται πιο μακριά από το centroid. Έτσι έχουμε 2 centroids. Όμοια προχωράμε επιλέγοντας σαν επόμενο centroid αυτό που απέχει περισσότερο από τα ήδη επιλεγμένα centroid. Συνεχίζουμε έτσι μέχρις ώτου επιλέξουμε K centroids. Αναλυτικά τα βήματα του αλγορίθμου:
-	
-	\begin{algorithmic}[H]
-		\State Step1: From n objects calculate a point whose attribute values are average of n-objects atrribute values so first initial centroid is average of n-objects.
-		\State
-	    \State Step2: Select next initial centroids from n-objects in such a way that the Euclidean distance of that object is maximum from other selected initial centroids.
-	    \State
-	    \State Step3: Repeat step2 until we get k initial centroids.
-	    \State
-	    \State From these steps we will get initial centroids and with these initial centroids perform K-means algorithm.
-	\end{algorithmic}
+	\item Heuristic Μέθοδος επιλογής centroids. Υπάρχουν διάφορες τεχνικές επιλογής αρχικού κέντρου με Heuristic μεθόδους που προκύπτουν από την εμπειρία μας. Η τεχνική που χρησιμοποιήσαμε εμείς ακολουθά την παρακάτω λογική και έχει ως σκοπό την επιλογή Κ centroid, όσες και οι ομάδες μας. Επιλέγουμε σαν αρχική τιμή centroid το σημείο από τα δεδομένα μας που βρίσκεται πιο κοντά στον μέσο όρο των σημείων μας. Έτσι έχουμε ένα centroid. Για το επόμενο υπολογίζουμε τις αποστάσεις των σημείων μας από το centroid και ορίζουμε αυτό που βρίσκεται πιο μακριά από το centroid. Έτσι έχουμε 2 centroids. Όμοια προχωράμε επιλέγοντας σαν επόμενο centroid αυτό που απέχει περισσότερο από τα ήδη επιλεγμένα centroid. Συνεχίζουμε έτσι μέχρις ότου επιλέξουμε K centroids. Αναλυτικά τα βήματα του αλγορίθμου:
+	\begin{algorithm}[H]
+		From n objects calculate a point whose attribute values are average of n-objects attribute values so first initial centroid is average of n-objects.\;
+	    Select next initial centroids from n-objects in such a way that the Euclidean distance of that object is maximum from other selected initial centroids.\;
+	    Repeat step2 until we get k initial centroids.
+	    From these steps we will get initial centroids and with these initial centroids perform K-means algorithm.\;
+	\end{algorithm}
 \end{enumerate}
 
 Ο παραπάνω αλγόριθμος υλοποιήθηκε στο Matlab μέσω της συνάρτησης
