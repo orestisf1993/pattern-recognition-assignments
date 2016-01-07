@@ -13,20 +13,24 @@ class MyTree(treelib.Tree):
     """Used to override and extend some of Tree's features."""
 
     def create_node(self, tag=None, identifier=None, parent=None, data=None):
+        if identifier is None:
+            identifier = tag
         return super(MyTree, self).create_node(
             tag=tag,
-            identifier=tag,
+            identifier=identifier,
             parent=parent,
             data=data)
 
-    def get_full_path(self, node):
+    def get_full_path(self, nid):
         """Return the full path for this node."""
-        res = node
+        node = self.get_node(nid)
+        res = node.tag
         while True:
-            node = self.parent(node)
+            node = self.parent(nid)
             if node is not None:
-                node = node.tag
-                res = os.path.join(node, res)
+                tag = node.tag
+                nid = node.identifier
+                res = os.path.join(tag, res)
             else:
                 return res
 
@@ -240,6 +244,7 @@ def main():
         os.remove(file_to_print_paths)
 
     tree = tree_init(base_file)
+    tree.show()
 
     for node_name in tree.expand_tree():
         directory = tree.get_full_path(node_name)
