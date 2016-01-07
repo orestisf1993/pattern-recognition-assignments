@@ -1,5 +1,4 @@
 function [c] = optimizer_kmeans( verb,clnumber)
-distancesMap2 = {'cosine   ','correlation'};
 
 
 paths_filename = '../2nd-assignment/datasets/paths.txt';
@@ -7,7 +6,7 @@ files = file_paths(paths_filename);
 
 initial_centroids={'random','random multiple iretations','heuristic'};
 distancesMap = {'cosine';'correlation'};
-
+distancesMap2 = {'cosine   ','correlation'};
 
 N = length(initial_centroids);
 M = length(distancesMap);
@@ -48,14 +47,16 @@ for ff = 3:1:F
             if verb ==1
                 fprintf(strM)
             end
-        end
-        if succ2 > s_max
-            strMax = strM;
-            s_max = succ2;
-        end
-        if sil>sil_max
-            sil_max = sil;
-            strSil =strM;
+            
+            if succ2 > s_max
+                strMax = strM;
+                s_max = succ2;
+            end
+            if sil>sil_max
+                sil_max = sil;
+                strSil =strM;
+            end
+            
         end
         
     end
