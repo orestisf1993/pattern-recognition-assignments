@@ -1,5 +1,4 @@
 \chapter{Ομαδοποίηση}
-
 Πριν προχωρήσουμε στους αλγορίθμους που χρησιμοποιήσαμε είναι χρήσιμο να αναφέρουμε 2 σημαντικά ζητήματα που αφορούν την ομαδοποίηση μας. Το πρώτο αφορά την μετρική που θα χρησιμοποιήσουμε για την αξιολόγηση της ομαδοποίησης και ο δεύτερος τον τρόπο με τον οποίο θα μετρήσουμε την απόσταση. Όσον αφορά την μετρική μπορούμε να αναφέρουμε ότι σαν κύρια μετρική θα χρησιμοποιήσουμε το $Silhouette$ καθώς μέσα σε αυτήν εμπεριέχονται οι μετρικές $Cohesion$ και $Separation$ και μπορεί να θεωρηθεί πιο αντιπροσωπευτική.
 \section{Διαχωριστικοί Αλγόριθμοι}
 Ο αλγόριθμος που κυρίως αντιπροσωπεύει αυτή την κατηγορία αλγορίθμων είναι ο K-means. Η βασική ιδέα των διαχωριστικών αλγορίθμων είναι η ανάθεση των σημείων μας σε ομάδες προσπαθώντας να ελαχιστοποιήσουμε την απόσταση από ένα σημείο που αντιπροσωπεύει την ομάδα. Έτσι κάθε σημείο μας θεωρούμε ότι ανήκει στην ομάδα αυτή στην οποία η απόσταση από το αντιπροσωπευτικό σημείο είναι ελάχιστη. Εκτός από τον K-means σε αυτήν την κατηγορία ανήκουν διάφορες παραλλαγές του όπως ο bisection K-means ,ο fuzzy Κ-means και ο K-medoid. Στην δικιά μας υλοποίηση χρησιμοποιήσαμε τον απλό K-means και τον K-medoid.
@@ -109,7 +108,7 @@
 Στην συνέχεια προχωρήσαμε στην υλοποίηση του αλγορίθμου K-means για τα διαφορετικά datasets που φτιάξαμε και περιγράφτηκαν παραπάνω. Τρέξαμε όλα τα datasets μας για τον αλγόριθμο K-means στο Matlab για διαφορετικά σετ παραμέτρων του αλγορίθμου μας. Τα διαφορετικά σετ παραμέτρων που χρησιμοποιήσαμε όπως αναφέραμε και παραπάνω αφορούν τόσο τον τρόπο υπολογισμού της απόστασης όσο και τον τρόπο επιλογής των αρχικών κεντρών. Όυσιαστικά υλοποιήσαμε 9 σετ παραμέτρων τα οποία παρουσιάζονται παρακάτω: 
 
 \begin{enumerate}
-    \item  \textbf{1ο Σετ Παραμέτρων}: 
+    \item \textbf{1ο Σετ Παραμέτρων}: 
     \begin{itemize}
         \item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
         \item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος
@@ -193,6 +192,14 @@
 
 Η μετρική $Success Rate$ στις 2 παραπάνω ομαδοποιήσεις μετρήθηκε με τον 1ο τρόπο.
 %ΤΟ DO HYPERLINK TO DESCRIBE OF eval_clust(type1)
+\noindent\begin{minipage}{\linewidth}
+    \centering
+    \captionsetup{type={figure}}
+    \includegraphics[width=\linewidth]{images/kmeans8_result1.eps}
+    \includegraphics[width=\linewidth]{images/kmeans8_result2.eps}
+    \captionof{figure}{TODO}
+    \label{fig:kmeans8_result}
+\end{minipage}
 Έπειτα υλοποιήσαμε μια μέτρηση με το 1ο, 2ο και 3ο σετ παραμέτρων και υλοποιήσαμε 10 ομάδες. Πήραμε το παρακάτω διάγραμμα:
 
 \begin{figure}
@@ -214,8 +221,16 @@
 
 Από αυτό το διάγραμμα παίρνουμε το καλύτερο $SuccessRate$ που ισούται με 93.8\% στο dataset \url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/dataset.csv}.
 
-Τέλος υλοποιήσαμε ομαδοποίηση για 20 κλάσεις. Αρχικά πήραμε το 1ο, 2ο και 3ο σετ παραμέτρων:
+\noindent\begin{minipage}{\linewidth}
+    \centering
+    \captionsetup{type={figure}}
+    \includegraphics[width=\linewidth]{images/kmeans10_result1.eps}
+    \includegraphics[width=\linewidth]{images/kmeans10_result2.eps}
+    \captionof{figure}{TODO}
+    \label{fig:kmeans10_result}
+\end{minipage}
 
+Τέλος υλοποιήσαμε ομαδοποίηση για 20 κλάσεις. Αρχικά πήραμε το 1ο, 2ο και 3ο σετ παραμέτρων:\\
 \begin{figure}
 \centering
 \includegraphics[width=0.7\linewidth]{../../../../../Dropbox/protypa-figs/pictures-2/kmeansCosBar20}
@@ -240,36 +255,41 @@
 %ΤΟ DO HYPERLINK TO DESCRIBE OF eval_clust(type2)
 Οι 4 τελευταίες ομαδοποιήσεις, δηλαδή ο διαχώρισμος των ομάδων σε 10 και 20 αντίστοιχα έγιναν για να αντιμετωπίσουν το πρόβλημα που έχει ο k-means σε ανισομεγεθής ομάδες όπως αναφέρθηκε και στην παράγραφο της εισαγωγής για τον K-means. Ουσιαστικά δεν έγινε έπειτα η μείωση των ομάδων σε 8 όπως θέλουμε να είναι ο τελικός αριθμός. Περισσότερες πληροφορίες σχετικά με το θέμα της μετ-επεξεργασίας δίνονται στο κεφάλαιο με τα Ανοιχτά Θέματα.
 %TO DO HYPERLINK TO OPENTHEMES
-
+\\\noindent\begin{minipage}{\linewidth}
+    \centering
+    \captionsetup{type={figure}}
+    \includegraphics[width=\linewidth]{images/kmeans20_result1.eps}
+    \includegraphics[width=\linewidth]{images/kmeans20_result2.eps}
+    \captionof{figure}{TODO}
+    \label{fig:kmeans20_result}
+\end{minipage}
 % Please add the following required packages to your document preamble:
 % \usepackage{graphicx}
 Στο παρακάτω πινακάκι παρουσιάζονται μαζεμένες όλες οι βέλτιστες λύσεις για το $Silhouette$ και για το $Success Rate$ για τις ομαδοποιήσεις που έγιναν.
 
-\begin{table}[]
+\begin{minipage}{\linewidth}
     \centering
     \resizebox{\textwidth}{!}{%
         \begin{tabular}{lllllllll}
             \cline{7-7}
             Dataset & Center Type & Distance Type & Number of Clusters & Cohesion & \multicolumn{1}{l|}{Separation} & \multicolumn{1}{l|}{Silhouette} & Success Rate & Max Type \\ \cline{7-7}
-            Α & random multiple iretations & Cosine & 8 & 592 & 5080 & 0.231 & 0.925 & Best Success Rate \\
-            B & random multiple iretations & Correlation & 8 & 660 & 5090 & 0.259 & 0.887 & Best Silhouette \\
-            C & random multiple iretations & Correlation & 10 & 462 & 5300 & 0.222 & 0.938 & Best Success Rate \\
-            B & random multiple iretations & Cosine & 10 & 544 & 2630 & 0.263 & 0.875 & Best Silhouette \\
-            D & random multiple iretations & Cosine & 20 & 168 & 5500 & 0.213 & 0.938 & Best Success Rate \\
-            B & random multiple iretations & Correlation & 20 & 228 & 5520 & 0.278 & 0.9 & Best Silhouette
+            Α & random multiple iterations & Cosine & 8 & 592 & 5080 & 0.231 & 0.925 & Best Success Rate \\
+            B & random multiple iterations & Correlation & 8 & 660 & 5090 & 0.259 & 0.887 & Best Silhouette \\
+            C & random multiple iterations & Correlation & 10 & 462 & 5300 & 0.222 & 0.938 & Best Success Rate \\
+            B & random multiple iterations & Cosine & 10 & 544 & 2630 & 0.263 & 0.875 & Best Silhouette \\
+            D & random multiple iterations & Cosine & 20 & 168 & 5500 & 0.213 & 0.938 & Best Success Rate \\
+            B & random multiple iterations & Correlation & 20 & 228 & 5520 & 0.278 & 0.9 & Best Silhouette
         \end{tabular}
     }
-    \caption{My caption}
+    \captionof{table}{TODO}
     \label{my-label}
-\end{table}
+\end{minipage}
 
 Στο παραπάνω πινακάκι χρησιμοποιήσαμε τους κωδικούς των dataset τα οποία ορίσαμε ως εξής:
 \begin{enumerate}
     \item A=\url{join_duplicates/freq_8_70/dataset.csv}
     \item B=\url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv}
     \item C=\url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/dataset.csv}
-    \item
-    D=\url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/bool_it/dataset.csv}
-    
+    \item D=\url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/bool_it/dataset.csv}
 \end{enumerate}
 
