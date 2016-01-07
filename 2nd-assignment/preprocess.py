@@ -196,40 +196,58 @@ def gibberish_detector(dataset):
 
 def tree_init(base_file):
     """Initialize the tree."""
+    from functools import partial
     tree = treelib.Tree()
+
     # your tree structure here:
-    # tag names currently should be unique.
-    tree.create_node("root", data={
-        'action': lambda _: csv_read(base_file + '.csv', delimiter=';')
-    })
-    tree.create_node("join_duplicates", parent="root", data={
-        'action': join_duplicates
-    })
+    freq_ranges = [
+        (3, 70), (8, 70), (8, 50), (3, 50)
+    ]
     tree.create_node(
-        "frequency_based_selection",
-        parent="join_duplicates",
+        "root",
         data={
-            'action': frequency_based_selection})
-    tree.create_node("gibberish_detector",
-                     parent="frequency_based_selection",
-                     data={'action': gibberish_detector})
-    tree.create_node("join_similar", parent="gibberish_detector", data={
-        'action': join_similar
-    })
-    tree.create_node("drop_fry_words", parent="join_similar", data={
-        'action': drop_fry_words
-    })
+            'action': lambda _: csv_read(base_file + '.csv', delimiter=';')
+        })
     tree.create_node(
-        "frequency_based_selection_df",
-        parent="drop_fry_words",
+        "join_duplicates",
+        parent="root",
         data={
-            'action': frequency_based_selection})
-    tree.create_node("bool_it", parent="gibberish_detector", data={
-        'action': bool_it
-    })
-    tree.create_node("frequency_based_selection2", parent="bool_it", data={
-        'action': frequency_based_selection
-    })
+            'action': join_duplicates
+        })
+    for low_bound, upper_bound in freq_ranges:
+        freq_tag = "freq_" + str(low_bound) + "_" + str(upper_bound)
+        freq_action = partial(frequency_based_selection, low_bound=8, upper_bound=50)
+        tree.create_node(
+            tag=freq_tag,
+            parent="join_duplicates",
+            data={'action': freq_action}
+        )
+        tree.create_node(
+            tag="gibberish_detector",
+            identifier="gibberish_detector" + freq_tag,
+            parent=freq_tag,
+            data={'action': gibberish_detector})
+        tree.create_node(
+            tag="join_similar",
+            identifier="join_similar" + freq_tag,
+            parent="gibberish_detector" + freq_tag,
+            data={
+                'action': join_similar
+            })
+        tree.create_node(
+            tag="drop_fry_words",
+            identifier="drop_fry_words" + freq_tag,
+            parent="join_similar" + freq_tag,
+            data={
+                'action': drop_fry_words
+            })
+        tree.create_node(
+            tag="bool_it",
+            identifier="bool_it" + freq_tag,
+            parent="drop_fry_words" + freq_tag,
+            data={
+                'action': bool_it
+            })
     return tree
 
 
