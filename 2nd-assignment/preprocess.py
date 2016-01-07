@@ -133,8 +133,7 @@ def append_class(dataset, filename='class.csv'):
 def save_results(dataset, directory, filename, pre_save_action=append_class):
     """Save dataset to a .pickle and .csv file."""
     if pre_save_action:
-        dataset_after_action = dataset.copy(deep=True)
-        dataset_after_action = pre_save_action(dataset)
+        dataset_after_action = pre_save_action(dataset.copy(deep=True))
     else:
         dataset_after_action = dataset
     if not os.path.exists(directory):
