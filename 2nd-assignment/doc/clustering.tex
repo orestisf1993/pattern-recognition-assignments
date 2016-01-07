@@ -1,9 +1,13 @@
 \chapter{Ομαδοποίηση}
+
+Πριν προχωρήσουμε στους αλγορίθμους που χρησιμοποιήσαμε είναι χρήσιμο να αναφέρουμε 2 σημαντικά ζητήματα που αφορούν την ομαδοποίηση μας. Το πρώτο αφορά την μετρική που θα χρησιμοποιήσουμε για την αξιολόγηση της ομαδοποίησης και ο δεύτερος τον τρόπο με τον οποίο θα μετρήσουμε την απόσταση. Όσον αφορά την μετρική μπορούμε να αναφέρουμε ότι σαν κύρια μετρική θα χρησιμοποιήσουμε το $Silhouette$ καθώς μέσα σε αυτήν εμπεριέχονται οι μετρικές $Cohesion$ και $Separation$ και μπορεί να θεωρηθεί πιο αντιπροσωπευτική.
 \section{Διαχωριστικοί Αλγόριθμοι}
 
 Ο αλγόριθμος που κυρίως αντιπροσωπεύει αυτή την κατηγορία αλγορίθμων είναι ο K-means. Η βασική ιδέα των διαχωριστικών αλγορίθμων είναι η ανάθεση των σημείων μας σε ομάδες προσπαθώντας να ελαχιστοποιήσουμε την απόσταση από ένα σημείο που αντιπροσωπεύει την ομάδα. Έτσι κάθε σημείο μας θεωρούμε ότι ανήκει στην ομάδα αυτή στην οποία η απόσταση από το αντιπροσωπευτικό σημείο είναι ελάχιστη. Εκτός από τον K-means σε αυτήν την κατηγορία ανήκουν διάφορες παραλλαγές του όπως ο bisection K-means ,ο fuzzy Κ-means και ο K-medoid. Στην δικιά μας υλοποίηση χρησιμοποιήσαμε τον απλό K-means και τον K-medoid.
 
 \subsection{K-means}
+
+\subsubsection{Εισαγωγή}
 
 Όπως αναφέραμε ο K-means είναι ο πιο συνηθισμένος και απλός διαχωριστικός αλγόριθμος. Η λογική που χρησιμοποιεί είναι η εξής:
 \begin{enumerate}
@@ -46,9 +50,22 @@
 	\end{algorithmic}
 \end{enumerate}
 
+Ο παραπάνω αλγόριθμος υλοποιήθηκε στο Matlab μέσω της συνάρτησης
+\lstinline[language=MATLAB]!initial_centroid=centroid_heuristic(X,number_of_features,total_centroid_counter)!
+
+Όπου οι είσοδοι μας είναι:
+\begin{enumerate}
+	\item \lstinline[language=MATLAB]!X)! : Το dataset μας σε μορφή πίνακα.
+	\item \lstinline[language=MATLAB]!number_of_features! : Ο αριθμός των γνωρισμάτων μας που στην περίπτωση μας είναι ο αριθμός των βιβλιοθικών μας ,δηλαδή 80.
+    \item \lstinline[language=MATLAB]!total_centroid_counter! : Ο αριθμός των ομάδων που θέλουμε να δημιουργήσουμε.
+\end{enumerate}
+
+Έξοδος της συνάρτησης μας είναι τα Κ αρχικά κέντρα.
+
+
 Ακόμα για να αποφύγουμε το πρόβλημα των αρχικών centroids πολλές φορές χρησμιποιείται ο bisecting K-means καθώς εξαρτάται λιγότερο από την αρχική επιλογή των κεντρών.
 
-Η πολυπλοκότητα του αλγορίθμου είναι Ο(n*K*I*d) όπου n=αριθμός σημείων, Κ=αριθμός ομάδων, l=αριθμός επαναλήψεων , d=αριθμός μεταβλητών. Πρόκειται για έναν αρκετά γρήγορο αλγόριθμο.
+Η πολυπλοκότητα του αλγορίθμου είναι $ O(n*K*I*d)$ όπου $n$ είναι ο αριθμός σημείων, $Κ$ είναι ο αριθμός ομάδων, $l$ είναι αριθμός επαναλήψεων και $d$ είναι αριθμός μεταβλητών. Πρόκειται για έναν αρκετά γρήγορο αλγόριθμο.
 
 Τέλος η τελευταία παράμετρος που επιλέγεται στον αλγόριθμο K-means είναι η απόσταση. Οι μετρικές που χρησιμοποιούνται σαν απόσταση είναι:
 \begin{enumerate}
@@ -59,6 +76,7 @@
 	\item \textbf{Hamming }: Απόσταση που χρησιμοποιείται για δυαδικά δεδομένα. Είναι το ποσοστό των bit που διαφέρουν.
 \end{enumerate}
 
+Ένα ακόμα πρόβλημα του K-means είναι ότι όταν οι ομάδες μας είναι ανισομεγεθής, έχουν διαφορετική πυκνότητα και μη σφαιρικά σχήματα. Τα παραπάνω προβλήματα επιλύονται με την δημιουργία πολλών μικρών ομάδων και την σύνθεση τους σε επίπεδο μετ-επεξεργασίας, θέμα το οποίο θα αναλυθεί παρακάτω εκτενέστερα στα ανοιχτά θέματα.
 Παρακάτω φαίνεται μια ομαδοποίηση που πραγματοποιήθηκε με K-means. Είναι ευδιάκριτα τόσο τα 3 clusters που δημιουργήθηκαν όσο και τα κέντρα τους. Κάθε σημείο του κάθε cluster απέχει την ελάχιστη απόσταση από το κέντρο του cluster στο οποιό ανήκει.
 
 	\begin{figure}
@@ -78,5 +96,172 @@
 \label{fig:kmeans_change_centroids}
 \end{figure}
 
+\subsubsection{Πειραματικά Αποτελέσματα}
 
+Στην συνέχεια προχωρήσαμε στην υλοποίηση του αλγορίθμου K-means για τα διαφορετικά datasets που φτιάξαμε και περιγράφτηκαν παραπάνω. Τρέξαμε όλα τα datasets μας για τον αλγόριθμο K-means στο Matlab για διαφορετικά σετ παραμέτρων του αλγορίθμου μας. Τα διαφορετικά σετ παραμέτρων που χρησιμοποιήσαμε όπως αναφέραμε και παραπάνω αφορούν τόσο τον τρόπο υπολογισμού της απόστασης όσο και τον τρόπο επιλογής των αρχικών κεντρών. Όυσιαστικά υλοποιήσαμε 9 σετ παραμέτρων τα οποία παρουσιάζονται παρακάτω: 
+
+\begin{enumerate}
+	\item  \textbf{1ο Σετ Παραμέτρων}: 
+	\begin{itemize}
+		\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
+		\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος
+	\end{itemize}
+	\item  \textbf{2ο Σετ Παραμέτρων}:
+	\begin{itemize}
+		\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
+		\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος με επανάληψη αλγορίθμου 10 φορές
+	\end{itemize}
+	\item  \textbf{3ο Σετ Παραμέτρων}:
+		\begin{itemize}
+			\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Cosine
+			\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Επιλογή μέσω του ευρυστικού κανόνα.
+		\end{itemize}
+	\item  \textbf{4ο Σετ Παραμέτρων}:
+		\begin{itemize}
+			\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Correlation
+			\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος
+		\end{itemize}
+	\item  \textbf{5ο Σετ Παραμέτρων}:
+		\begin{itemize}
+			\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Correlation
+			\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} : Τυχαίος με επανάληψη αλγορίθμου 10 φορές
+		\end{itemize}
+	\item  \textbf{6ο Σετ Παραμέτρων}:
+		\begin{itemize}
+			\item \textbf{Τρόπος Υπολογισμού Απόστασης} : Correlation
+			\item \textbf{Τρόπος Επιλογής Αρχικού Κέντρου} :  Επιλογή μέσω του ευρυστικού κανόνα.
+		\end{itemize}
+\end{enumerate}
+
+Τα παραπάνω σετ παραμέτρων υλοποιούνται στο Matlab μέσω των εντολών:
+\begin{enumerate}
+	\item  \textbf{1ο Σετ Παραμέτρων}: \lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',cosine);!
+	Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται και η παράμετρος \lstinline[language=MATLAB]!Distance! που δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!cosine!. Δεν δηλώνεται τίποτα για τις αρχικές τιμές των κέντρων τον ομάδων.
+	\item  \textbf{2ο Σετ Παραμέτρων}:
+\lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',cosine'Replicates',number_of_iretation);!
+Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται, η παράμετρος \lstinline[language=MATLAB]!Distance! δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!cosine! και η παράμετρος \lstinline[language=MATLAB]!Replicates! δηλώνει την επανάληψη του K-means \lstinline[language=MATLAB]!number_of_iretaion! φορές που στην περίπτωση μας επιλέχτηκε 10. 
+	\item  \textbf{3ο Σετ Παραμέτρων}:
+\lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',cosine,'Start',heuristic_centroid);!
+Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται και η παράμετρος \lstinline[language=MATLAB]!Distance! που δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!cosine!. Η παράμετρος \lstinline[language=MATLAB]!Start! δηλώνει την αρχική επιλογή των κέντρων και ισούται με \lstinline[language=MATLAB]!heuristic_centroid! που προκύπτουν από την κλήση της συνάρτησης \lstinline[language=MATLAB]!centroid_heuristic! που περιγράφτηκε παραπάνω.
+	\item  \textbf{4ο Σετ Παραμέτρων}:
+\lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',correlation);!
+Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται και η παράμετρος \lstinline[language=MATLAB]!Distance! που δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!correlation!. Δεν δηλώνεται τίποτα για τις αρχικές τιμές των κέντρων τον ομάδων.
+	\item  \textbf{5ο Σετ Παραμέτρων}:
+\lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',correlation'Replicates',number_of_iretation);!
+Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται, η παράμετρος \lstinline[language=MATLAB]!Distance! δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!correlation! και η παράμετρος \lstinline[language=MATLAB]!Replicates! δηλώνει την επανάληψη του K-means \lstinline[language=MATLAB]!number_of_iretaion! φορές που στην περίπτωση μας επιλέχτηκε 10. 
+	\item  \textbf{6ο Σετ Παραμέτρων}:
+\lstinline[language=MATLAB]!kmeans(X,clnumber,'Distance',correlation,'Start',heuristic_centroid);!
+Όπου \lstinline[language=MATLAB]!X! είναι το σύνολο δεδομένων εισόδου, \lstinline[language=MATLAB]!clnumber! είναι ο αριθμός των ομάδων που δημιουργούνται και η παράμετρος \lstinline[language=MATLAB]!Distance! που δηλώνει τον τρόπο υπολογισμού της απόστασης ορίζεται να ισούται με \lstinline[language=MATLAB]!correlation!. Η παράμετρος \lstinline[language=MATLAB]!Start! δηλώνει την αρχική επιλογή των κέντρων και ισούται με \lstinline[language=MATLAB]!heuristic_centroid! που προκύπτουν από την κλήση της συνάρτησης
+\end{enumerate}
+
+Αφού ορίσαμε τα σετ παραμέτρων μας, τρέξαμε στο Matlab το script με όνομα \lstinline[language=MATLAB]!scriptk!. Tο παραπάνω script καλεί την συνάρτηση \lstinline[language=MATLAB]!optimizer_kmeans!, η οποία διαβάζει τα dataset μας, υλοποιεί τον αλγόριθμο K-means και μας βγάζει τα διαγράμματα στα οποία έχουμε τις μετρικές μας. Η φόρτωση των dataset μας γίνεται με την συνάρτηση \lstinline[language=MATLAB]!file_paths! και τα διαγράμματα με την συνάρτηση \lstinline[language=MATLAB]!plot_bars!.
+
+Το πρώτο διάγραμμα που πήραμε περιέχει σε ένα κοινό διάγραμμα το 1o, 2ο και 3ο σετ δεδομένων κάνοντας την ομαδοποίηση για 8 clusters.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../../../../../Dropbox/protypa-figs/pictures-2/kmeansCosBar8}
+\caption{}
+\label{fig:kmeansCosBar8}
+\end{figure}
+
+Στο παραπάνω σχήμα βλέπουμε στον κάθετο άξονα τα διάφορετικα dataset που χρησιμοποιήσαμε για το 1ο, 2ο και 3ο σετ παραμέτρων αντίστοιχα. Στον οριζόντιο άξονα έχουμε τις μετρικές $Silhouette$, $Cohesion$, $Separation$ και $Success Rate$. Καταρχήν να σημειώσουμε ότι οι μετρικές $Cohesion$ και $Separation$ επειδή παίρνουν πολύ μεγάλες τιμές και θέλαμε να τις βάλουμε στο ίδιο διάγραμμα με τις άλλες μετρικές τις κανονικοποιήσαμε ως προς τον ίδιο αριθμό. Αυτός ο συντελεστής για το $Cohesion$ ισούται με 2000 και για το $Separation$ ισούται με 10000. 
+Οι 2 μετρικές στις οποίες δίνουμε μεγαλύτερη βαρύτητα είναι το $Silhouette$ και το $Success Rate$. Το $Silhouette$ είναι μια μετρική που περιγράψαμε παραπάνω. Το $Success Rate$ είναι η μετρική που μας δίνει τι ποσοστό από τις υπάρχουσες βιβλιοθήκες βρίκαμε σωστό. Όπως είναι λογικό μεγάλο $Silhouette$ αντιστοιχεί συνήθως σε μεγάλο $Success Rate$ χωρίς αυτό να σημαίνει ότι το μέγιστο $Silhouette$ αντιστοιχεί στο μέγιστο $Success Rate$. Σαν βασική μας μετρική θα θεωρήσουμε το $Silhouette$ καθώς θεωρούμε ότι είναι πιο σωστό αφού σε κάθε πρόβλημα ομαδοποίησης δεν έχουμε τα τελικά αποτελέσματα για να μπορούμε να κάνουμε την σύγκριση. Το $Success Rate$ δηλαδή δεν μπορεί να θεωρηθεί αντιπροσωπευτική μετρική αλλά μπορεί να χρησιμοποιηθεί για επαλήθευση. 
+Στο παραπάνω διάγραμμα, είπαμε ότι στον κατακόρυφο άξονα έχουμε τα διάφορα dataset μας.Οι 3 πρώτες ομάδες τιμών αντιστοιχούν στο ίδιο dataset υλοποιημένο με διαφορετικό σετ παραμέτρων. Έτσι η πρώτη ομάδα τιμών (από πάνω προς τα κάτω) μας δίνει το πρώτο dataset με επιλογή κέντρου με $heuristic$ τρόπο, η δεύτερη ομάδα τιμών το πρώτο dataset με τυχαία επιλογή κέντρου με πολλαπλές επαναλήψεις και η τρίτη ομάδα τιμών το πρώτο dataset με τυχαία επιλογή κέντρου. Η τέταρτη ομάδα τιμών μας δίνει το δεύτερο dataset με επιλογή κέντρου με $heuristic$ τρόπο, η πέμπτη ομάδα το δεύτερο dataset  με τυχαία επιλογή κέντρου με πολλαπλές επαναλήψεις και η έκτη ομάδα τιμών το δεύτερο dataset με τυχαία επιλογή κέντρου. Με παρόμοιο τρόπο συνεχίζουμε στις επόμενες ομάδες τιμών. Παρατηρούμε δηλαδή ότι ένα dataset μας κατέχει 3 συνεχόμενες θέσεις στον κατακόρυφο άξονα.
+Κάθε ομάδα τιμών περιέχει τις 4 μετρικές που περιγράψαμε με διαφορετικό χρώμα.
+
+Παρατηρούμε ότι από το διάγραμμα έχουμε το μέγιστο $Silhouette$ για την 5η εγγραφή στον κατακόρυφο άξονα. Αυτή η εγγραφή αφορά το dataset με όνομα \url{join_duplicates/freq_8_70/gibberish_detector/join_similar/drop_fry_words/dataset.csv} με επιλογή κέντρου τυχαία με πολλαπλές επαναλήψεις. Ωστόσο τρέξαμε στο Matlab μια σύγκριση με το επόμενο διάγραμμα και παρατηρήσαμε ότι το επόμενο διάγραμμα δίνει υψηλότερο μέγιστο $Silhouette$. Αυτό που είναι χρήσιμο από αυτό το διάγραμμα είναι να πάρουμε το βέλτιστο $Success Rate$ το οποίο βρίσκεται στο dataset \url{join_duplicates/freq_8_70/dataset.csv} με τυχαία επιλογή κέντρου με πολλαπλές επαναλήψεις. Η τιμή του $Success Rate$ σε αυτήν την περίπτωση είναι ίση με 92.5\% το οποίο μεταφράζεται ότι πετύχαμε σωστή ομαδοποίηση για 74 βιβλιοθήκες από το σύνολο των 80. Αυτό είναι το καλύτερο ποσοστό σωστών αποτελεσμάτων που επιτύχαμε. Γενικά τα βέλτιστα αποτελέσματα στον K-means επιτυγχάνονται με τυχαία επιλογή κέντρου με πολλαπλές επαναλήψεις και για αυτόν τον λόγο δεν θα αναφέρεται.
+
+Στην συνέχεια πήραμε σε ένα κοινό διάγραμμα το 4o, 5ο και 6ο σετ δεδομένων κάνοντας την ομαδοποίηση για 8 clusters.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../../../../../Dropbox/protypa-figs/pictures-2/kmeansCorBar8}
+\caption{}
+\label{fig:kmeansCorBar8}
+\end{figure}
+
+Από το παραπάνω διάγραμμα προκύπτει ότι το dataset με το μέγιστο $Silhouette$ είναι το \url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv}. Η τιμή του $Silhouette$ είναι 0.259 και το αντίστοιχο $SuccessRate$ είναι 88.7\% δηλαδή 70 βιβλιοθήκες ομαδοποιήθηκαν σωστά. Αυτή η τιμή του $Silhouette$ ξεπερνάει και όλες τις προηγούμενες από το διάγραμμα όπου η απόσταση μετρήθηκε ως $Cosine$. Παρατηρούμε λοιπόν ότι ενώ μεγάλες τιμές του συντελεστή $Silhouette$ αντιστοιχούν σε μεγάλες τιμές $SuccessRate$ και το αντίστροφο, οι μέγιστες τιμές της μιας μετρικής δεν σημαίνουν και μέγιστες τιμές της άλλης μετρικής.
+
+Η μετρική $Success Rate$ στις 2 παραπάνω ομαδοποιήσεις μετρήθηκε με τον 1ο τρόπο.
+%ΤΟ DO HYPERLINK TO DESCRIBE OF eval_clust(type1)
+Έπειτα υλοποιήσαμε μια μέτρηση με το 1ο, 2ο και 3ο σετ παραμέτρων και υλοποιήσαμε 10 ομάδες. Πήραμε το παρακάτω διάγραμμα:
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../../../../../Dropbox/protypa-figs/pictures-2/kmeansCosBar10}
+\caption{}
+\label{fig:kmeansCosBar10}
+\end{figure}
+
+Από το παραπάνω διάγραμμα προκύπτει ότι το dataset \url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv} έχει το βέλτιστο $Silhouette$ και τιμή ίση με 0.263. Το αντίστοιχο ποσοστό $SuccessRate$ είναι 87.5\% το οποίο σημαίνει ότι αν συνενώσουμε τις ομάδες μας και δημιουργήσουμε 8 clusters, οι 70 βιβλιοθήκες μας θα έχουν ομαδοποιηθεί σωστά.
+
+Το αντίστοιχο διάγραμμα για το 4ο, 5ο και 6ο σετ παραμέτρων με 10 κλάσεις είναι το παρακάτω:
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../../../../../Dropbox/protypa-figs/pictures-2/kmeansCorBar10}
+\caption{}
+\label{fig:kmeansCorBar10}
+\end{figure}
+
+Από αυτό το διάγραμμα παίρνουμε το καλύτερο $SuccessRate$ που ισούται με 93.8\% στο dataset \url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/dataset.csv}.
+
+Τέλος υλοποιήσαμε ομαδοποίηση για 20 κλάσεις. Αρχικά πήραμε το 1ο, 2ο και 3ο σετ παραμέτρων:
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../../../../../Dropbox/protypa-figs/pictures-2/kmeansCosBar20}
+\caption{}
+\label{fig:kmeansCosBar20}
+\end{figure}
+
+Από το παραπάνω διάγραμμα πήραμε το καλύτερο $Success Rate$ να ισούται με 93.8\% στο dataset \url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/bool_it/dataset.csv}.
+
+Τα αντίστοιχα αποτελέσματα στο 4ο, 5ο και 6ο dataset για 20 clusters:
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../../../../../Dropbox/protypa-figs/pictures-2/kmeansCorBar20}
+\caption{}
+\label{fig:kmeansCorBar20}
+\end{figure}
+
+Το παραπάνω διάγραμμα μας δίνει καλύτερη μετρική $Silhouette$ ίση με 0.278.
+
+Η μετρική $Success Rate$ στις 4 παραπάνω ομαδοποιήσεις μετρήθηκε με τον 2ο τρόπο.  
+%ΤΟ DO HYPERLINK TO DESCRIBE OF eval_clust(type2)
+Οι 4 τελευταίες ομαδοποιήσεις, δηλαδή ο διαχώρισμος των ομάδων σε 10 και 20 αντίστοιχα έγιναν για να αντιμετωπίσουν το πρόβλημα που έχει ο k-means σε ανισομεγεθής ομάδες όπως αναφέρθηκε και στην παράγραφο της εισαγωγής για τον K-means. Ουσιαστικά δεν έγινε έπειτα η μείωση των ομάδων σε 8 όπως θέλουμε να είναι ο τελικός αριθμός. Περισσότερες πληροφορίες σχετικά με το θέμα της μετ-επεξεργασίας δίνονται στο κεφάλαιο με τα Ανοιχτά Θέματα.
+%TO DO HYPERLINK TO OPENTHEMES
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+Στο παρακάτω πινακάκι παρουσιάζονται μαζεμένες όλες οι βέλτιστες λύσεις για το $Silhouette$ και για το $Success Rate$ για τις ομαδοποιήσεις που έγιναν.
+
+\begin{table}[]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{lllllllll}
+			\cline{7-7}
+			Dataset & Center Type & Distance Type & Number of Clusters & Cohesion & \multicolumn{1}{l|}{Separation} & \multicolumn{1}{l|}{Silhouette} & Success Rate & Max Type \\ \cline{7-7}
+			Α & random multiple iretations & Cosine & 8 & 592 & 5080 & 0.231 & 0.925 & Best Success Rate \\
+			B & random multiple iretations & Correlation & 8 & 660 & 5090 & 0.259 & 0.887 & Best Silhouette \\
+			C & random multiple iretations & Correlation & 10 & 462 & 5300 & 0.222 & 0.938 & Best Success Rate \\
+			B & random multiple iretations & Cosine & 10 & 544 & 2630 & 0.263 & 0.875 & Best Silhouette \\
+			D & random multiple iretations & Cosine & 20 & 168 & 5500 & 0.213 & 0.938 & Best Success Rate \\
+			B & random multiple iretations & Correlation & 20 & 228 & 5520 & 0.278 & 0.9 & Best Silhouette
+		\end{tabular}
+	}
+	\caption{My caption}
+	\label{my-label}
+\end{table}
+
+Στο παραπάνω πινακάκι χρησιμοποιήσαμε τους κωδικούς των dataset τα οποία ορίσαμε ως εξής:
+\begin{enumerate}
+	\item A=\url{join_duplicates/freq_8_70/dataset.csv}
+	\item B=\url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv}
+	\item C=\url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/dataset.csv}
+	\item
+	D=\url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/bool_it/dataset.csv}
+	
+\end{enumerate}
 
