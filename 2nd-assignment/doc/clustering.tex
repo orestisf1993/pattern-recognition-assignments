@@ -63,7 +63,7 @@
 \end{enumerate}
 
 Ο παραπάνω αλγόριθμος υλοποιήθηκε στο Matlab μέσω της συνάρτησης
-\lstinline[language=MATLAB]!initial_centroid=centroid_heuristic(X, number_of_features, total_centroid_counter)!
+\lstinline[language=MATLAB, breaklines=true]!initial_centroid=centroid_heuristic(X, number_of_features, total_centroid_counter)!
 
 Όπου οι είσοδοι μας είναι:
 \begin{enumerate}
@@ -89,29 +89,31 @@
 \end{enumerate}
 
 Ένα ακόμα πρόβλημα του K-means είναι ότι όταν οι ομάδες μας είναι ανισομεγέθης, έχουν διαφορετική πυκνότητα και μη σφαιρικά σχήματα. Τα παραπάνω προβλήματα επιλύονται με την δημιουργία πολλών μικρών ομάδων και την σύνθεση τους σε επίπεδο μετ-επεξεργασίας, θέμα το οποίο θα αναλυθεί παρακάτω εκτενέστερα στα ανοιχτά θέματα.
-Παρακάτω φαίνεται μια ομαδοποίηση που πραγματοποιήθηκε με K-means. Είναι ευδιάκριτα τόσο τα 3 clusters που δημιουργήθηκαν όσο και τα κέντρα τους. Κάθε σημείο του κάθε cluster απέχει την ελάχιστη απόσταση από το κέντρο του cluster στο οποιό ανήκει.
+Στο \hyperref[fig:kmeans]{\figurename{} \ref{fig:kmeans}}
+φαίνεται μια ομαδοποίηση που πραγματοποιήθηκε με K-means. Είναι ευδιάκριτα τόσο τα 3 clusters που δημιουργήθηκαν όσο και τα κέντρα τους. Κάθε σημείο του κάθε cluster απέχει την ελάχιστη απόσταση από το κέντρο του cluster στο οποίο ανήκει.
 
 \noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=1.0\linewidth]{images/kmeans}
-    \captionof{figure}{TODO}
+    \captionof{figure}{Παράδειγμα ομαδοποίησης k-means}
     \label{fig:kmeans}
 \end{minipage}
 
-Τέλος βλέπουμε ένα παράδειγμα μιας ομαδοποίησης ενός dataset μέσω του αλγορίθμου K-means ανάλογα με το βήμα στο οποίο βρίσκεται. Βλέπουμε πως μεταβάλλονται τα κέντρα με το πέρασμα των επαναλήψεων και έτσι και τα σημεία που ανήκουν σε κάθε cluster. Στο τελευταίο βήμα παρατηρούμε πάλι ότι το σημείο κάθε cluster απέχει ελάχιστη απόσταση από το κέντρο του cluster στο οποίο βρίσκεται και συνεπώς δεν χρειάζεται να γίνει άλλη επανάληψη και ο αλγόριθμος έχει τερματιστεί.
+Τέλος, 
+στο \hyperref[fig:kmeans_change_centroids]{\figurename{} \ref{fig:kmeans_change_centroids}}
+βλέπουμε ένα παράδειγμα μιας ομαδοποίησης ενός dataset μέσω του αλγορίθμου K-means ανάλογα με το βήμα στο οποίο βρίσκεται. Βλέπουμε πως μεταβάλλονται τα κέντρα με το πέρασμα των επαναλήψεων και έτσι και τα σημεία που ανήκουν σε κάθε cluster. Στο τελευταίο βήμα παρατηρούμε πάλι ότι το σημείο κάθε cluster απέχει ελάχιστη απόσταση από το κέντρο του cluster στο οποίο βρίσκεται και συνεπώς δεν χρειάζεται να γίνει άλλη επανάληψη και ο αλγόριθμος έχει τερματιστεί.
 
 \noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=1.0\linewidth]{images/kmeans_change_centroids}
-    \captionof{figure}{TODO}
+    \captionof{figure}{Παράδειγμα ομαδοποίησης k-means βήμα-βήμα}
     \label{fig:kmeans_change_centroids}
 \end{minipage}
 
 \subsubsection{Πειραματικά Αποτελέσματα}
-
-Στην συνέχεια προχωρήσαμε στην υλοποίηση του αλγορίθμου K-means για τα διαφορετικά datasets που φτιάξαμε και περιγράφτηκαν παραπάνω. Τρέξαμε όλα τα datasets μας για τον αλγόριθμο K-means στο Matlab για διαφορετικά σετ παραμέτρων του αλγορίθμου μας. Τα διαφορετικά σετ παραμέτρων που χρησιμοποιήσαμε όπως αναφέραμε και παραπάνω αφορούν τόσο τον τρόπο υπολογισμού της απόστασης όσο και τον τρόπο επιλογής των αρχικών κεντρών. Όυσιαστικά υλοποιήσαμε 9 σετ παραμέτρων τα οποία παρουσιάζονται παρακάτω:
+Στην συνέχεια προχωρήσαμε στην υλοποίηση του αλγορίθμου K-means για τα διαφορετικά datasets που φτιάξαμε και περιγράφτηκαν παραπάνω. Τρέξαμε όλα τα datasets μας για τον αλγόριθμο K-means στο Matlab για διαφορετικά σετ παραμέτρων του αλγορίθμου μας. Τα διαφορετικά σετ παραμέτρων που χρησιμοποιήσαμε όπως αναφέραμε και παραπάνω αφορούν τόσο τον τρόπο υπολογισμού της απόστασης όσο και τον τρόπο επιλογής των αρχικών κέντρων. Όυσιαστικά υλοποιήσαμε 9 σετ παραμέτρων τα οποία παρουσιάζονται παρακάτω:
 
 \begin{enumerate}
     \item \textbf{1ο Σετ Παραμέτρων}:
@@ -207,15 +209,17 @@ Tο παραπάνω script καλεί την συνάρτηση \lstinline[lang
 Η φόρτωση των dataset μας γίνεται με την συνάρτηση \lstinline[language=MATLAB]!file_paths! και τα διαγράμματα με την συνάρτηση \lstinline[language=MATLAB]!plot_bars!.
 
 Το πρώτο διάγραμμα που πήραμε περιέχει σε ένα κοινό διάγραμμα το 1o, 2ο και 3ο σετ δεδομένων κάνοντας την ομαδοποίηση για 8 clusters.
+
 \noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=1.0\linewidth]{images/kmeansCosBar8}
-    \captionof{figure}{TODO}
+    \captionof{figure}{1o-2o-3o σετ με 8 clusters}
     \label{fig:kmeansCosBar8}
 \end{minipage}
 
-Στο παραπάνω σχήμα βλέπουμε στον κάθετο άξονα τα διαφορετικά dataset που χρησιμοποιήσαμε για το 1ο, 2ο και 3ο σετ παραμέτρων αντίστοιχα. Στον οριζόντιο άξονα έχουμε τις μετρικές $Silhouette$, $Cohesion$, $Separation$ και $Success Rate$. Καταρχήν να σημειώσουμε ότι οι μετρικές $Cohesion$ και $Separation$ επειδή παίρνουν πολύ μεγάλες τιμές και θέλαμε να τις βάλουμε στο ίδιο διάγραμμα με τις άλλες μετρικές τις κανονικοποιήσαμε ως προς τον ίδιο αριθμό. Αυτός ο συντελεστής για το $Cohesion$ ισούται με 2000 και για το $Separation$ ισούται με 10000. 
+Στο \hyperref[fig:kmeansCosBar8]{\figurename{} \ref{fig:kmeansCosBar8}}
+βλέπουμε στον κάθετο άξονα τα διαφορετικά dataset που χρησιμοποιήσαμε για το 1ο, 2ο και 3ο σετ παραμέτρων αντίστοιχα. Στον οριζόντιο άξονα έχουμε τις μετρικές $Silhouette$, $Cohesion$, $Separation$ και $Success Rate$. Καταρχήν να σημειώσουμε ότι οι μετρικές $Cohesion$ και $Separation$ επειδή παίρνουν πολύ μεγάλες τιμές και θέλαμε να τις βάλουμε στο ίδιο διάγραμμα με τις άλλες μετρικές τις κανονικοποιήσαμε ως προς τον ίδιο αριθμό. Αυτός ο συντελεστής για το $Cohesion$ ισούται με 2000 και για το $Separation$ ισούται με 10000. 
 Οι 2 μετρικές στις οποίες δίνουμε μεγαλύτερη βαρύτητα είναι το $Silhouette$ και το $Success Rate$. Το $Silhouette$ είναι μια μετρική που περιγράψαμε παραπάνω. Το $Success Rate$ είναι η μετρική που μας δίνει τι ποσοστό από τις υπάρχουσες βιβλιοθήκες βρήκαμε σωστό. Όπως είναι λογικό μεγάλο $Silhouette$ αντιστοιχεί συνήθως σε μεγάλο $Success Rate$ χωρίς αυτό να σημαίνει ότι το μέγιστο $Silhouette$ αντιστοιχεί στο μέγιστο $Success Rate$. Σαν βασική μας μετρική θα θεωρήσουμε το $Silhouette$ καθώς θεωρούμε ότι είναι πιο σωστό αφού σε κάθε πρόβλημα ομαδοποίησης δεν έχουμε τα τελικά αποτελέσματα για να μπορούμε να κάνουμε την σύγκριση. Το $Success Rate$ δηλαδή δεν μπορεί να θεωρηθεί αντιπροσωπευτική μετρική αλλά μπορεί να χρησιμοποιηθεί για επαλήθευση. 
 Στο παραπάνω διάγραμμα, είπαμε ότι στον κατακόρυφο άξονα έχουμε τα διάφορα dataset μας.Οι 3 πρώτες ομάδες τιμών αντιστοιχούν στο ίδιο dataset υλοποιημένο με διαφορετικό σετ παραμέτρων. Έτσι η πρώτη ομάδα τιμών (από πάνω προς τα κάτω) μας δίνει το πρώτο dataset με επιλογή κέντρου με $heuristic$ τρόπο, η δεύτερη ομάδα τιμών το πρώτο dataset με τυχαία επιλογή κέντρου με πολλαπλές επαναλήψεις και η τρίτη ομάδα τιμών το πρώτο dataset με τυχαία επιλογή κέντρου. Η τέταρτη ομάδα τιμών μας δίνει το δεύτερο dataset με επιλογή κέντρου με $heuristic$ τρόπο, η πέμπτη ομάδα το δεύτερο dataset  με τυχαία επιλογή κέντρου με πολλαπλές επαναλήψεις και η έκτη ομάδα τιμών το δεύτερο dataset με τυχαία επιλογή κέντρου. Με παρόμοιο τρόπο συνεχίζουμε στις επόμενες ομάδες τιμών. Παρατηρούμε δηλαδή ότι ένα dataset μας κατέχει 3 συνεχόμενες θέσεις στον κατακόρυφο άξονα.
 Κάθε ομάδα τιμών περιέχει τις 4 μετρικές που περιγράψαμε με διαφορετικό χρώμα.
@@ -228,108 +232,124 @@ Tο παραπάνω script καλεί την συνάρτηση \lstinline[lang
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=1.0\linewidth]{images/kmeansCorBar8}
-    \captionof{figure}{TODO}
+    \captionof{figure}{4o-5o-6o σετ με 8 clusters}
     \label{fig:kmeansCorBar8}
 \end{minipage}
 
-Από το παραπάνω διάγραμμα προκύπτει ότι το dataset με το μέγιστο $Silhouette$ είναι το \url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv}. Η τιμή του $Silhouette$ είναι 0.259 και το αντίστοιχο $SuccessRate$ είναι 88.7\% δηλαδή 70 βιβλιοθήκες ομαδοποιήθηκαν σωστά. Αυτή η τιμή του $Silhouette$ ξεπερνάει και όλες τις προηγούμενες από το διάγραμμα όπου η απόσταση μετρήθηκε ως $Cosine$. Παρατηρούμε λοιπόν ότι ενώ μεγάλες τιμές του συντελεστή $Silhouette$ αντιστοιχούν σε μεγάλες τιμές $SuccessRate$ και το αντίστροφο, οι μέγιστες τιμές της μιας μετρικής δεν σημαίνουν και μέγιστες τιμές της άλλης μετρικής.
+Από το \hyperref[fig:kmeansCorBar8]{\figurename{} \ref{fig:kmeansCorBar8}}
+προκύπτει ότι το dataset με το μέγιστο $Silhouette$ είναι το \url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv}. Η τιμή του $Silhouette$ είναι 0.259 και το αντίστοιχο $SuccessRate$ είναι 88.7\% δηλαδή 70 βιβλιοθήκες ομαδοποιήθηκαν σωστά. Αυτή η τιμή του $Silhouette$ ξεπερνάει και όλες τις προηγούμενες από το διάγραμμα όπου η απόσταση μετρήθηκε ως $Cosine$. Παρατηρούμε λοιπόν ότι ενώ μεγάλες τιμές του συντελεστή $Silhouette$ αντιστοιχούν σε μεγάλες τιμές $SuccessRate$ και το αντίστροφο, οι μέγιστες τιμές της μιας μετρικής δεν σημαίνουν και μέγιστες τιμές της άλλης μετρικής.
 
 Η μετρική $Success Rate$ στις 2 παραπάνω ομαδοποιήσεις μετρήθηκε με τον 1ο τρόπο.
 %ΤΟ DO HYPERLINK TO DESCRIBE OF eval_clust(type1)
-Αφού υλοποιήσαμε την παραπάνω ομαδοποίηση περάσαμε τα αποτελέσματα που πήραμε στο Weka για οπτικοποίηση των καλύτερων αποτελεσμάτων μας.
-\noindent\begin{minipage}{\linewidth}
+Αφού υλοποιήσαμε την παραπάνω ομαδοποίηση περάσαμε τα αποτελέσματα που πήραμε στο Weka για οπτικοποίηση των καλύτερων αποτελεσμάτων μας
+στο \hyperref[fig:kmeans8_result]{\figurename{} \ref{fig:kmeans8_result}}.
+\\\noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=\linewidth]{images/kmeans8_result1.eps}
     \includegraphics[width=\linewidth]{images/kmeans8_result2.eps}
-    \captionof{figure}{TODO}
+    \captionof{figure}{Αποτελέσματα για kmeans με 8 clusters}
     \label{fig:kmeans8_result}
 \end{minipage}
 
-Παρατηρούμε ότι στην πρώτη περίπτωση όπου είναι η ομαδοποίηση με βέλτιστο $Success Rate$ έχούμε πετύχει όλες τις βιβλιοθήκες \url{http-clients} (γκρι), τις \url{swing-libraries} λαχανί και τις \url{xml-processing}. Από την βιβλιοθήκη \url{android} (μπλε) πετύχαμε 22 βιβλιοθήκες και από τις υπόλοιπες ομαδοποιήσαμε επιτυχώς το μεγαλύτερο ποσοστό. Διαπυστώνουμε ότι όντως λάθος ομαδοποίηση υπέστησαν 6 βιβλιοθήκες. Άρα ορθώς το $Success Rate$ είναι 92.5\%.
+Παρατηρούμε ότι στην πρώτη περίπτωση όπου είναι η ομαδοποίηση με βέλτιστο $Success Rate$ έχουμε πετύχει όλες τις βιβλιοθήκες \texttt{http-clients} (γκρι), τις \texttt{swing-libraries} (λαχανί) και τις \texttt{xml-processing}. Από την βιβλιοθήκη \texttt{android} (μπλε) πετύχαμε 22 βιβλιοθήκες και από τις υπόλοιπες ομαδοποιήσαμε επιτυχώς το μεγαλύτερο ποσοστό.
+Διαπιστώνουμε ότι όντως λάθος ομαδοποίηση υπέστησαν 6 βιβλιοθήκες.
+Άρα, ορθώς το $Success Rate$ είναι 92.5\%.
 
-Όμοια στο δεύτερο διάγραμμα παρατηρούμε ότι επιτύχαμε το μεγαλύτερο ποσοστό \url{android} (μπλε) βιβλιοθηκών. Παρατηρούμε ότι 7 βιβλιοθήκες ομαδοποιήθηκαν λάθος. 
-Έπειτα υλοποιήσαμε μια μέτρηση με το 1ο, 2ο και 3ο σετ παραμέτρων και υλοποιήσαμε 10 ομάδες. Πήραμε το παρακάτω διάγραμμα:
+Όμοια, στο δεύτερο διάγραμμα παρατηρούμε ότι επιτύχαμε το μεγαλύτερο ποσοστό \texttt{android} (μπλε) βιβλιοθηκών.
+Παρατηρούμε ότι 7 βιβλιοθήκες ομαδοποιηθήκαν λάθος. 
+
+Έπειτα, υλοποιήσαμε μια μέτρηση με το 1ο, 2ο και 3ο σετ παραμέτρων και υλοποιήσαμε 10 ομάδες. Πήραμε το παρακάτω διάγραμμα:
 
 \noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=1.0\linewidth]{images/kmeansCosBar10}
-    \captionof{figure}{TODO}
+    \captionof{figure}{1ο-2ο-3ο σετ με 10 clusters}
     \label{fig:kmeansCosBar10}
 \end{minipage}
 
-Από το παραπάνω διάγραμμα προκύπτει ότι το dataset \url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv} έχει το βέλτιστο $Silhouette$ και τιμή ίση με 0.263. Το αντίστοιχο ποσοστό $SuccessRate$ είναι 87.5\% το οποίο σημαίνει ότι αν συνενώσουμε τις ομάδες μας και δημιουργήσουμε 8 clusters, οι 70 βιβλιοθήκες μας θα έχουν ομαδοποιηθεί σωστά.
+Από το 
+\hyperref[fig:kmeansCosBar10]{\figurename{} \ref{fig:kmeansCosBar10}}
+προκύπτει ότι το dataset \url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv} έχει το βέλτιστο $Silhouette$ και τιμή ίση με 0.263. Το αντίστοιχο ποσοστό $SuccessRate$ είναι 87.5\% το οποίο σημαίνει ότι αν συνενώσουμε τις ομάδες μας και δημιουργήσουμε 8 clusters, οι 70 βιβλιοθήκες μας θα έχουν ομαδοποιηθεί σωστά.
 
-Το αντίστοιχο διάγραμμα για το 4ο, 5ο και 6ο σετ παραμέτρων με 10 κλάσεις είναι το παρακάτω:\\
+Το αντίστοιχο διάγραμμα για το 4ο, 5ο και 6ο σετ παραμέτρων με 10 κλάσεις είναι το
+\hyperref[fig:kmeansCorBar10]{\figurename{} \ref{fig:kmeansCorBar10}}
+
 \noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=1.0\linewidth]{images/kmeansCorBar10}
-    \captionof{figure}{TODO}
+    \captionof{figure}{4ο-5ο-6ο σετ με 10 clusters}
     \label{fig:kmeansCorBar10}
 \end{minipage}
 
 Από αυτό το διάγραμμα παίρνουμε το καλύτερο $SuccessRate$ που ισούται με 93.8\% στο dataset \url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/dataset.csv}.
 
-Όμοια με πριν χρησιμοποιήσαμε το Weka για οπτικοποίηση των αποτελεσμάτων μας. Στην πρώτη περίπτωση έχουμε το μεγαλύτερο $Success Rate$ και στην δεύτερη το μεγαλύτερο $Silhouete$.
+Όμοια με πριν χρησιμοποιήσαμε το Weka για οπτικοποίηση των αποτελεσμάτων μας
+στο \hyperref[fig:kmeans10_result]{\figurename{} \ref{fig:kmeans10_result}}.
+Στην πρώτη περίπτωση έχουμε το μεγαλύτερο $Success Rate$ και στην δεύτερη το μεγαλύτερο $Silhouete$.
 
 \noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=\linewidth]{images/kmeans10_result1.eps}
     \includegraphics[width=\linewidth]{images/kmeans10_result2.eps}
-    \captionof{figure}{TODO}
+    \captionof{figure}{Αποτελέσματα για kmeans με 10 clusters}
     \label{fig:kmeans10_result}
 \end{minipage}
 
 Παρατηρούμε ότι ο αριθμός των κλάσεων είναι 10. Αυτό που αξίζει να παρατηρήσουμε είναι ότι αν προχωρούσαμε στο επόμενο στάδιο της μετ-επεξεργασίας, στην πρώτη περίπτωση, η 1η κλάση και η 8η κλάση θα ενώνονταν καθώς είναι και οι 2 καθαρά android βιβλιοθήκες. Όμοια θα μπορούσαμε να κάνουμε και άλλες συνενώσεις.
 
-Τέλος υλοποιήσαμε ομαδοποίηση για 20 κλάσεις. Αρχικά πήραμε το 1ο, 2ο και 3ο σετ παραμέτρων:\\
+Τέλος υλοποιήσαμε ομαδοποίηση για 20 κλάσεις. Αρχικά πήραμε το 1ο, 2ο και 3ο σετ παραμέτρων:
+
 \noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=1.0\linewidth]{images/kmeansCosBar20}
-    \captionof{figure}{TODO}
+    \captionof{figure}{1o-2o-3o σετ με 20 clusters}
     \label{fig:kmeansCosBar20}
 \end{minipage}
 
-Από το παραπάνω διάγραμμα πήραμε το καλύτερο $Success Rate$ να ισούται με 93.8\% στο dataset \url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/bool_it/dataset.csv}.
+Από το 
+\hyperref[fig:kmeansCosBar20]{\figurename{} \ref{fig:kmeansCosBar20}}
+πήραμε το καλύτερο $Success Rate$ να ισούται με 93.8\% στο dataset \url{join_duplicates/freq_8_50/gibberish_detector/join_similar/drop_fry_words/bool_it/dataset.csv}.
 
-Τα αντίστοιχα αποτελέσματα στο 4ο, 5ο και 6ο dataset για 20 clusters:\\
+Τα αντίστοιχα αποτελέσματα στο 4ο, 5ο και 6ο dataset για 20 clusters:
+
 \noindent\begin{minipage}{\linewidth}
     \captionsetup{type={figure}}
     \centering
     \includegraphics[width=1.0\linewidth]{images/kmeansCorBar20}
-    \captionof{figure}{TODO}
+    \captionof{figure}{4o-5o-6o σετ με 20 clusters}
     \label{fig:kmeansCorBar20}
 \end{minipage}
 
-Το παραπάνω διάγραμμα μας δίνει καλύτερη μετρική $Silhouette$ ίση με 0.278.
+Το 
+\hyperref[fig:kmeansCorBar20]{\figurename{} \ref{fig:kmeansCorBar20}}
+μας δίνει καλύτερη μετρική $Silhouette$ ίση με 0.278.
 
 Η μετρική $Success Rate$ στις 4 παραπάνω ομαδοποιήσεις μετρήθηκε με τον 2ο τρόπο.
 %ΤΟ DO HYPERLINK TO DESCRIBE OF eval_clust(type2)
 Οι 4 τελευταίες ομαδοποιήσεις, δηλαδή ο διαχωρισμός των ομάδων σε 10 και 20 αντίστοιχα έγιναν για να αντιμετωπίσουν το πρόβλημα που έχει ο k-means σε ανισομεγέθης ομάδες όπως αναφέρθηκε και στην παράγραφο της εισαγωγής για τον K-means. Ουσιαστικά δεν έγινε έπειτα η μείωση των ομάδων σε 8 όπως θέλουμε να είναι ο τελικός αριθμός. Περισσότερες πληροφορίες σχετικά με το θέμα της μετ-επεξεργασίας δίνονται στο κεφάλαιο με τα Ανοιχτά Θέματα.
 %TO DO HYPERLINK TO OPENTHEMES
-Παρακάτω βλέπουμε τα αποτελέσματα της βέλτιστης ομαδοποίησης ως προς $Success Rate$ kai $Silhouette$. Παρατηρούμε ότι πρόκειται όντως για 20 ομάδες. Πολλές ομάδες θα μπορούσαν να συνενωθούν σε εννιαίες όπως οι \url{android} (ομάδες 2,4,5,10,11), οι \url{http-clients} (ομάδες 17,18) και oi \url{command-line-parsers} (ομάδες 9,15). Οι υπόλοιπες συνενώσεις θα γίνουν για να διατηρηθεί ελάχιστο το $SSE$.
-\\\noindent\begin{minipage}{\linewidth}
+Παρακάτω βλέπουμε τα αποτελέσματα της βέλτιστης ομαδοποίησης ως προς $Success Rate$ και $Silhouette$. Παρατηρούμε ότι πρόκειται όντως για 20 ομάδες. Πολλές ομάδες θα μπορούσαν να συνενωθούν σε ενιαίες όπως οι \texttt{android} (ομάδες 2,4,5,10,11), οι \texttt{http-clients} (ομάδες 17,18) και οι \texttt{command-line-parsers} (ομάδες 9,15). Οι υπόλοιπες συνενώσεις θα γίνουν για να διατηρηθεί ελάχιστο το $SSE$.
+
+\noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=\linewidth]{images/kmeans20_result1.eps}
     \includegraphics[width=\linewidth]{images/kmeans20_result2.eps}
-    \captionof{figure}{TODO}
+    \captionof{figure}{Αποτελέσματα για kmeans με 20 clusters}
     \label{fig:kmeans20_result}
 \end{minipage}
-% Please add the following required packages to your document preamble:
-% \usepackage{graphicx}
-Στο παρακάτω πινακάκι παρουσιάζονται μαζεμένες όλες οι βέλτιστες λύσεις για το $Silhouette$ και για το $Success Rate$ για τις ομαδοποιήσεις που έγιναν.
 
-\begin{minipage}{\linewidth}
+\noindent\begin{minipage}{\linewidth}
     \centering
+    \captionsetup{type={table}}
     \resizebox{\textwidth}{!}{%
         \begin{tabular}{lllllllll}
-            \cline{7-7}
-            Dataset & Center Type & Distance Type & Number of Clusters & Cohesion & \multicolumn{1}{l|}{Separation} & \multicolumn{1}{l|}{Silhouette} & Success Rate & Max Type \\ \cline{7-7}
+            Dataset & Center Type & Distance Type & Clusters & Cohesion & Separation & Silhouette & Success Rate & Max Type \\
             Α & random multiple iterations & Cosine & 8 & 592 & 5080 & 0.231 & 0.925 & Best Success Rate \\
             B & random multiple iterations & Correlation & 8 & 660 & 5090 & 0.259 & 0.887 & Best Silhouette \\
             C & random multiple iterations & Correlation & 10 & 462 & 5300 & 0.222 & 0.938 & Best Success Rate \\
@@ -338,11 +358,13 @@ Tο παραπάνω script καλεί την συνάρτηση \lstinline[lang
             B & random multiple iterations & Correlation & 20 & 228 & 5520 & 0.278 & 0.9 & Best Silhouette
         \end{tabular}
     }
-    \captionof{table}{TODO}
-    \label{K-means Best Results}
+    \captionof{table}{Συνοπτικός πίνακας καλύτερων αποτελεσμάτων k-means}
+    \label{table:best-k-means}
 \end{minipage}
 
-Στο παραπάνω πινακάκι χρησιμοποιήσαμε τους κωδικούς των dataset τα οποία ορίσαμε ως εξής:
+Ο \hyperref[table:best-k-means]{\tablename{} \ref{table:best-k-means}}
+παρουσιάζει μαζεμένες όλες οι βέλτιστες λύσεις για το $Silhouette$ και για το $Success Rate$ για τις ομαδοποιήσεις που έγιναν.
+Χρησιμοποιήσαμε τους κωδικούς των dataset τα οποία ορίσαμε ως εξής:
 \begin{enumerate}
     \item A=\url{join_duplicates/freq_8_70/dataset.csv}
     \item B=\url{join_duplicates/freq_3_70/gibberish_detector/join_similar/dataset.csv}
