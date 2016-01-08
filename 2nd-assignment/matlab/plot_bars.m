@@ -1,4 +1,4 @@
-function plot_bars(c,lMethod, tit, name,eval)
+function plot_bars(c, lMethod, tit, name, eval)
 % set(0, 'currentfigure', h); % set current figure
 % hold on; <<--- for some reasons breaks the colors for me.
 % axes = h.CurrentAxes;
@@ -42,7 +42,7 @@ set(cat(2), 'FaceColor', [253, 184, 99] / 255, 'EdgeColor', [253, 184, 99] / 255
 set(cat(3), 'FaceColor', [178, 171, 210] / 255, 'EdgeColor', [178, 171, 210] / 255);
 set(cat(4), 'FaceColor', [94, 60, 153] / 255, 'EdgeColor', [94, 60, 153] / 255);
 
-print(['../doc/images/',name], '-dpdf', '-r0')
+print(['../doc/images/', name], '-dpdf', '-r0')
 
 close all
 end

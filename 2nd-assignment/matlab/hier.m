@@ -4,16 +4,15 @@ paths_filename = '../datasets/paths.txt';
 files = file_paths(paths_filename);
 
 T = readtable(files{4});
-T(:,end) = [];%delete the category from the data
-X=table2array(T);
+T(:, end) = []; % delete the category from the data
+X = table2array(T);
 
 distance = 'correlation';
-Y = pdist (X,distance);
+Y = pdist (X, distance);
 YY = squareform(Y);
-Z =linkage(YY,'average');
-% c = cophenet(Z,Y)
+Z = linkage(YY, 'average');
 
-YY = 1-YY;
+YY = 1 - YY;
 figure;
 % Create the heat map.
 imagesc(YY);
@@ -22,21 +21,13 @@ title('Hierarhical Clustering HeatMap')
 colormap jet
 % Add a colorbar to display the scale of the data.
 colorbar
-saveas(gcf,'../doc/images/heatHier','epsc')
+saveas(gcf, '../doc/images/heatHier', 'epsc')
 
-% T = cluster(Z,'cutoff',0.8);
-IDX = cluster(Z,'maxclust',8);
+IDX = cluster(Z, 'maxclust', 8);
 
-%
-% figure
-% subplot(3,1,1)
-% plot(T)
-% subplot(3,1,2)
-% hist(T)
 figure
 dendrogram(Z)
-saveas(gcf,'../doc/images/dentroHier','epsc')
+saveas(gcf, '../doc/images/dentroHier', 'epsc')
 
-
-eval1 = eval_clust(IDX,1)
-eval2 = eval_clust(IDX ,2)
+eval1 = eval_clust(IDX, 1)
+eval2 = eval_clust(IDX, 2)
