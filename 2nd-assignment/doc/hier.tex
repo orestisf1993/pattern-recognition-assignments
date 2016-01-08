@@ -1,4 +1,4 @@
-\section{Περιγραφή εξερεύνησης των ιεραρχικών μοντέλων}
+\subsection{Περιγραφή εξερεύνησης των ιεραρχικών μοντέλων}
 
 Τα μοντέλα μας δημιουργήθηκαν με την χρήση του Matlab και η διαδικασία που περιγράφτηκε στην εισαγωγή πραγματοποιείται στο αρχείο optimizer\_hier.m
 για τις διάφορες παραμέτρους. Οι αποστάσεις ανάμεσα στα σημεία ή υπολογίζονται για τους ιεραρχικούς με την χρήση της συνάρτησης pdist , η οποία μπορεί να υπολογίσει τις εξής αποστάσεις:
@@ -45,32 +45,89 @@ CDX = cluster(Z,'maxclust',8);
 
 
 επίσης υπάρχει η συνάρτηση cophonet(Z,YY) η οποία είναι μια μετρική που υπολογίζει την συσχέτιση ανάμεσα στις συνδέσεις που έχει δημιουργήσει το Z και τις αντίστοιχες αποστάσεις στο YY .Όσο πιο μεγάλη είναι η συσχέτιση τόσο πιο καλά έχει αποτυπωθεί η διαφορετικότητα των αρχικών σημείων, σαν συνδέσεις μεταξύ clusters , περισσότερα
-\href{https://en.wikipedia.org/wiki/Cophenetic\_correlation{εδώ}}
+\href{https://en.wikipedia.org/wiki/Cophenetic\_correlation}{εδώ}
 
 Στη συνέχεια παρουσιάζονται και σχολιάζονται τα πειραματικά αποτελέσματα.
 
 \section{Πειραματικά αποτελέσματα}
 
-Χρησιμοποιούνται οι γνωστές μετρικές silhouette ,cohesion,separation
-αλλά και η success1 η οποία είναι μία από τις 2 μετρικές που  υπολογίζει το πόσα πετύχαμε από τα πραγματικά δεδομένα.Περισσότερα για το πως υπολογίστηκαν και τη αντιπροσωπεύει η success1 στο \textbf{TELOS} του κεφαλαίου.   	
+Χρησιμοποιούνται οι γνωστές μετρικές $Silhouette$ ,$Cohesion$,$Separation$
+αλλά και η $Success Rate 1$ η οποία είναι μία από τις 2 μετρικές που  υπολογίζει το πόσα πετύχαμε από τα πραγματικά δεδομένα.Περισσότερα για το πως υπολογίστηκαν και τη αντιπροσωπεύει η success1 στο \textbf{TELOS} του κεφαλαίου.   	
 
 Έγινε χρήση των προαναφερθένων  αλγορίθμων απόστασης και εφαρμόστηκαν στον καθένα 4 διαφορετικοί τρόποι σύνδεσης για όλα τα dataset
 
 
-\begin{figure}
-	\includegraphics{images/hierCosBar.pdf}
-	\caption{Μετρικές για τον ιεραρχικό αλγόριθμο με την χρήση του Cosine}
+
+\noindent\begin{minipage}{\linewidth}
+	\includegraphics[width=\linewidth]{images/hierCosBar.pdf}
+	\captionof{figure}{Μετρικές για τον ιεραρχικό αλγόριθμο με την χρήση του Cosine}
 	\label{fig:CosineHier}
-\end{figure}
+\end{minipage}
 
-
-
-\begin{figure}
-	\includegraphics{images/hierCorBar.pdf}
-	\caption{Μετρικές για τον ιεραρχικό αλγόριθμο με την χρήση του Cosine}
+\noindent\begin{minipage}{\linewidth}
+	\includegraphics[width=\linewidth]{images/hierCorBar.pdf}
+	\captionof{figure}{Μετρικές για τον ιεραρχικό αλγόριθμο με την χρήση του Cosine}
 	\label{fig:CorrelationHier}
-\end{figure}
+\end{minipage}
+
+\newpage
+Βλέπουμε ότι και στις 2 περιπτώσεις ότι όσο υψηλότερο είναι το πσοσοστό επιτυχία
+τόσο υψηλότερο είναι  η μετρική $Silhouette$ και η $Separation$.Αντιθετα H $Cohesion$ όσο αυξάνεται το ποσοστό επιτυχίας είναι μικρότερη. Αυτά ήταν και τα επιθυμητά αποτελέσματα . Η μετρικές μας να βελτιώνονται όταν πετυχαίνουμε καλύτερα αποτελέσματα. 
+Τα καλυτερα ποσοστά σημειώνονται από τις μεθόδους average και weighted
+και όσο αφορά τα dataset βλέπουμε ότι υπάρχουν διαφορές αν και μικρές
+
+Να σημειώσουμε ότι το αρχικό dataset δεν συμπεριλαμβάνεται σε αυτές τις μετρήσεις
 
 
 
+To dataset που έδωσε καλύτερο(αν και υπήρχαν ισοβαθμίες) $Silhouette$ και $Success Rate 1$ ήταν το ίδιο: \\ \url{join_duplicates/freq_8_70/gibberish_detector/join_similar/dataset.csv-average}\\
+
+\begin{minipage}{\linewidth}
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{lllllllll}
+			\cline{7-7}
+			Dataset & Method & Distance Type & Number of Clusters & Cohesion & \multicolumn{1}{l|}{Separation} & \multicolumn{1}{l|}{Silhouette} & Success Rate & Max Type \\ \cline{7-7}
+			Α & average & Cosine & 8 & 0.351 & 0.504 & 0.229 & 0.787 & Best Success Rate \\
+			A & average & Correlation & 8 & 0.360 & 0.504 & 0.259 & 0.231& Best Silhouette \\
+		\end{tabular}
+	}
+	\captionof{table}{TODO}
+	\label{my-label}
+\end{minipage}
+
+Επίσης παραθέτουμε το σχήμα που προέκυψε από το weka και δείχνει ποιες
+βιβλιοθήκες μπήκαν σε ποια Clusters (Προέκυψε το ίδιο και για best $Success Rate 1$ και για $Silhouette$ ,λογικά υπήρχαν αμοιβαίες ανταλαες ανάμεσα στα clusters)
+
+\noindent\begin{minipage}{\linewidth}
+	\includegraphics[width=\linewidth]{images/hier_result.eps}
+	\captionof{figure}{Libraries σε Clusters}
+	\label{fig:clustering}
+\end{minipage}
+
+Βλέπουμε ότι η τα swing-libraries(κόκκινα) τα http-clients(γκρι), 
+και τα command-line parsers(λαχανί) τα πετύχαμε ακριβώς με ενώ χάθηκαν 
+λίγα από τα android σε γειτονικά clusters.to Cluster 4 έμεινε μόνο με 2 στοιχεία ενώ το 3 είχε μεγάλη ανομοιογένεια το 2 είχε την πλειοψηφία των xml(φουξ),json(ροζ),csv(γαλάζιο)
+Μπορούμε να χαρακτηρίσουμε αυτό το αποτέλεσμα ώς μέτριο προς καλό
+καθώς πετύχαμε ακριβώς 3 από τα 8 clusters και μία σχετική πληοψηφία από τα υπόλοιπα.
+
+
+Τέλος παραθέτουμε τον πίνακα ομοιότητας και το δεντροδιάγραμμα για το καλύτερο dataset και clustering
+
+\noindent\begin{minipage}{\linewidth}
+	\includegraphics[width=\linewidth]{images/heatHier.eps}
+	\captionof{figure}{Το δεντροδιάγραμμα με τα καλύτερα αποτελέσματα}
+	\label{fig:Heat}
+\end{minipage}
+
+Είναι εμφανές ότι οι μετρική της απόστασης που διαλέξαμε είναι σωστή
+καθώς τα clusters διαφαίνονται σχετικά με το ματι
+
+\noindent\begin{minipage}{\linewidth}
+	\includegraphics[width=\linewidth]{images/dentroHier.eps}
+	\captionof{figure}{Το δεντροδιάγραμμα με τα καλύτερα αποτελέσματα}
+	\label{fig:Dentro}
+\end{minipage}
+
+Τέλος να προσθέσουμε ότι το $coph\_coeff = 0.7067$ για το συγκεκριμένο δεντροδιάγραμμα και πίνακα ομοιότητας.
 
