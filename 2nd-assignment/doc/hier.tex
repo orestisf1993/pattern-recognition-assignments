@@ -46,7 +46,7 @@ CDX = cluster(Z,'maxclust',8);
 Όσο πιο μεγάλη είναι η συσχέτιση τόσο πιο καλά έχει αποτυπωθεί η διαφορετικότητα των αρχικών σημείων, σαν συνδέσεις μεταξύ clusters, περισσότερα
 \href{https://en.wikipedia.org/wiki/Cophenetic_correlation}{εδώ}.
 
-\section{Πειραματικά αποτελέσματα}
+\subsection{Πειραματικά αποτελέσματα}
 Χρησιμοποιούνται οι γνωστές μετρικές $Silhouette$, $Cohesion$,$Separation$
 αλλά και η $Success Rate 1$ η οποία είναι μία από τις 2 μετρικές που  υπολογίζει το πόσα πετύχαμε από τα πραγματικά δεδομένα.Περισσότερα για το πως υπολογίστηκαν και τη αντιπροσωπεύει η success1 στο τέλος του κεφαλαίου.    
 
@@ -64,7 +64,7 @@ CDX = cluster(Z,'maxclust',8);
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=\linewidth]{images/hierCorBar.pdf}
-    \captionof{figure}{Μετρικές για τον ιεραρχικό αλγόριθμο με την χρήση του Cosine}
+    \captionof{figure}{Μετρικές για τον ιεραρχικό αλγόριθμο με την χρήση του Correlation}
     \label{fig:hierCorBar}
 \end{minipage}
 
@@ -77,13 +77,6 @@ CDX = cluster(Z,'maxclust',8);
 και όσο αφορά τα dataset βλέπουμε ότι υπάρχουν διαφορές αν και μικρές
 Να σημειώσουμε ότι το αρχικό dataset δεν συμπεριλαμβάνεται σε αυτές τις μετρήσεις.
 
-\noindent\begin{minipage}{\linewidth}
-    \centering
-    \captionsetup{type={figure}}
-    \includegraphics[width=\linewidth]{images/hierCorBar.pdf}
-    \captionof{figure}{Μετρικές για τον ιεραρχικό αλγόριθμο με την χρήση του Cosine}
-    \label{fig:CorrelationHier}
-\end{minipage}
 
 To dataset που έδωσε καλύτερο (αν και υπήρχαν ισοβαθμίες) $Silhouette$ και $Success Rate 1$ ήταν το ίδιο:
 \url{join_duplicates/freq_8_70/gibberish_detector/join_similar/dataset.csv-average}.
@@ -108,7 +101,7 @@ To dataset που έδωσε καλύτερο (αν και υπήρχαν ισο
 \noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
-    \includegraphics[width=\linewidth]{images/hier_result.eps}
+    \includegraphics[width=\linewidth height =0.4 \lineheight]{images/hier_result.eps}
     \captionof{figure}{Libraries σε Clusters}
     \label{fig:clustering}
 \end{minipage}
@@ -125,7 +118,7 @@ To dataset που έδωσε καλύτερο (αν και υπήρχαν ισο
     \centering
     \captionsetup{type={figure}}
     \includegraphics[width=\linewidth]{images/heatHier.eps}
-    \captionof{figure}{Το δεντροδιάγραμμα με τα καλύτερα αποτελέσματα}
+    \captionof{figure}{To heatmap των δεδομένων για correlation}
     \label{fig:Heat}
 \end{minipage}
 
