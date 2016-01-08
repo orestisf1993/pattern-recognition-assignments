@@ -1,4 +1,3 @@
-\include{preamble}
 %&preamble
 \usepackage[linesnumbered, boxruled]{algorithm2e}
 \SetKwRepeat{Do}{do}{while}
@@ -23,6 +22,8 @@
 \setmainfont[Mapping=tex-text]{DejaVu Sans}
 \newfontfamily\greekfont[Script=Greek]{DejaVu Sans}
 \newfontfamily\greekfontsf[Script=Greek]{DejaVu Sans}
+\setmonofont[Scale=1.0]{Source Code Pro Medium}		
+\newfontfamily\greekfonttt[Scale=1.0]{Source Code Pro Medium}
 \usepackage{microtype} % microtype is font-dependant
 
 \title{Αναγνώριση Προτύπων\\
@@ -35,7 +36,6 @@
   \textbf{Τμήμα Ηλ. Μηχανικών / Μηχανικών ΗΥ}\\
   \textbf{Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης}}
 \titlepic{\includegraphics[width=0.40\textwidth]{images/university}}
-
 \renewcommand{\labelenumii}{\arabic{enumii}.}
 \renewcommand{\labelenumiii}{\arabic{enumiii}.}
 \begin{document}
@@ -44,7 +44,11 @@
 \listoffigures
 \listoftables
 
-
+\include{intro}
+\include{preprocessing}
+\include{clustering}
 \include{kmedoids}
-\include{intro_hier}
+\include{hier_intro}
+\include{hier}
+\include{openissues}
 \end{document}
