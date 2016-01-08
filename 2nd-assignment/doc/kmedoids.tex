@@ -24,48 +24,58 @@
     }
 \end{algorithm}
 
-Ένα παράδειγμα του παραπάνω αλγορίθμου φάινεται στο παρακάτω σχήμα:\\
+Ένα παράδειγμα του παραπάνω αλγορίθμου φαίνεται στο 
+\hyperref[fig:kmedoid-example]{\figurename{} \ref{fig:kmedoid-example}}:
+
 \noindent\begin{minipage}{\linewidth}
     \centering
     \captionsetup{type={figure}}
-	\makebox[\linewidth]{
-	\includegraphics{images/kmedoid}}
-	\captionof{figure}{Παράδειγμα k-medoid}\label{fig:pam}
+	\includegraphics[width=\linewidth]{images/kmedoid}
+	\captionof{figure}{Παράδειγμα k-medoid}\label{fig:kmedoid-example}
 \end{minipage}
 
 \subsubsection{Πειραματικά Αποτελέσματα}
+Καθώς ο K-medoids αποτελεί μια παραλλαγή του K-means πιο ανθεκτική στον θόρυβο δεν περιμένουμε να έχουμε καλύτερα αποτελέσματα με την εφαρμογή του καθώς δεν έχουμε ανεπιθύμητο θόρυβο στα δεδομένα μας. Τρέξαμε όλα τα dataset μας για τον αλγόριθμο K-medoids στο Matlab χρησιμοποιώντας την εντολή
+\lstinline[language=MATLAB, breaklines=true]!kmedoids(X, clnumber, 'Distance', correlation);!
+Η μόνη παράμετρος που αλλάξαμε ήταν η απόσταση και χρησιμοποιήσαμε τον τύπο correlation. Τρέξαμε για είδος απόστασης cosine και τα αποτελέσματα ήταν ίδια. Παρατηρήσαμε ότι οι άλλες παράμετροι της εντολής \lstinline[language=MATLAB]!kmedoids! δεν δίνουν διαφορετικά αποτελέσματα για αυτό χρησιμοποιήθηκαν οι default τιμές τους. Για να πάρουμε τα διαγράμματα με τις μετρικές τρέξαμε το script  \lstinline[language=MATLAB]!scriptm!. Αυτό το script καλεί την συνάρτηση \lstinline[language=MATLAB]!optimizer_kmedoids! η οποία διαβάζει τα dataset μας, υλοποιεί τον αλγόριθμο K-medoids και μας βγάζει τα διαγράμματα στα οποία έχουμε τις μετρικές μας.
 
-Καθώς ο K-medoids αποτελεί μια παραλλαγή του K-means πιο ανθεκτική στον θόρυβο δεν περιμένουμε να έχουμε καλύτερα αποτελέσματα με την εφαρμογή του καθώς δεν έχουμε ανεπιθύμητο θόρυβο στα δεδομένα μας. Τρέξαμε όλα τα dataset μας για τον αλγόριρμο K-medoids στο Matlab χρησιμοποιώνας την εντολή \lstinline[language=MATLAB]!kmedoids(X,clnumber,'Distance',correlation);!
-Η μόνη παράμετρος που αλλάξαμε ήταν η απόσταση και χρησιμοποιήσαμε τον τύπο correlation. Τρέξαμε για είδος απόστασης cosine και τα αποτελέσματα ήταν ίδια. Παρατηρήσαμε ότι οι άλλες παράμετροι της εντολής \lstinline[language=MATLAB]!kmedoids! δεν δίνουν διαφορετικά αποτελέσματα για αυτό χρησιμοποιήθηκαν οι default τιμές τους. Για να πάρουμε τα διαγράμματα με τις μετρικές τρέξαμε το script  \lstinline[language=MATLAB]!scriptm!. Αυτό το script καλεί την συνάρτηση \lstinline[language=MATLAB]!optimizer_kmedoids! η οποία διαβάζει τα dataset μας, υλοποιεί τον αλγόριθμο K-medoids και μας βγάζει τα διαγράμματα στα οποία έχουμε τις μετρικές μας. Η φόρτωση των dataset μας γίνεται με την συνάρτηση \lstinline[language=MATLAB]!file_paths! και τα διαγράμματα με την συνάρτηση \lstinline[language=MATLAB]!plot_bars!.
-
-Το διάγραμμα που παίρνουμε είναι το εξής:
-\includegraphics{images/MedCorBar}
-
+Το διάγραμμα που παίρνουμε είναι το \hyperref[fig:MedCorBar]{\figurename{} \ref{fig:MedCorBar}}:
 Παρατηρούμε ότι τα αποτελέσματα μας είναι αρκετά ικανοποιητικά, δεν φτάνουν όμως τα επίπεδα των αποτελεσμάτων του K-means.
+Στο
+\hyperref[fig:kmedoid_result]{\figurename{} \ref{fig:kmedoid_result}}
+βλέπουμε τα αποτελέσματα από τις βέλτιστες ομαδοποιήσεις ως προς τις μετρικές $SuccessRate$ και $Silhouette$ αντίστοιχα.
+Παρατηρούμε ότι και στις 2 ομαδοποιήσεις ενώ πετυχαίνουμε υψηλά ποσοστά στην ομαδοποίηση των μεγάλων cluster χάνουμε πιο πολλές βιβλιοθήκες από πριν.
+Τέλος, ο
+\hyperref[table:k-medoids-best]{\tablename{} \ref{table:k-medoids-best}}
+παρουσιάζει τις βέλτιστες λύσεις για το $Silhouette$ και για το $Success Rate$ για την ομαδοποίηση που έγινε.
 
-Παρακάτω βλέπουμε τα αποτελέσματα από τις βέλτιστες ομαδοποιήσεις ως προς τις μετρικές $SuccessRate$ και $Silhouette$ αντίστοιχα.
-\noindent\begin{minipage}{\linewidth}
+\begin{figure}[htbp]
     \centering
     \captionsetup{type={figure}}
-    \includegraphics{images/kmedoid_result1}
-    \includegraphics{images/kmedoid_2}
-    \captionof{figure}{TODO}
+    \includegraphics[width=\linewidth]{images/MedCorBar}
+    \captionof{figure}{Αποτελέσματα k-medoids}
+    \label{fig:MedCorBar}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \captionsetup{type={figure}}
+    \includegraphics[width=\linewidth]{images/kmedoid_result1}
+    \includegraphics[width=\linewidth]{images/kmedoid_2}
+    \captionof{figure}{Αποτελέσματα k-medoids}
     \label{fig:kmedoid_result}
-\end{minipage}
+\end{figure}
 
-Παρατηρούμε ότι και στις 2 ομαδοποιήσεις ενώ πετυχαίνουμε υψηλά ποσοστά στην ομαδοποίηση των μεγάλων cluster χάνουμε πιο πολλές βιβλιοθήκες από πριν.
-
-Τέλος στο παρακάτω πινακάκι παρουσιάζονται μαζεμένες οι βέλτιστες λύσεις για το $Silhouette$ και για το $Success Rate$ για την ομαδοποίηση που έγινε.
-\begin{table}[]
+\begin{table}[htbp]
 	\centering
 	\resizebox{\textwidth}{!}{%
 		\begin{tabular}{llllll}
-			\cline{4-4}
-			Dataset & Cohesion & \multicolumn{1}{l|}{Separation} & \multicolumn{1}{l|}{Silhouette} & Success Rate & Max Type \\ \cline{4-4}
+			Dataset & Cohesion & Separation & Silhouette & Success Rate & Max Type \\
 			&  &  &  &  & Best Success Rate \\
 			&  &  &  &  & Best Silhouette
 		\end{tabular}
 	}
-	\caption{K-medoids Best Results}
+	\caption{Συνοπτικός πίνακας καλύτερων αποτελεσμάτων k-medoids}
 	\label{table:k-medoids-best}
 \end{table}
+\FloatBarrier
