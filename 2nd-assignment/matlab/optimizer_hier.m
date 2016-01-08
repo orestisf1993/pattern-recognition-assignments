@@ -9,7 +9,7 @@ lMethod2 = {'weighted';'ward    ';'complete' ;  'average '};
 distancesMap = {'cosine','correlation'};
 lMethod = {'weighted';'ward';'complete';'average'};
 
-paths_filename = '../2nd-assignment/datasets/paths.txt';
+paths_filename = '../datasets/paths.txt';
 files = file_paths(paths_filename);
 
 

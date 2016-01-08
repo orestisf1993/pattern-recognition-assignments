@@ -1,6 +1,6 @@
 % function [ IDX] = hier()
 
-paths_filename = '../2nd-assignment/datasets/paths.txt';
+paths_filename = '../datasets/paths.txt';
 files = file_paths(paths_filename);
 
 T = readtable(files{4});
@@ -22,7 +22,7 @@ title('Hierarhical Clustering HeatMap')
 colormap jet
 % Add a colorbar to display the scale of the data.
 colorbar
-saveas(gcf,'../2nd-assignment/doc/images/heatHier','epsc')
+saveas(gcf,'../doc/images/heatHier','epsc')
 
 % T = cluster(Z,'cutoff',0.8);
 IDX = cluster(Z,'maxclust',8);
@@ -35,7 +35,7 @@ IDX = cluster(Z,'maxclust',8);
 % hist(T)
 figure
 dendrogram(Z)
-saveas(gcf,'../2nd-assignment/doc/images/dentroHier','epsc')
+saveas(gcf,'../doc/images/dentroHier','epsc')
 
 
 eval1 = eval_clust(IDX,1)

@@ -1,7 +1,7 @@
 function [c,IDXS,IDXL] = optimizer_kmeans( verb,clnumber)
 
 
-paths_filename = '../2nd-assignment/datasets/paths.txt';
+paths_filename = '../datasets/paths.txt';
 files = file_paths(paths_filename);
 
 initial_centroids={'random','random multiple iretations','heuristic'};

@@ -8,7 +8,7 @@ while ischar(tline)
     i = i +1;
     tline = fgets(fid);
     tline(end) =[];%last characters create a problem with readtable
-    fpaths{i} = ['../2nd-assignment/datasets/' ,tline];
+    fpaths{i} = ['../datasets/' ,tline];
   
     
 end

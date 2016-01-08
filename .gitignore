@@ -250,3 +250,4 @@ vignettes/*.pdf
 *.pickle
 out.html
 *.pki
+images/

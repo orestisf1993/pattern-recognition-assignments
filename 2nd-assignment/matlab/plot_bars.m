@@ -10,9 +10,9 @@ figure('visible', 'off', 'PaperType', 'a4', 'PaperOrientation', 'portrait', ...
 y = [c(:, 6), c(:, 7), c(:, 8), c(:, eval)];
 barh(y)
 
-paths_filename = '../2nd-assignment/datasets/paths.txt';
+paths_filename = '../datasets/paths.txt';
 files = file_paths(paths_filename);
-files = strrep(files(:), '../2nd-assignment/datasets/root/', '');
+files = strrep(files(:), '../datasets/root/', '');
 files = strrep(files(:), '_', '\_');
 
 legend('Silhouette', 'Cohesion', 'Separation', 'Success\_Rate')
@@ -42,7 +42,7 @@ set(cat(2), 'FaceColor', [253, 184, 99] / 255, 'EdgeColor', [253, 184, 99] / 255
 set(cat(3), 'FaceColor', [178, 171, 210] / 255, 'EdgeColor', [178, 171, 210] / 255);
 set(cat(4), 'FaceColor', [94, 60, 153] / 255, 'EdgeColor', [94, 60, 153] / 255);
 
-print(['../2nd-assignment/doc/images/',name], '-dpdf', '-r0')
+print(['../doc/images/',name], '-dpdf', '-r0')
 
 close all
 end
