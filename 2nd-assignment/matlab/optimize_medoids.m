@@ -4,7 +4,7 @@ starts = {'plus'};
 
 num_clust = 8;
 
-paths_filename = '../2nd-assignment/datasets/paths.txt';
+paths_filename = '../datasets/paths.txt';
 paths = file_paths(paths_filename);
 datasets = {};
 file_idx_start = 3;
