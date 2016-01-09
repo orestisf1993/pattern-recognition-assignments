@@ -1,0 +1,70 @@
+From 89facbe968df9ac74cf806d6451e124e4ed413a4 Mon Sep 17 00:00:00 2001
+From: orestisf <orestisf1993@gmail.com>
+Date: Sat, 9 Jan 2016 05:09:50 +0200
+Subject: [PATCH] Patch for matlab's silhouette
+
+---
+ silhouette.m | 25 +++++--------------------
+ 1 file changed, 5 insertions(+), 20 deletions(-)
+
+diff --git a/silhouette.m b/silhouette.m
+index 6e06992..1483c09 100644
+--- a/silhouette.m
++++ b/silhouette.m
+@@ -1,4 +1,4 @@
+-function [s,h] = silhouette(X, clust, distance, varargin)
++function [avgDWithin,avgDBetween] = coh_sep(X, clust, distance, varargin)
+ %SILHOUETTE Silhouette plot for clustered data.
+ %   SILHOUETTE(X, CLUST) plots cluster silhouettes for the N-by-P data
+ %   matrix X, with clusters defined by CLUST.  Rows of X correspond to
+@@ -83,11 +83,7 @@ if ~isempty(X) && (nIn ~= size(X,1))
+ end
+ 
+ % Remove NaNs, and get size of the non-missing data
+-if ~isempty(X)
+-    [~, wasnan, X, idx] = statremovenan(X, idx);
+-else
+-    [~, wasnan, idx] = statremovenan(idx);
+-end
++wasnan =0;
+ n = length(idx);
+ p = size(X,2);
+ k = length(cnames);
+@@ -195,9 +191,9 @@ for j = 1:n
+     % Compute average distance by cluster number
+     for i = 1:k
+         if i == idx(j)
+-            avgDWithin(j) = sum(distj(mbrs(:,i))) ./ max(count(i)-1, 1);
++            avgDWithin(j) = sum(distj(mbrs(:,i)));
+         else
+-            avgDBetween(j,i) = sum(distj(mbrs(:,i))) ./ count(i);
++            avgDBetween(j,i) = sum(distj(mbrs(:,i)));
+         end
+     end
+ end
+@@ -223,21 +219,10 @@ if (nargout == 0) || (nargout > 1)
+     if k > 20
+         cnames = '';
+     end
+-    barsh = barh(bars, 1.0);
+-    axesh = get(barsh(1), 'Parent');
+-    set(axesh, 'Xlim',[-Inf 1.1], 'Ylim',[1 length(bars)], 'YDir','reverse', 'YTick',tcks, 'YTickLabel',cnames);
+-    if n > 50
+-        shading flat
+-    end
+-    xlabel(getString(message('stats:silhouette:xlabel')));
+-    ylabel(getString(message('stats:silhouette:ylabel')));
+ end
+ 
+ if nargout > 0
+-    s = statinsertnan(wasnan,silh);
+-end
+-if nargout > 1
+-    h = get(axesh, 'Parent');
++    s = silh;
+ end
+ 
+ %------------------------------------------------------------------
+-- 
+2.7.0
+
